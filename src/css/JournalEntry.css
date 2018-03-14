@@ -1,0 +1,56 @@
+/*
+
+Journal Entry
+
+*/
+/*
+
+Tags
+
+*/
+legend{
+    margin-top:5%;
+}
+
+/*
+
+Class
+
+*/
+.table-header-row{
+    background-color:#393a3d;
+    color:white;
+}
+.journalEntry-addAccount button{
+    margin-top:3%;
+    
+}
+.journalEntry-buttons{
+    text-align: center;
+    margin:3%;
+}
+.journalEntry-buttons button{
+    margin-left:1%;
+    margin-right:1%;
+}
+.journalEntry-description{
+    text-align: center;
+    margin:3%;
+}
+.journalEntry-description textarea{
+    margin-top:2%;
+    height: 100px;
+    width: 300px;
+}
+
+/*
+
+ID
+
+*/
+#btn-add{
+    text-align:center;
+    padding:0px;
+    margin-top:5%;
+    
+}
