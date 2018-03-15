@@ -1,4 +1,21 @@
 <!doctype html>
+<?php
+$config['db'] = array(
+	'host'			=>'localhost',
+	'username'		=>'rmorga51',
+	'password'		=>'',
+	'dbname'		=>'accounting'
+);
+	
+
+$db = new PDO('mysql:host=' . $config['db']['host'] . ';dbname=' . $config['db']['dbname'], $config['db']['username'], $config['db']['password']); 
+$db->setATTRIBUTE(PDO::ATTR_EMULATE_PREPARES, false);
+$db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+
+$query = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE'");
+
+?>
 <html lang = en>
     <head>
             <!-- Required meta tags -->
@@ -61,42 +78,56 @@
             
             <div className="App">
                     <legend class="" align="center" text-size=""><strong>Journal Entry</strong></legend>
-                    <hr/>
+                  
+                   
+
+                    <!--Table-->
+                    <form method="post" action="JournalEntryUpload.php" enctype="multipart/form-data">
+                    <input id="datepicker" width="276" type="submit" name="date"/>
                     <!--Date Picker -->
-                    <div class="input-group date" data-provide="datepicker">
-                            <input type="text" class="form-control">
-                            <div class="input-group-addon">g
+                    <div id = "upload-file" class="input-group date" data-provide="datepicker">
+                            <input type="text" class="form-control" name="date">
+                            <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
                             </div>
                         </div>
-
-                    <!--Table-->
                     <table class = "table table-stripped">
-                        <tr class="table-header-row">
-                            <td><strong>DATE</strong></td>
+                        <tr class="table-header-row">                          
                             <td><strong>NAME</strong></td>
                             <td><strong>Ref</strong></td>
                             <td><strong>DEBIT</strong></td>
-                            <td><strong>CREDIT</strong></td>
-                            <td><strong>ACTION</strong></td>
+                            <td><strong>CREDIT</strong></td>                          
                         </tr>
+                        <?php
+                      while($row = $query->fetch(PDO::FETCH_ASSOC)){
+                        echo "<tr>";
+                        echo '<td><input readonly type="text" name="accountName" value="',$row['account_name'],'"></td>';
+                        echo '<td><input type="text"  name="reference" value=""></td>';
+                        echo '<td><input type="number" step="0.01" value="0.00" name="debit"></td>';
+                        echo '<td><input type="number" step="0.01" value="0.00" name="credit"></td>';
+                        echo "</tr>";
+                      }
+                    ?>
                   </table>
+              
                 </div>
-                <input id="datepicker" width="276" type="submit" />
-                <form enctype="multipart/form-data">
-                    <input name="file" type="file" />
-                    <input type="button" value="Upload" />
-                </form>
+                
 
-                <!--For the whole Journal Entry-->
+
+
+                <!--For the whole Journal Entry--><div id="btn-add">
+                  <button type ="button" class ="btn-success"><a href = "./selectAccount.php">Add New Account</a></button>
+                </div>
                 <div class="journalEntry-description">
                         <h2>Description</h2>
-                        <textarea></textarea>
+                        <textarea name="description" ></textarea>
                     </div>
+                    
                     <div class="journalEntry-buttons">
-                        <button class="btn-danger"><a id= "cancel" href="./home.html">Cancel</a></button>
-                        <button class="btn-success">Submit</button>
+                        <button class="btn-danger"><a id= "cancel" href="./home.php">Cancel</a></button>
+                        <input class="btn btn-success right" type="submit" name="submit" value="submit">
                     </div>
+                    </form>
 
 
     <!-- dependices--> 

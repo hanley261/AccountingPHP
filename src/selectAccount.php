@@ -6,14 +6,14 @@ $config['db'] = array(
 	'password'		=>'',
 	'dbname'		=>'accounting'
 );
-	
-
 $db = new PDO('mysql:host=' . $config['db']['host'] . ';dbname=' . $config['db']['dbname'], $config['db']['username'], $config['db']['password']); 
 $db->setATTRIBUTE(PDO::ATTR_EMULATE_PREPARES, false);
 $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-$query = $db->query("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a'");
+$query = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE'");
+//$query2 = $db->query2("UPDATE account_status FROM chart_of_accounts WHERE account_name = 'n/a'");
+
 
 ?>
 <html lang = en>
@@ -23,15 +23,16 @@ $query = $db->query("SELECT * FROM chart_of_accounts WHERE account_status != 'n/
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
                 <!-- CSS -->
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-            <link rel="stylesheet" href="css/COA.css"/>
+            <link rel="stylesheet" href="css/home.css"/>
             <link rel="stylesheet" href="css/header.css"/>
                 <!---Title -->
-            <title>AnyWhere-Chart Of Accounts</title>
+            <title>AnyWhere-selectAccount</title>
     </head>
     <body>
 
+      
         
-              <!-- Header-->
+            <!-- Header-->
 
 
         <nav class="navbar navbar-expand navbar-primary">
@@ -75,60 +76,50 @@ $query = $db->query("SELECT * FROM chart_of_accounts WHERE account_status != 'n/
 
 
 
+<!--Create Account -->
+<div class="App">
+        <div class="col-md-3 cols-md-offset-3">
+        <form id="create-account" method="GET" action="selectAccountUpload.php">
+          <div class="form-group">
+              <label htmlFor="account_type">Account Type</label>
+              <select id="account_type" class="form-control">
+              <option value="" disabled>--Account Type--</option>  
+                <option value="Assests">Assets</option>
+                <option value="Liabilities">Liabilities</option>
+                <option value="Owner's-Equity">Owner's Equity</option>
+                <option value="Revenue">Revenue</option>
+                <option value="Expenses">Expenses</option>
+              </select> 
+          </div>
+          </form>
+          <form  id="create-account" method="POST" action="selectAccountUpload.php" enctype="multipart/form-data">
+          <div class="form-group">
+              <label>
+                  Account Name
+              </label>
+              <select id="accountNameSelect" name="account_name" class="form-control"> 
+          <?php
+              			while($row = $query->fetch(PDO::FETCH_ASSOC)){
+                      echo '<option value ="',$row['account_name'],'">',$row['account_name'],'</option>';
+                    }
+          ?>
+              </select>
+          </div>
+          
+          <div class="row">
+            <div class="">
+                <button class="btn btn-danger left" type="reset"> Cancel</button>
+                <input class="btn btn-success right" name="submit" type="submit" value="submit">
+            </div>
+            
+          </div>
+      </form>
+    </div>
+        </div>
 
-                <!-- Body -->
-                <div class="container">
-                    <legend class="" align="center" text-size=""><strong>Charts of Account</strong></legend>
-                    <!-- Search Component -->
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <form action="" class="search-form">
-                                    <div class="form-group has-feedback">
-                                        <label for="search" class="sr-only">Search Accounts</label>
-                                        <input type="text" class="form-control" name="search" id="search" placeholder="search"/>
-                                          <span class="glyphicon glyphicon-search form-control-feedback"></span>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="float-right">
-                                <a class="btn btn-success float-right" id="btn" align="right" href="./createAccount.php">New</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Table-->
-                    <table id="COA-table" class= "table table-stripped">
-                        <tr class="table-header-row">
-                          <td><strong>CODE</strong></td>
-                          <td><strong>NAME</strong></td>
-                          <td><strong>TYPE</strong></td>
-                          <td><strong>DETAIL TYPE</strong></td>
-                          <td><strong>SIDE</strong></td>
-                          <td><strong>STATUS</strong></td>
-                          <td><strong>BALANCE</strong></td>
-                          <td><strong>LAST DATE ACCESSED</strong></td>
-                          <td><strong>USER ID</strong></td>
-                        </tr>
-                        <!---PHP database call-->
-                        <?php
-			while($row = $query->fetch(PDO::FETCH_ASSOC)){
-				echo "<tr>";
-				echo "<td>",$row['account_code'],"</td>";
-				echo "<td>",$row['account_type'],"</td>";
-				echo "<td>",$row['account_subtype'],"</td>";
-				echo "<td>",$row['account_name'],"</td>";
-				echo "<td>",$row['normal_side'],"</td>";
-				echo "<td>",$row['account_status'],"</td>";
-				echo "<td>",$row['balance'],"</td>";
-				echo "<td>",$row['last_date_accessed'],"</td>";
-				echo "<td>",$row['last_user_id_accessed'],"</td>";
-				echo "</tr>";
-			}
-		?>
-                    </table>
-                    </div>
 
-    <script src="./scripts/activeAccounts.js" type="text/javascript"></script>
+
+
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
