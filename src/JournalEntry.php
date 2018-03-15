@@ -14,7 +14,7 @@
             <title>AnyWhere-Journal Entry</title>
     </head>
     <body>
-        <!-- Header-->
+              <!-- Header-->
 
 
         <nav class="navbar navbar-expand navbar-primary">
@@ -26,22 +26,22 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                   <li class="nav-item active">
-                    <a class="nav-link active" href="./home.html">Home<span class="sr-only">(current)</span></a>
+                    <a class="nav-link active" href="./home.php">Home<span class="sr-only">(current)</span></a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link"href="./COA.html">Charts of Account</a>
+                    <a class="nav-link"href="./COA.php">Charts of Account</a>
                   </li>
                   <li class="nav-item">
-                        <a class="nav-link" href="./JournalEntry.html">Journal Entry</a>
-                      </li>
-                      <li class="nav-item">
-                            <a class="nav-link" href="./ManagerReview.html">Manager Review</a>
-                          </li>
+                        <a class="nav-link" href="./JournalEntry.php">Journal Entry</a>
+                </li>
+                <li class="nav-item">
+                         <a class="nav-link" href="./ManagerReview.php">Manager Review</a>
+                </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="./accounts.html">Accounts</a>
+                    <a class="nav-link" href="./accounts.php">Accounts</a>
                   </li>
                   <li class="nav-item">
-                  <a class="nav-link" href="./logs.html">Logs</a>
+                  <a class="nav-link" href="./logs.php">Logs</a>
                 </li>
       
                 </ul>
@@ -49,12 +49,13 @@
               </div>
               <div class="pull-right">
                 <ul class="nav navbar-nav navbar-right">
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown01" href="./login.html"><span class="glyphicon glyphicon-user"></span>Login</a>
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="navbarDropdown" href="./login.php"><span class="glyphicon glyphicon-user"></span>Login</a>
                   </li>
                 </ul>
               </div>
             </nav>
+
 
             <!--Journal Entry Page -->
             

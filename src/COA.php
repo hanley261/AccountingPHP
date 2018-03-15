@@ -14,47 +14,51 @@
     <body>
 
         
-        <!-- Header-->
+              <!-- Header-->
 
 
-            <nav class="navbar navbar-expand navbar-primary">
-                    <header class="navbar-brand" href="./home.html"><img src="assets/logo.png" alt="bluePrint" height="60"/></header>
-                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
+        <nav class="navbar navbar-expand navbar-primary">
+                <header class="navbar-brand" href="./home.html"><img src="assets/logo.png" alt="bluePrint" height="60"/></header>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNavbar">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                  <li class="nav-item active">
+                    <a class="nav-link active" href="./home.php">Home<span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link"href="./COA.php">Charts of Account</a>
+                  </li>
+                  <li class="nav-item">
+                        <a class="nav-link" href="./JournalEntry.php">Journal Entry</a>
+                </li>
+                <li class="nav-item">
+                         <a class="nav-link" href="./ManagerReview.php">Manager Review</a>
+                </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="./accounts.php">Accounts</a>
+                  </li>
+                  <li class="nav-item">
+                  <a class="nav-link" href="./logs.php">Logs</a>
+                </li>
+      
+                </ul>
                 
-                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                      <li class="nav-item active">
-                        <a class="nav-link active" href="./home.html">Home<span class="sr-only">(current)</span></a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="./COA.html">Charts of Account</a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link" href="./JournalEntry.html">Journal Entry</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./ManagerReview.html">Manager Review</a>
-                          </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="./accounts.html">Accounts</a>
-                      </li>
-                      <li class="nav-item">
-                      <a class="nav-link" href="./logs.html">Logs</a>
-                    </li>
-          
-                    </ul>
-                    
-                  </div>
-                  <div class="pull-right">
-                    <ul class="nav navbar-nav navbar-right">
-                      <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="navbarDropdown" href="./login.html"><span class="glyphicon glyphicon-user"></span>Login</a>
-                      </li>
-                    </ul>
-                  </div>
-                </nav>
+              </div>
+              <div class="pull-right">
+                <ul class="nav navbar-nav navbar-right">
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="navbarDropdown" href="./login.php"><span class="glyphicon glyphicon-user"></span>Login</a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+
+
+
+
                 <!-- Body -->
                 <div class="container">
                     <legend class="" align="center" text-size=""><strong>Charts of Account</strong></legend>
@@ -71,7 +75,7 @@
                                 </form>
                             </div>
                             <div class="float-right">
-                                <a class="btn btn-success float-right" id="btn" align="right" href="./createAccount.html">New</a>
+                                <a class="btn btn-success float-right" id="btn" align="right" href="./createAccount.php">New</a>
                             </div>
                         </div>
                     </div>

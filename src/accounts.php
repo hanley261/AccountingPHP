@@ -6,8 +6,8 @@
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
                 <!-- CSS -->
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-            <link rel="stylesheet" href="css/home.css"/>
             <link rel="stylesheet" href="css/header.css"/>
+            <link rel="stylesheet" href="css/accounts.css"/>
                 <!---Title -->
             <title>AnyWhere-Home</title>
     </head>
@@ -27,22 +27,22 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                   <li class="nav-item active">
-                    <a class="nav-link active" href="./home.html">Home<span class="sr-only">(current)</span></a>
+                    <a class="nav-link active" href="./home.php">Home<span class="sr-only">(current)</span></a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link"href="./COA.html">Charts of Account</a>
+                    <a class="nav-link"href="./COA.php">Charts of Account</a>
                   </li>
                   <li class="nav-item">
-                        <a class="nav-link" href="./JournalEntry.html">Journal Entry</a>
-                      </li>
-                      <li class="nav-item">
-                            <a class="nav-link" href="./ManagerReview.html">Manager Review</a>
-                          </li>
+                        <a class="nav-link" href="./JournalEntry.php">Journal Entry</a>
+                </li>
+                <li class="nav-item">
+                         <a class="nav-link" href="./ManagerReview.php">Manager Review</a>
+                </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="./accounts.html">Accounts</a>
+                    <a class="nav-link" href="./accounts.php">Accounts</a>
                   </li>
                   <li class="nav-item">
-                  <a class="nav-link" href="./logs.html">Logs</a>
+                  <a class="nav-link" href="./logs.php">Logs</a>
                 </li>
       
                 </ul>
@@ -51,22 +51,15 @@
               <div class="pull-right">
                 <ul class="nav navbar-nav navbar-right">
                   <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="navbarDropdown" href="./login.html"><span class="glyphicon glyphicon-user"></span>Login</a>
+                    <a class="dropdown-toggle" data-toggle="navbarDropdown" href="./login.php"><span class="glyphicon glyphicon-user"></span>Login</a>
                   </li>
                 </ul>
               </div>
             </nav>
 
-            <!--Home-->
+                    <!-- Accoutns -->
+                    <h1>Accounts</h1>
 
-
-            <div class="container">
-                    <div class="row">
-                     <a href ="./createAccount.html" class="btn btn-success margin-10">Create Account</a>
-                     <a href="./journalEntry.html" class="btn btn-success margin-10">Journalize</a>
-                     <a class="btn btn-success margin-10">Post Account</a>
-                    </div>
-                  </div>
 
 
 
