@@ -10,7 +10,8 @@ if (!$con)
   
 //post properties
 $name = ($_POST['account_name']);
-$sql="UPDATE chart_of_accounts SET journal_entry = '$name' WHERE account_name = '$name' ";
+$sql="UPDATE chart_of_accounts SET journal_entry = 'true' WHERE  account_name = '$name'";
+
 
 if (!mysqli_query($con, $sql))
   {

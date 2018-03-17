@@ -7,11 +7,11 @@ if (!$con)
   die('Could not connect: ' . mysql_error());
   }
   mysqli_select_db($con, "accounting");
-
+echo $_POST['date'];
 //post properties
-$sql="INSERT INTO journalentry (accountName, reference, debt, credit, description)
+$sql="INSERT INTO journalentry (accountName, reference, debt, credit, description1, date1)
 VALUES 
-    ('$_POST[accountName]','$_POST[reference]','$_POST[debit]','$_POST[credit]','$_POST[description]')";
+    ('$_POST[accountName]','$_POST[reference]','$_POST[debit]','$_POST[credit]','$_POST[description]', '$_POST[date]')";
 
 
 if (!mysqli_query($con, $sql))

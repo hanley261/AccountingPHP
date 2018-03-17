@@ -14,6 +14,8 @@ $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
 $query = $db->query("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a'");
+echo $_GET['Subject'];
+
 
 ?>
 <html lang = en>
@@ -83,10 +85,10 @@ $query = $db->query("SELECT * FROM chart_of_accounts WHERE account_status != 'n/
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-lg-4">
-                                <form action="" class="search-form">
+                                <form class="search-form">
                                     <div class="form-group has-feedback">
                                         <label for="search" class="sr-only">Search Accounts</label>
-                                        <input type="text" class="form-control" name="search" id="search" placeholder="search"/>
+                                                <input type="text" class="form-control" name="search" id="search" placeholder="search"/>
                                           <span class="glyphicon glyphicon-search form-control-feedback"></span>
                                     </div>
                                 </form>
@@ -96,6 +98,21 @@ $query = $db->query("SELECT * FROM chart_of_accounts WHERE account_status != 'n/
                             </div>
                         </div>
                     </div>
+                    <form method="get" action="COA.php"> 
+                    <select  name="Subject" >
+                      <option selected="selected" value="account_type" >Type</option>
+                      <option value="account_code">Code</option>
+                      <option value="account_name">Name</option>
+                      <option value="account_type">Type</option>
+                      <option value="account_subtype">Sub Type</option>
+                      <option value="normal_side">Side</option>
+                      <option value="account_status">Status</option>
+                      <option value="balance">Balance</option>
+                      <option value="last_date_accessed">Last Date Accesed</option>
+                      <option value="last_user_id_accessed">User Id</option>
+                    </select>
+                    <input type="submit" value="Filter">
+                    </form>
                     <!--Table-->
                     <table id="COA-table" class= "table table-stripped">
                         <tr class="table-header-row">
@@ -111,6 +128,7 @@ $query = $db->query("SELECT * FROM chart_of_accounts WHERE account_status != 'n/
                         </tr>
                         <!---PHP database call-->
                         <?php
+
 			while($row = $query->fetch(PDO::FETCH_ASSOC)){
 				echo "<tr>";
 				echo "<td>",$row['account_code'],"</td>";

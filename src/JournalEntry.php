@@ -13,7 +13,7 @@ $db->setATTRIBUTE(PDO::ATTR_EMULATE_PREPARES, false);
 $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-$query = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE'");
+$query = $db->query("SELECT * FROM chart_of_accounts WHERE journal_entry = 'true'");
 
 ?>
 <html lang = en>
@@ -83,10 +83,10 @@ $query = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'ACT
 
                     <!--Table-->
                     <form method="post" action="JournalEntryUpload.php" enctype="multipart/form-data">
-                    <input id="datepicker" width="276" type="submit" name="date"/>
+                    <input id="datepicker" width="276" type="text" name="date"/>
                     <!--Date Picker -->
                     <div id = "upload-file" class="input-group date" data-provide="datepicker">
-                            <input type="text" class="form-control" name="date">
+                            <input type="text" class="form-control">
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
                             </div>
@@ -99,6 +99,7 @@ $query = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'ACT
                             <td><strong>CREDIT</strong></td>                          
                         </tr>
                         <?php
+                        echo 
                       while($row = $query->fetch(PDO::FETCH_ASSOC)){
                         echo "<tr>";
                         echo '<td><input readonly type="text" name="accountName" value="',$row['account_name'],'"></td>';
