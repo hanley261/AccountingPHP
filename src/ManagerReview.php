@@ -1,4 +1,19 @@
 <!doctype html>
+<?php
+$config['db'] = array(
+	'host'			=>'localhost',
+	'username'		=>'rmorga51',
+	'password'		=>'',
+	'dbname'		=>'accounting'
+);
+	
+
+$db = new PDO('mysql:host=' . $config['db']['host'] . ';dbname=' . $config['db']['dbname'], $config['db']['username'], $config['db']['password']); 
+$db->setATTRIBUTE(PDO::ATTR_EMULATE_PREPARES, false);
+$db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+$query = $db->query("SELECT * FROM journalentry");
+?>
 <html lang = en>
     <head>
                 <!-- Required meta tags -->
@@ -71,19 +86,29 @@
                             <td><strong>Ref</strong></td>
                             <td><strong>DEBIT</strong></td>
                             <td><strong>CREDIT</strong></td>
+                            <td><strong>REASON</strong></td>
                             <td><strong>ACTION</strong></td>
                         </tr>
+                        <?php 
+                        while($row = $query->fetch(PDO::FETCH_ASSOC)){
+                      echo '<form><tr>';
+                      echo '<td>', $row['date1'],'</td>';
+                      echo '<td>',$row['account_name'],'</td>';
+                      echo '<td>',$row['reference'],'</td>';
+                      echo '<td>',$row['debt'],'</td>';                    
+                      echo '<td>',$row['credit'],'</td>';
+                      echo '<td>',$row['description1'],'</td>';
+                      echo '<td>    <div class="journalEntry-buttons">
+                      <button class="btn-danger"><a id= "cancel" href="">Reject</a></button>
+                      <button class="btn-success">Approve</button>
+                  </div></td>';
+                      echo '</tr></form>';
+                    }
+                      ?>
                   </table>
                 </div>
-                <!--For the whole Journal Entry-->
-                <div class="journalEntry-description">
-                        <h2>Reason</h2>
-                        <textarea></textarea>
-                    </div>
-                    <div class="journalEntry-buttons">
-                        <button class="btn-danger"><a id= "cancel" href="">Reject</a></button>
-                        <button class="btn-success">Approve</button>
-                    </div>
+
+                
 
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>

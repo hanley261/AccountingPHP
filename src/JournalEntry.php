@@ -14,6 +14,8 @@ $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
 $query = $db->query("SELECT * FROM chart_of_accounts WHERE journal_entry = 'true'");
+$query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE'");
+
 
 ?>
 <html lang = en>
@@ -86,12 +88,12 @@ $query = $db->query("SELECT * FROM chart_of_accounts WHERE journal_entry = 'true
                     <input id="datepicker" width="276" type="text" name="date"/>
                     <!--Date Picker -->
                     <div id = "upload-file" class="input-group date" data-provide="datepicker">
-                            <input type="text" class="form-control">
+                            
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
                             </div>
                         </div>
-                    <table class = "table table-stripped">
+                    <table id="JEtable" class = "table table-stripped">
                         <tr class="table-header-row">                          
                             <td><strong>NAME</strong></td>
                             <td><strong>Ref</strong></td>
@@ -99,16 +101,31 @@ $query = $db->query("SELECT * FROM chart_of_accounts WHERE journal_entry = 'true
                             <td><strong>CREDIT</strong></td>                          
                         </tr>
                         <?php
-                        echo 
-                      while($row = $query->fetch(PDO::FETCH_ASSOC)){
-                        echo "<tr>";
-                        echo '<td><input readonly type="text" name="accountName" value="',$row['account_name'],'"></td>';
-                        echo '<td><input type="text"  name="reference" value=""></td>';
-                        echo '<td><input type="number" step="0.01" value="0.00" name="debit"></td>';
-                        echo '<td><input type="number" step="0.01" value="0.00" name="credit"></td>';
-                        echo "</tr>";
-                      }
-                    ?>
+/*
+  while($row = $query->fetch(PDO::FETCH_ASSOC)){
+    echo "<tr>";
+    echo '<td><input readonly type="text" name="accountName" value="',$row['account_name'],'"></td>';
+    echo '<td><input type="text"  name="reference" value=""></td>';
+    echo '<td id = "debit"><input type="number" step="0.01" value="0.00" name="debit"><span id = "addDebit">+</span></td>';
+    echo '<td id = "credit"><input type="number" step="0.01" value="0.00" name="credit"><span>+</span></td>';
+    echo "</tr>";
+  }
+*/
+?>
+<tr class="layoutRow">
+  
+              <td><select id="accountNameSelect" name="account_name" class="form-control"> 
+          <?php
+              			while($row = $query2->fetch(PDO::FETCH_ASSOC)){
+                      echo '<option class = "accounts" value ="',$row['account_name'],'">',$row['account_name'],'</option>';
+                    }
+          ?>
+              </select></td>
+              <td><input readonly name ="reference" type = "text" value ="#Ref"></td>
+              <td><input type="number" step="0.01" value="0.00" min = "0" name="debit"><span class= "addDebit">+</span></td>
+              <td><input class ="creditBox" type="number" step="0.01" value="0.00" min = "0"name="credit"><span class = "addCredit">+</span></td>
+                    </tr>
+                    
                   </table>
               
                 </div>
@@ -117,7 +134,8 @@ $query = $db->query("SELECT * FROM chart_of_accounts WHERE journal_entry = 'true
 
 
                 <!--For the whole Journal Entry--><div id="btn-add">
-                  <button type ="button" class ="btn-success"><a href = "./selectAccount.php">Add New Account</a></button>
+                  <!--<button type ="button" class ="btn-success"><a href = "./selectAccount.php">Add New Account</a></button>-->
+                  <button type ="button" id="addAccount"class ="btn-success">Add Account</button>
                 </div>
                 <div class="journalEntry-description">
                         <h2>Description</h2>

@@ -42,6 +42,9 @@ Class
     height: 100px;
     width: 300px;
 }
+.layoutRow{
+    display: none;
+}
 
 /*
 
@@ -60,6 +63,7 @@ ID
     margin-top:5%;
     
 }
+
 #upload-file{
     text-align:center;
     padding:0px;

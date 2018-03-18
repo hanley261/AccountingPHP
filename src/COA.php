@@ -13,8 +13,20 @@ $db->setATTRIBUTE(PDO::ATTR_EMULATE_PREPARES, false);
 $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-$query = $db->query("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a'");
-echo $_GET['Subject'];
+
+$order=array("account_name","account_type");
+$key=array_search($_GET['Subject'],$order);
+$order=$order[$key];
+
+$query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY ':order' ASC");
+$query->bindParam(":order",$order);
+
+
+$order = $_GET['Subject'];
+$query->execute();
+$query->fetch(PDO::FETCH_ASSOC);
+
+echo $order;
 
 
 ?>
