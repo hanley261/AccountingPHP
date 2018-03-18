@@ -13,7 +13,7 @@ $db->setATTRIBUTE(PDO::ATTR_EMULATE_PREPARES, false);
 $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-$query = $db->query("SELECT * FROM chart_of_accounts WHERE journal_entry = 'true'");
+
 $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE'");
 
 
@@ -64,7 +64,6 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
                 </li>
       
                 </ul>
-                
               </div>
               <div class="pull-right">
                 <ul class="nav navbar-nav navbar-right">
@@ -85,7 +84,7 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
 
                     <!--Table-->
                     <form method="post" action="JournalEntryUpload.php" enctype="multipart/form-data">
-                    <input id="datepicker" width="276" type="text" name="date"/>
+                    <input id="datepicker" width="276" type="text" name="date" readonly/>
                     <!--Date Picker -->
                     <div id = "upload-file" class="input-group date" data-provide="datepicker">
                             
@@ -96,6 +95,7 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
                     <table id="JEtable" class = "table table-stripped">
                         <tr class="table-header-row">                          
                             <td><strong>NAME</strong></td>
+                            <td><strong>DATE</strong></td>
                             <td><strong>Ref</strong></td>
                             <td><strong>DEBIT</strong></td>
                             <td><strong>CREDIT</strong></td>                          
@@ -115,15 +115,17 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
 <tr class="layoutRow">
   
               <td><select id="accountNameSelect" name="account_name" class="form-control"> 
+              
           <?php
               			while($row = $query2->fetch(PDO::FETCH_ASSOC)){
                       echo '<option class = "accounts" value ="',$row['account_name'],'">',$row['account_name'],'</option>';
                     }
           ?>
               </select></td>
+              <td><input class="dateSet" readonly></td>
               <td><input readonly name ="reference" type = "text" value ="#Ref"></td>
-              <td><input type="number" step="0.01" value="0.00" min = "0" name="debit"><span class= "addDebit">+</span></td>
-              <td><input class ="creditBox" type="number" step="0.01" value="0.00" min = "0"name="credit"><span class = "addCredit">+</span></td>
+              <td><input type="number" step="0.01" value="0.00" min = "0" name="debit"><!--<span class= "addDebit">+</span>--></td>
+              <td><input class ="creditBox" type="number" step="0.01" value="0.00" min = "0"name="credit"><!--<span class = "addCredit">+</span>--></td>
                     </tr>
                     
                   </table>

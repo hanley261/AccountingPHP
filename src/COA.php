@@ -12,21 +12,38 @@ $db = new PDO('mysql:host=' . $config['db']['host'] . ';dbname=' . $config['db']
 $db->setATTRIBUTE(PDO::ATTR_EMULATE_PREPARES, false);
 $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+if(isset  ($_GET['Subject'])){
+  $order = $_GET['Subject'];
+  
+
+  if($order == "account_type"){
+    $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY account_type ASC");
+    }
+if($order == "account_name"){
+$query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY account_name ASC");
+}
+if($order == "account_code"){
+  $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY account_code ASC");
+  }
+  if($order == "normal_side"){
+    $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY normal_side ASC");
+    }
+    if($order == "balance"){
+      $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY balance ASC");
+      }
+      if($order == "last_date_accessed"){
+        $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY last_date_accessed ASC");
+        }
+}
+else{
+  $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY account_Type ASC");
+}
 
 
-$order=array("account_name","account_type");
-$key=array_search($_GET['Subject'],$order);
-$order=$order[$key];
 
-$query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY ':order' ASC");
-$query->bindParam(":order",$order);
-
-
-$order = $_GET['Subject'];
 $query->execute();
 $query->fetch(PDO::FETCH_ASSOC);
 
-echo $order;
 
 
 ?>
@@ -94,7 +111,7 @@ echo $order;
                 <div class="container">
                     <legend class="" align="center" text-size=""><strong>Charts of Account</strong></legend>
                     <!-- Search Component -->
-                    <div class="container-fluid">
+                    <!--<div class="container-fluid">
                         <div class="row">
                             <div class="col-lg-4">
                                 <form class="search-form">
@@ -104,14 +121,14 @@ echo $order;
                                           <span class="glyphicon glyphicon-search form-control-feedback"></span>
                                     </div>
                                 </form>
-                            </div>
+                            </div>-->
                             <div class="float-right">
-                                <a class="btn btn-success float-right" id="btn" align="right" href="./createAccount.php">New</a>
+                                <a class="btn btn-success float-right" id="btn" align="right" href="./createAccount.php">Add Account</a>
                             </div>
                         </div>
                     </div>
-                    <form method="get" action="COA.php"> 
-                    <select  name="Subject" >
+                    <form method="get" action="COA.php" class ="form-inline"> 
+                    <select  name="Subject" class ="form-control">
                       <option selected="selected" value="account_type" >Type</option>
                       <option value="account_code">Code</option>
                       <option value="account_name">Name</option>
@@ -123,7 +140,7 @@ echo $order;
                       <option value="last_date_accessed">Last Date Accesed</option>
                       <option value="last_user_id_accessed">User Id</option>
                     </select>
-                    <input type="submit" value="Filter">
+                    <input class = "btn btn-success float-right" align = "right" type="submit" value="Filter">
                     </form>
                     <!--Table-->
                     <table id="COA-table" class= "table table-stripped">

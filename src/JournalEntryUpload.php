@@ -13,6 +13,7 @@ if (!$con)
   $credit = ($_POST["credit"]);
   $description = ($_POST["description"]);
   $date = ($_POST["date"]);
+  
 //post properties
 $sql="INSERT INTO journalentry (account_name, reference, debt, credit, description1, date1)
 VALUES 
@@ -23,15 +24,15 @@ VALUES
     '$description',
      '$date')";
 
-
 if (!mysqli_query($con, $sql))
   {
   die('Error: ' . mysqli_error($con));
   }
-echo "Submit was successful";
+  header("Location:home.php");
+exit;
+
+
 // my original script ends above
-
-
 
 // Display things to the page so you can see what is happening for testing purposes
 /*echo "The file named <strong>$fileName</strong> uploaded successfuly.<br /><br />";
