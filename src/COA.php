@@ -19,6 +19,9 @@ if(isset  ($_GET['Subject'])){
   if($order == "account_type"){
     $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY account_type ASC");
     }
+    if($order == "account_subtype"){
+      $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY account_subtype ASC");
+      }
 if($order == "account_name"){
 $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY account_name ASC");
 }
@@ -34,6 +37,12 @@ if($order == "account_code"){
       if($order == "last_date_accessed"){
         $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY last_date_accessed ASC");
         }
+        if($order == "account_status"){
+          $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY account_status ASC");
+          }
+          if($order == "last_user_id_accessed"){
+            $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY last_user_id_accessed ASC");
+            }
 }
 else{
   $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY account_Type ASC");
@@ -145,10 +154,10 @@ $query->fetch(PDO::FETCH_ASSOC);
                     <!--Table-->
                     <table id="COA-table" class= "table table-stripped">
                         <tr class="table-header-row">
-                          <td><strong>CODE</strong></td>
-                          <td><strong>NAME</strong></td>
+                          <td><strong>CODE</strong></td>                          
                           <td><strong>TYPE</strong></td>
-                          <td><strong>DETAIL TYPE</strong></td>
+                          <td><strong>SUB-TYPE</strong></td>
+                          <td><strong>NAME</strong></td>
                           <td><strong>SIDE</strong></td>
                           <td><strong>STATUS</strong></td>
                           <td><strong>BALANCE</strong></td>

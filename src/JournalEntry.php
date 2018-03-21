@@ -14,7 +14,7 @@ $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
 
-$query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE'");
+$query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY account_name ASC");
 
 
 ?>
@@ -83,8 +83,8 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
                    
 
                     <!--Table-->
-                    <form method="post" action="JournalEntryUpload.php" enctype="multipart/form-data">
-                    <input id="datepicker" width="276" type="text" name="date" readonly/>
+                 <form method="post" action="JournalEntryUpload.php" enctype="multipart/form-data">
+                    <input id="datepicker" width="276" type="text" readonly/>
                     <!--Date Picker -->
                     <div id = "upload-file" class="input-group date" data-provide="datepicker">
                             
@@ -98,7 +98,8 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
                             <td><strong>DATE</strong></td>
                             <td><strong>Ref</strong></td>
                             <td><strong>DEBIT</strong></td>
-                            <td><strong>CREDIT</strong></td>                          
+                            <td><strong>CREDIT</strong></td>   
+                            <td><strong>DESCRIPTION</strong></td>                         
                         </tr>
                         <?php
 /*
@@ -113,8 +114,7 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
 */
 ?>
 <tr class="layoutRow">
-  
-              <td><select id="accountNameSelect" name="account_name" class="form-control"> 
+              <td><select id="accountNameSelect" name="account_name[]" class="form-control"> 
               
           <?php
               			while($row = $query2->fetch(PDO::FETCH_ASSOC)){
@@ -122,10 +122,12 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
                     }
           ?>
               </select></td>
-              <td><input class="dateSet" readonly></td>
-              <td><input readonly name ="reference" type = "text" value ="#Ref"></td>
-              <td><input type="number" step="0.01" value="0.00" min = "0" name="debit"><!--<span class= "addDebit">+</span>--></td>
-              <td><input class ="creditBox" type="number" step="0.01" value="0.00" min = "0"name="credit"><!--<span class = "addCredit">+</span>--></td>
+              <td><input class="dateSet" name="date[]" readonly></td>
+              <td><input readonly name ="reference[]" type = "text" value ="#Ref"></td>
+              <td><input type="number" step="0.01" value="0.00" min = "0" name="debit[]"><!--<span class= "addDebit">+</span>--></td>
+              <td><input class ="creditBox" type="number" step="0.01" value="0.00" min = "0"name="credit[]"><!--<span class = "addCredit">+</span>--></td>
+              <td><input class ="description" type="text" name="description[]"></td>
+                    
                     </tr>
                     
                   </table>
@@ -139,16 +141,12 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
                   <!--<button type ="button" class ="btn-success"><a href = "./selectAccount.php">Add New Account</a></button>-->
                   <button type ="button" id="addAccount"class ="btn-success">Add Account</button>
                 </div>
-                <div class="journalEntry-description">
-                        <h2>Description</h2>
-                        <textarea name="description" ></textarea>
-                    </div>
                     
                     <div class="journalEntry-buttons">
                         <button class="btn-danger"><a id= "cancel" href="./home.php">Cancel</a></button>
-                        <input class="btn btn-success right" type="submit" name="submit" value="submit">
+                        <input id = "submitAll" class="btn btn-success right" type="submit" name="submit" value="submit">
                     </div>
-                    </form>
+                </form>
 
 
     <!-- dependices--> 

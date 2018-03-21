@@ -19,6 +19,9 @@ if(isset  ($_GET['Subject'])){
   if($order == "account_type"){
     $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY account_type ASC");
     }
+    if($order == "account_subtype"){
+      $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY account_subtype ASC");
+      }
 if($order == "account_name"){
 $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY account_name ASC");
 }
@@ -28,12 +31,18 @@ if($order == "account_code"){
   if($order == "normal_side"){
     $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY normal_side ASC");
     }
+    if($order == "account_status"){
+      $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY account_status ASC");
+      }
     if($order == "balance"){
       $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY balance ASC");
       }
       if($order == "last_date_accessed"){
         $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY last_date_accessed ASC");
         }
+        if($order == "last_user_id_accessed"){
+          $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY last_user_id_accessed ASC");
+          }
 }
 else{
   $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY account_Type ASC");
@@ -119,8 +128,8 @@ $query->fetch(PDO::FETCH_ASSOC);
      
                         </div>
                     </div>
-                    <form method="get" action="accounts.php"> 
-                    <select  name="Subject" >
+                    <form method="get" action="accounts.php" class ="form-inline"> 
+                    <select  name="Subject" class = "form-control">
                       <option selected="selected" value="account_type" >Type</option>
                       <option value="account_code">Code</option>
                       <option value="account_name">Name</option>
@@ -132,15 +141,15 @@ $query->fetch(PDO::FETCH_ASSOC);
                       <option value="last_date_accessed">Last Date Accesed</option>
                       <option value="last_user_id_accessed">User Id</option>
                     </select>
-                    <input type="submit" value="Filter">
+                    <input class = "btn btn-success float-right" type="submit" value="Filter">
                     </form>
                     <!--Table-->
                     <table id="COA-table" class= "table table-stripped">
                         <tr class="table-header-row">
-                          <td><strong>CODE</strong></td>
-                          <td><strong>NAME</strong></td>
+                          <td><strong>CODE</strong></td>                          
                           <td><strong>TYPE</strong></td>
-                          <td><strong>DETAIL TYPE</strong></td>
+                          <td><strong>SUB-TYPE</strong></td>
+                          <td><strong>NAME</strong></td>
                           <td><strong>SIDE</strong></td>
                           <td><strong>STATUS</strong></td>
                           <td><strong>BALANCE</strong></td>

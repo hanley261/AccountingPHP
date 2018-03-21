@@ -48,6 +48,7 @@ function setDate(){
   newDate[i].value = document.getElementById("datepicker").value;
   } 
 }
+
 $("#JEtable").on('click','span',function(){
   $(this).after('<br/><input type="number" step="0.01" value="0.00" min = "0" name="debit"><span class= "addDebit">+</span>');
   $(this).nextUntil("input").before("<br/>");
@@ -58,4 +59,12 @@ $("#JEtable").on('click','span',function(){
 $(document).ready(function(){
   $("#addAccount").click(addRow);
   $("#addAccount").click(setDate);
+  $("#datepicker").change(setDate);
+  
   });
+
+  $('#submitAll').click(function(){
+    $('.target').each(function(){
+        $(this).find("form").submit();
+    });
+});
