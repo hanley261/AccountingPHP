@@ -124,8 +124,8 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
               </select></td>
               <td><input class="dateSet" name="date[]" readonly></td>
               <td><input readonly name ="reference[]" type = "text" value ="#Ref"></td>
-              <td><input type="number" step="0.01" value="0.00" min = "0" name="debit[]"><!--<span class= "addDebit">+</span>--></td>
-              <td><input class ="creditBox" type="number" step="0.01" value="0.00" min = "0"name="credit[]"><!--<span class = "addCredit">+</span>--></td>
+              <td><input type="number" step="0.01" value="0.00" min = "0" name="debit[]"><span class= "addDebit">+</span></td>
+              <td><input class ="creditBox" type="number" step="0.01" value="0.00" min = "0"name="credit[]"><span class = "addCredit">+</span></td>
               <td><input class ="description" type="text" name="description[]"></td>
                     
                     </tr>
