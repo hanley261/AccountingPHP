@@ -12,8 +12,6 @@ $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
 $query = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE'");
-//$query2 = $db->query2("UPDATE account_status FROM chart_of_accounts WHERE account_name = 'n/a'");
-
 
 ?>
 <html lang = en>

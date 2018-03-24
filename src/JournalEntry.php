@@ -102,16 +102,7 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
                             <td><strong>DESCRIPTION</strong></td>                         
                         </tr>
                         <?php
-/*
-  while($row = $query->fetch(PDO::FETCH_ASSOC)){
-    echo "<tr>";
-    echo '<td><input readonly type="text" name="accountName" value="',$row['account_name'],'"></td>';
-    echo '<td><input type="text"  name="reference" value=""></td>';
-    echo '<td id = "debit"><input type="number" step="0.01" value="0.00" name="debit"><span id = "addDebit">+</span></td>';
-    echo '<td id = "credit"><input type="number" step="0.01" value="0.00" name="credit"><span>+</span></td>';
-    echo "</tr>";
-  }
-*/
+
 ?>
 <tr class="layoutRow">
               <td><select id="accountNameSelect" name="account_name[]" class="form-control"> 
@@ -124,8 +115,8 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
               </select></td>
               <td><input class="dateSet" name="date[]" readonly></td>
               <td><input readonly name ="reference[]" type = "text" value ="#Ref"></td>
-              <td><input type="number" step="0.01" value="0.00" min = "0" name="debit[]"><span class= "addDebit">+</span></td>
-              <td><input class ="creditBox" type="number" step="0.01" value="0.00" min = "0"name="credit[]"><span class = "addCredit">+</span></td>
+              <td><input type="number" step="0.01" value="0.00" min = "0" name="debit[]"></td>
+              <td><input class ="creditBox" type="number" step="0.01" value="0.00" min = "0"name="credit[]"></td>
               <td><input class ="description" type="text" name="description[]"></td>
                     
                     </tr>
@@ -138,7 +129,7 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
 
 
                 <!--For the whole Journal Entry--><div id="btn-add">
-                  <!--<button type ="button" class ="btn-success"><a href = "./selectAccount.php">Add New Account</a></button>-->
+                 
                   <button type ="button" id="addAccount"class ="btn-success">Add Account</button>
                 </div>
                     
