@@ -13,9 +13,8 @@ $db->setATTRIBUTE(PDO::ATTR_EMULATE_PREPARES, false);
 $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-$query = $db->query("SELECT MAX(transaction_id)+1 FROM journal_entry");
+$query = $db->query("SELECT MAX(transaction_id)+1 AS max_number FROM journal_entry");
 $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY account_name ASC");
-
 
 ?>
 <html lang = en>
@@ -114,7 +113,14 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
           ?>
               </select></td>
               <td><input class="dateSet" name="" readonly></td>
-              <td><input readonly name ="transaction_id[]" type = "text" value ="REF#"></td>
+
+              <td>
+               <?php 
+                while($max = $query->fetch(PDO::FETCH_ASSOC)){
+                  echo '<input readonly name ="transaction_id" type = "text" value ="',$max['max_number'],'">';
+                }
+                ?>
+              </td>
               <td><input class = "debitBox" type="number" step="0.01" value="" min = "0" name="debit[]"></td>
               <td><input class ="creditBox" type="number" step="0.01" value="" min = "0"name="credit[]"></td>
             

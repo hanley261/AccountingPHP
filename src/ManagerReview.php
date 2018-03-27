@@ -12,7 +12,9 @@ $db = new PDO('mysql:host=' . $config['db']['host'] . ';dbname=' . $config['db']
 $db->setATTRIBUTE(PDO::ATTR_EMULATE_PREPARES, false);
 $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$query = $db->query("SELECT * FROM journal_entry");
+$query = $db->query("SELECT * FROM journal_entry WHERE approval_status = 'n/a'");
+$query2 = $db->query("SELECT * FROM je_accounts WHERE transaction_id = 1");
+$query3 = $db->query("SELECT * FROM journal_entry INNER JOIN je_accounts ON journal_entry.transaction_id = je_accounts.transaction_id");
 ?>
 <html lang = en>
     <head>
@@ -82,25 +84,48 @@ $query = $db->query("SELECT * FROM journal_entry");
                     <table class = "table table-stripped">
                         <tr class="table-header-row">
                             <td><strong>DATE</strong></td>
-                            <td><strong>NAME</strong></td>
-                            <td><strong>Ref</strong></td>
+                            <td><strong>ACCOUNT NAME</strong></td>
+                            <td><strong>REF</strong></td>
                             <td><strong>DEBIT</strong></td>
-                            <td><strong>CREDIT</strong></td>
-                            <td><strong>REASON</strong></td>
-                            <td><strong>ACTION</strong></td>
+                            <td><strong>CREDIT</strong></td>                            
+                            <td><strong>USER ID</strong></td>
+                        
                         </tr>
-                        <?php 
+                       <?php 
                         while($row = $query->fetch(PDO::FETCH_ASSOC)){
-                      echo '<form><tr>';
-                      echo '<td>', $row['date1'],'</td>';
-                      echo '<td>',$row['account_name'],'</td>';
-                      echo '<td>',$row['reference'],'</td>';
-                      echo '<td>',$row['debt'],'</td>';                    
-                      echo '<td>',$row['credit'],'</td>';
-                      echo '<td>',$row['description1'],'</td>';
-                      echo '<td>    <div class="journalEntry-buttons">
-                      <button class="btn-danger"><a id= "cancel" href="">Reject</a></button>
-                      <button class="btn-success">Approve</button>
+                      echo '<form method="POST" action="managerReviewUpload.php" enctype="multipart/form-data"><tr>';
+                      echo '<td>',$row['date1'],'</td>';
+                      echo '<td>';
+                      $transaction_id = $row['transaction_id'];
+                      $query4 = $db->query("SELECT * FROM je_accounts WHERE transaction_id = $transaction_id ORDER BY debit DESC");
+                      while($name = $query4->fetch(PDO::FETCH_ASSOC)){
+                        echo '<div>',$name['account_name'], '</div>';
+                      } 
+                      echo '<td> <input readonly name = "transaction_id" value = "',$row['transaction_id'],'"></td>';
+                      echo '</td>';
+                      echo '<td>';
+                      $query6 = $db->query("SELECT * FROM je_accounts WHERE transaction_id = $transaction_id ORDER BY debit DESC");
+                      while($name = $query6->fetch(PDO::FETCH_ASSOC)){
+                        echo '<div>',$name['debit'], '</div>';
+                      } 
+                      echo '</td>';
+                      echo '<td>';
+                      $query5 = $db->query("SELECT * FROM je_accounts WHERE transaction_id = $transaction_id ORDER BY debit DESC");
+                      while($name = $query5->fetch(PDO::FETCH_ASSOC)){
+                        
+                        echo '<div>',$name['credit'], '</div>';
+                      } 
+                      echo '</td>';
+                      echo '<td>',$row['user_id'],'</td>';
+                      echo '</tr><tr>';
+
+                      echo '<td rowspan="2"><label>Description:&nbsp &nbsp </label>',$row['description1'],'</td>';             
+                      echo '<td rowspan="2"><label>Reason:&nbsp &nbsp </label><input/></td></tr>';
+                      
+                      
+                      echo '<td rowspan="1">    <div class="journalEntry-buttons">
+                      <input name = "reject" class="btn btn-danger" type = "submit" value ="Reject">
+                      <input name ="approve" class="btn btn-success" type="submit" />
                   </div></td>';
                       echo '</tr></form>';
                     }

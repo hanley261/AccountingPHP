@@ -1,4 +1,27 @@
 <!doctype html>
+<?php
+$config['db'] = array(
+	'host'			=>'localhost',
+	'username'		=>'rmorga51',
+	'password'		=>'',
+	'dbname'		=>'accounting'
+);
+	
+
+$db = new PDO('mysql:host=' . $config['db']['host'] . ';dbname=' . $config['db']['dbname'], $config['db']['username'], $config['db']['password']); 
+$db->setATTRIBUTE(PDO::ATTR_EMULATE_PREPARES, false);
+$db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+$query = $db->prepare("SELECT * FROM journal_entry INNER JOIN je_accounts ON journal_entry.transaction_id = je_accounts.transaction_id WHERE account_name = 'Cash'");
+    
+
+
+$query->execute();
+$query->fetch(PDO::FETCH_ASSOC);
+
+
+
+?>
 <html lang = en>
     <head>
                 <!-- Required meta tags -->
@@ -6,14 +29,13 @@
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
                 <!-- CSS -->
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-            <link rel="stylesheet" href="css/home.css"/>
+            <link rel="stylesheet" href="css/COA.css"/>
             <link rel="stylesheet" href="css/header.css"/>
                 <!---Title -->
-            <title>AnyWhere-Home</title>
+            <title>AnyWhere-Chart Of Accounts</title>
     </head>
     <body>
 
-      
         
               <!-- Header-->
 
@@ -57,23 +79,19 @@
               </div>
             </nav>
 
-            <!--Home-->
+<!--Body of ledger accoutns -->
 
+<table id="COA-table" class= "table table-stripped">
+    <thead>
+        <tr>
+            <td>Debit</td>
+            <td>Credit</td>
+        </tr>
+    </thead>
 
-            <div class="container">
-                    <div class="row">
-                     <a href ="./createAccount.html" class="btn btn-success margin-10">Create Account</a>
-                     <a href="./journalEntry.html" class="btn btn-success margin-10">Journalize</a>
-                     <a class="btn btn-success margin-10">Post Account</a>
-                     <a href = "./ledgerAccounts.php" class="btn btn-success margin-10">Ledger Accounts</a>
-                    </div>
-                  </div>
-
-
-
-
+<script src="./scripts/activeAccounts.js" type="text/javascript"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     </body>
-</html>
+</html> 

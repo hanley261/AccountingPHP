@@ -9,32 +9,46 @@ if (!$con)
   mysqli_select_db($con, "accounting");
 
 
+ 
+  $transaction_id = ($_POST["transaction_id"]);
+  $description = ($_POST["description1"]);
+  $date = ($_POST["date1"]);
+
   $name = ($_POST["account_name"]);
-  $reference = ($_POST["reference"]);
   $debit = ($_POST["debit"]);
   $credit = ($_POST["credit"]);
-  $description = ($_POST["description"]);
-  $date = ($_POST["date"]);
- 
-
-//post properties
+//post properties Table: journal_entry 
+$sql="INSERT INTO journal_entry (user_id, manager_id, description1, approval_status, date1)
+VALUES 
+    ('Developer',
+    'Developer',  
+    '$description',
+    'n/a',
+    '$date'
+    )";
+   
+     if (!mysqli_query($con, $sql))
+ {
+ die('Error: ' . mysqli_error($con));
+ }
+//post properties Table: je_accounts
 
  for ($i=1; $i <count($name); $i++){
- $sql="INSERT INTO journalentry (account_name, reference, debt, credit, description1, date1)
+ $sql2="INSERT INTO je_accounts (transaction_id, account_name, debit, credit)
  VALUES 
-     ('$name[$i]',
-     '$reference[$i]',
+     ('$transaction_id',
+     '$name[$i]',
      '$debit[$i]',
-     '$credit[$i]',
-     '$description[$i]',
-      '$date[$i]')";
+     '$credit[$i]'
+     )";
     
-      if (!mysqli_query($con, $sql))
+      if (!mysqli_query($con, $sql2))
   {
   die('Error: ' . mysqli_error($con));
   }
  
  }
+ 
  
 
   header("Location:home.php");
