@@ -12,7 +12,7 @@ $db = new PDO('mysql:host=' . $config['db']['host'] . ';dbname=' . $config['db']
 $db->setATTRIBUTE(PDO::ATTR_EMULATE_PREPARES, false);
 $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$query = $db->query("SELECT * FROM journalentry");
+$query = $db->query("SELECT * FROM journal_entry");
 ?>
 <html lang = en>
     <head>

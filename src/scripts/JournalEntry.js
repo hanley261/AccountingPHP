@@ -34,6 +34,7 @@ function addRow(){
   $(".layoutRow").clone().insertAfter(".layoutRow");
   var rows = $(".layoutRow");
   rows[1].className = "target";
+  rows[0].$(".debitBox").click(function(){alert("test");});
 
 }
 
@@ -42,6 +43,10 @@ function addDebit(){
   alert("test");
 
 }
+function nullCredit(){
+  console.log("test");
+  console.log($(this).value);
+}
 function setDate(){
   var newDate = $('.dateSet');
   for(var i = 0; i < newDate.length;i++){
@@ -49,22 +54,17 @@ function setDate(){
   } 
 }
 
-$("#JEtable").on('click','span',function(){
-  $(this).after('<br/><input type="number" step="0.01" value="0.00" min = "0" name="debit"><span class= "addDebit">+</span>');
-  $(this).nextUntil("input").before("<br/>");
-  $(this).parent().next().children("input").before("<br/><br/><br/>");
-  setDate();
-});
+
 
 $(document).ready(function(){
   $("#addAccount").click(addRow);
   $("#addAccount").click(setDate);
   $("#datepicker").change(setDate);
-  
   });
-
+  
   $('#submitAll').click(function(){
     $('.target').each(function(){
         $(this).find("form").submit();
     });
+
 });

@@ -13,7 +13,7 @@ $db->setATTRIBUTE(PDO::ATTR_EMULATE_PREPARES, false);
 $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-
+$query = $db->query("SELECT MAX(transaction_id)+1 FROM journal_entry");
 $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY account_name ASC");
 
 
@@ -84,22 +84,22 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
 
                     <!--Table-->
                  <form method="post" action="JournalEntryUpload.php" enctype="multipart/form-data">
-                    <input id="datepicker" width="276" type="text" readonly/>
+                    <input id="datepicker" width="276" type="text" name = "date1" value = "" readonly/>
                     <!--Date Picker -->
-                    <div id = "upload-file" class="input-group date" data-provide="datepicker">
+                    <div id = "datepick" class="input-group date" data-provide="datepicker">
                             
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
                             </div>
-                        </div>
+                    </div>
+
                     <table id="JEtable" class = "table table-stripped">
                         <tr class="table-header-row">                          
                             <td><strong>NAME</strong></td>
                             <td><strong>DATE</strong></td>
                             <td><strong>Ref</strong></td>
                             <td><strong>DEBIT</strong></td>
-                            <td><strong>CREDIT</strong></td>   
-                            <td><strong>DESCRIPTION</strong></td>                         
+                            <td><strong>CREDIT</strong></td>                           
                         </tr>
                         <?php
 
@@ -113,26 +113,29 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
                     }
           ?>
               </select></td>
-              <td><input class="dateSet" name="date[]" readonly></td>
-              <td><input readonly name ="reference[]" type = "text" value ="#Ref"></td>
-              <td><input type="number" step="0.01" value="0.00" min = "0" name="debit[]"></td>
-              <td><input class ="creditBox" type="number" step="0.01" value="0.00" min = "0"name="credit[]"></td>
-              <td><input class ="description" type="text" name="description[]"></td>
+              <td><input class="dateSet" name="" readonly></td>
+              <td><input readonly name ="transaction_id[]" type = "text" value ="REF#"></td>
+              <td><input class = "debitBox" type="number" step="0.01" value="" min = "0" name="debit[]"></td>
+              <td><input class ="creditBox" type="number" step="0.01" value="" min = "0"name="credit[]"></td>
+            
                     
                     </tr>
-                    
+
                   </table>
-              
+
                 </div>
-                
+                <div id="btn-add">                
+                      <button type ="button" id="addAccount"class ="btn-success">Add Account</button>
+                    </div>
 
 
 
-                <!--For the whole Journal Entry--><div id="btn-add">
-                 
-                  <button type ="button" id="addAccount"class ="btn-success">Add Account</button>
-                </div>
-                    
+                <!--For the whole Journal Entry-->
+                    <div id ="a" class = "journalEntry-description">
+                      <h3>Description</h3>
+                      <textarea class = "form-control" maxlength="254" name = "description1"></textarea>
+                      <input type="file" id="upload-file">
+                    </div>
                     <div class="journalEntry-buttons">
                         <button class="btn-danger"><a id= "cancel" href="./home.php">Cancel</a></button>
                         <input id = "submitAll" class="btn btn-success right" type="submit" name="submit" value="submit">

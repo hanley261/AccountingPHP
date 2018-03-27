@@ -23,7 +23,7 @@ Class
 }
 .journalEntry-addAccount button{
     margin-top:3%;
-    
+    float:right;
 }
 .journalEntry-buttons{
     text-align: center;
@@ -38,9 +38,11 @@ Class
     margin:3%;
 }
 .journalEntry-description textarea{
+    margin:auto;
     margin-top:2%;
     height: 100px;
     width: 300px;
+    padding:20px;
 }
 .layoutRow{
     display: none;
@@ -51,22 +53,22 @@ Class
 ID
 
 */
+
 #btn-add{
-    text-align:center;
-    padding:0px;
-    margin-top:5%;
-    
+    margin-left:auto;
+    margin-right:auto;  
+    padding:20px;
+ 
+   
 }
-#btn-add{
-    text-align:center;
-    padding:0px;
-    margin-top:5%;
-    
+#datepicker{
+    display:inline-block;
 }
 
 #upload-file{
     text-align:center;
     padding:0px;
     margin-top:5%;
+    
     
 }

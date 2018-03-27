@@ -10,14 +10,15 @@ if (!$con)
   
 $currentDate = date("m/d/Y"); 
 //post properties
-$sql="INSERT INTO accounts (account_code, account_type, account_subtype, account_name, normal_side, account_status, initial_balance, last_date_accessed, last_user_id_accessed)
+$sql="INSERT INTO journal_entry (user_id, manager_id, description1, approval_status, date1)
 VALUES
-('$_POST[account_code]','$_POST[account_type]','$_POST[account_subtype]','$_POST[account_name]','$_POST[normal_side]','$_POST[account_status]','$_POST[initial_balance]','$currentDate','$_POST[last_user_id_accessed]' )";
+(Developer, Developer,'$_POST[description1]', n\a,'$_POST[date1]')";
 
 if (!mysqli_query($con, $sql))
   {
   die('Error: ' . mysqli_error($con));
   }
+  
 echo "Submit was successful";
 // my original script ends above
 
