@@ -55,6 +55,9 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
                 <li class="nav-item">
                          <a class="nav-link" href="./ManagerReview.php">Manager Review</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./ledgerAccounts.php">Account Ledgers</a>
+                  </li>
                   <li class="nav-item">
                     <a class="nav-link" href="./accounts.php">Accounts</a>
                   </li>
@@ -63,6 +66,7 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
                 </li>
       
                 </ul>
+                
               </div>
               <div class="pull-right">
                 <ul class="nav navbar-nav navbar-right">

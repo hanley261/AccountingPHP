@@ -23,7 +23,7 @@ VALUES
     ('Developer',
     'Developer',  
     '$description',
-    'n/a',
+    'Pending',
     '$date'
     )";
    

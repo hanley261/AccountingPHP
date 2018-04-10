@@ -14,41 +14,12 @@ $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 if(isset  ($_GET['Subject'])){
   $order = $_GET['Subject'];
-  
-
-  if($order == "account_type"){
-    $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY account_type ASC");
-    }
-    if($order == "account_subtype"){
-      $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY account_subtype ASC");
-      }
-if($order == "account_name"){
-$query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY account_name ASC");
-}
-if($order == "account_code"){
-  $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY account_code ASC");
-  }
-  if($order == "normal_side"){
-    $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY normal_side ASC");
-    }
-    if($order == "account_status"){
-      $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY account_status ASC");
-      }
-    if($order == "balance"){
-      $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY balance ASC");
-      }
-      if($order == "last_date_accessed"){
-        $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY last_date_accessed ASC");
-        }
-        if($order == "last_user_id_accessed"){
-          $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY last_user_id_accessed ASC");
-          }
 }
 else{
-  $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY account_Type ASC");
+  $order = 'account_type';
 }
 
-
+$query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY $order ASC");
 
 $query->execute();
 $query->fetch(PDO::FETCH_ASSOC);
@@ -74,7 +45,7 @@ $query->fetch(PDO::FETCH_ASSOC);
               <!-- Header-->
 
 
-        <nav class="navbar navbar-expand navbar-primary">
+              <nav class="navbar navbar-expand navbar-primary">
                 <header class="navbar-brand" href="./home.html"><img src="assets/logo.png" alt="bluePrint" height="60"/></header>
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNavbar">
                 <span class="navbar-toggler-icon"></span>
@@ -94,6 +65,9 @@ $query->fetch(PDO::FETCH_ASSOC);
                 <li class="nav-item">
                          <a class="nav-link" href="./ManagerReview.php">Manager Review</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./ledgerAccounts.php">Account Ledgers</a>
+                  </li>
                   <li class="nav-item">
                     <a class="nav-link" href="./accounts.php">Accounts</a>
                   </li>

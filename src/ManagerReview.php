@@ -12,7 +12,15 @@ $db = new PDO('mysql:host=' . $config['db']['host'] . ';dbname=' . $config['db']
 $db->setATTRIBUTE(PDO::ATTR_EMULATE_PREPARES, false);
 $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$query = $db->query("SELECT * FROM journal_entry WHERE approval_status = 'n/a'");
+/* Filter for Manger Review  */
+if(isset  ($_GET['Subject'])){
+  $filter = ($_GET['Subject']);
+ 
+}
+else{
+  $filter = 'pending';
+}
+$query = $db->query("SELECT * FROM journal_entry WHERE approval_status = '$filter'");
 $query2 = $db->query("SELECT * FROM je_accounts WHERE transaction_id = 1");
 $query3 = $db->query("SELECT * FROM journal_entry INNER JOIN je_accounts ON journal_entry.transaction_id = je_accounts.transaction_id");
 ?>
@@ -35,7 +43,7 @@ $query3 = $db->query("SELECT * FROM journal_entry INNER JOIN je_accounts ON jour
              <!-- Header-->
 
 
-        <nav class="navbar navbar-expand navbar-primary">
+               <nav class="navbar navbar-expand navbar-primary">
                 <header class="navbar-brand" href="./home.html"><img src="assets/logo.png" alt="bluePrint" height="60"/></header>
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNavbar">
                 <span class="navbar-toggler-icon"></span>
@@ -55,6 +63,9 @@ $query3 = $db->query("SELECT * FROM journal_entry INNER JOIN je_accounts ON jour
                 <li class="nav-item">
                          <a class="nav-link" href="./ManagerReview.php">Manager Review</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./ledgerAccounts.php">Account Ledgers</a>
+                  </li>
                   <li class="nav-item">
                     <a class="nav-link" href="./accounts.php">Accounts</a>
                   </li>
@@ -80,6 +91,15 @@ $query3 = $db->query("SELECT * FROM journal_entry INNER JOIN je_accounts ON jour
                     <legend class="" align="center" text-size=""><strong>Manager Review</strong></legend>
                     <hr/>
 
+
+                    <form method="get" action="ManagerReview.php" class ="form-inline"> 
+                    <select  name="Subject" class ="form-control">
+                      <option selected="selected" value="pending" >Pending</option>
+                      <option value="approved">Approved</option>
+                      <option value="rejected">Rejected</option>
+                    </select>
+                    <input class = "btn btn-success float-right" align = "right" type="submit" value="Filter">
+                    </form>
                     <!--Table-->
                     <table class = "table table-stripped">
                         <tr class="table-header-row">
@@ -122,11 +142,18 @@ $query3 = $db->query("SELECT * FROM journal_entry INNER JOIN je_accounts ON jour
                       echo '<td rowspan="2"><label>Description:&nbsp &nbsp </label>',$row['description1'],'</td>';             
                       echo '<td rowspan="2"><label>Reason:&nbsp &nbsp </label><input/></td></tr>';
                       
-                      
-                      echo '<td rowspan="1">    <div class="journalEntry-buttons">
-                      <input name = "reject" class="btn btn-danger" type = "submit" value ="Reject">
-                      <input name ="approve" class="btn btn-success" type="submit" />
-                  </div></td>';
+                      if($filter == 'approved'){
+                        echo '<td rowspan="1"><div class= "btn btn-success"> Approved</div> </td> ';
+                      }
+                      elseif($filter == 'rejected'){
+                        echo '<td rowspan="1"><div class= "btn btn-danger">Rejected</div> </td> ';
+                      }
+                      else{
+                          echo '<td rowspan="1">    <div class="journalEntry-buttons">
+                          <input name = "reject" class="btn btn-danger" type = "submit" value ="Reject">
+                          <input name ="approve" class="btn btn-success" type="submit" />
+                          </div></td>';
+                      }
                       echo '</tr></form>';
                     }
                       ?>
