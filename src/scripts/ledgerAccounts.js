@@ -3,9 +3,29 @@ function hideEmptyAccounts (){
     var accounts = $(".show");
     for(var i = 0; i < accounts.length;i++){
         if(accounts[i].getElementsByTagName("tr").length < 2){            
-            accounts[i].style.display = "none";    
+            accounts[i].style.display = "none";  
+            accounts[i].className = "hide";  
         }
     }
 }
+function searchForAccounts(){
+    var input, filter, tables, name;
+    input = document.getElementById("search");  
+    filter = input.value.toUpperCase();   
+    tables = $(".show");
+    
+    for (i = 0; i < tables.length; i++) {
+        name = tables[i].getElementsByClassName("table-title")[0];
+        if (name.innerText.toUpperCase().indexOf(filter) > -1) {
+            tables[i].style.display = "";
+        } else {
+            tables[i].style.display = "none";
+        }
+    }   
+}
 
+$(document).ready(function(){
+$("#search").keyup(searchForAccounts)
 hideEmptyAccounts();
+
+});

@@ -13,7 +13,7 @@ $db->setATTRIBUTE(PDO::ATTR_EMULATE_PREPARES, false);
 $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a'");
-/*$query2 = $db->prepare("SELECT * FROM journal_entry INNER JOIN je_accounts ON journal_entry.transaction_id = je_accounts.transaction_id ");*/
+
     
 
 
@@ -88,7 +88,7 @@ $query->fetch(PDO::FETCH_ASSOC);
 
 
             <!-- Search Component -->
-                    <!--<div class="container-fluid">
+                   <div class="container-fluid">
                         <div class="row">
                             <div class="col-lg-4">
                                 <form method="get" action="ledgerAccounts.php" class ="search-form">
@@ -100,14 +100,17 @@ $query->fetch(PDO::FETCH_ASSOC);
                                           <span class="glyphicon glyphicon-search form-control-feedback"></span>
                                           
                                     </div>
-                                </form>-->
+                                </form>
+                            </div>
+                        </div>
+                    </div>
 <!--Body of ledger accoutns -->
 <div id = "table-container">
 <?php
  while($coa = $query->fetch(PDO::FETCH_ASSOC)){
            /*Account Name */
            echo '<div class = "show">';
-           echo '<legend class="" align="center" text-size=""><strong>', $coa['account_name'],'</strong></legend>';
+           echo '<legend class="" align="center" text-size=""><strong><p class = "table-title">', $coa['account_name'],'</p></strong></legend>';
 echo '<table class= "table">';
         /*Header for table */
         echo '<tr class = "table-header-row"><th>Date</th><th>Debit</th><th>Credit</th></tr>';
