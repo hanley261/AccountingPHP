@@ -8,9 +8,14 @@ function hideEmptyAccounts (){
         }
     }
 }
+function searchBarEmpty(){
+
+}
 function searchForAccounts(){
+    
     var input, filter, tables, name;
     input = document.getElementById("search");  
+    searchBarEmpty(input);
     filter = input.value.toUpperCase();   
     tables = $(".show");
     
@@ -18,13 +23,18 @@ function searchForAccounts(){
         name = tables[i].getElementsByClassName("table-title")[0];
         if (name.innerText.toUpperCase().indexOf(filter) > -1) {
             tables[i].style.display = "";
+            
         } else {
             tables[i].style.display = "none";
+            tables[i].className = "hide"; 
+           
         }
     }   
+    
 }
 
 $(document).ready(function(){
+    
 $("#search").keyup(searchForAccounts)
 hideEmptyAccounts();
 

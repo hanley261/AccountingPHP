@@ -15,6 +15,8 @@ $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $query = $db->query("SELECT MAX(transaction_id)+1 AS max_number FROM journal_entry");
 $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY account_name ASC");
+$query3 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY account_name ASC");
+$query4 = $db->query("SELECT MAX(transaction_id)+1 AS max_number FROM journal_entry");
 
 ?>
 <html lang = en>
@@ -133,7 +135,7 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
               <td><select name="account_name[]" class="form-control"> 
               
                  <?php
-              			while($row = $query2->fetch(PDO::FETCH_ASSOC)){
+              			while($row = $query3->fetch(PDO::FETCH_ASSOC)){
                       echo '<option class = "accounts" value ="',$row['account_name'],'">',$row['account_name'],'</option>';
                     }
                  ?>
@@ -143,7 +145,7 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
 
               <td>
                <?php 
-                while($max = $query->fetch(PDO::FETCH_ASSOC)){
+                while($max = $query4->fetch(PDO::FETCH_ASSOC)){
                   echo '<input readonly name ="transaction_id" type = "text" value ="',$max['max_number'],'">';
                 }
                 ?>
@@ -158,6 +160,10 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
                     </tr>
                   </table>
 
+                </div>
+                <div>
+                  <div>Debit subtotal: </div>
+                  <div>Credit subtotal:</div>
                 </div>
                 <div id="btn-add">                
                       <button type ="button" id="addAccount"class ="btn-success">Add Account</button>

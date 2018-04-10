@@ -92,10 +92,10 @@ $query->fetch(PDO::FETCH_ASSOC);
                    <div class="container-fluid">
                         <div class="row">
                             <div class="col-lg-4">
-                                    <div class="input-group has-feedback">
-                                        <span class="badge badge-default">Search Accounts</span>
+                                    <div class="form-group has-feedback">
+                                        
                                                 <input type="text" class="form-control" name="search" id="search" placeholder="search"/>
-                                          <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
                                           
                                     </div>                                
                             </div>

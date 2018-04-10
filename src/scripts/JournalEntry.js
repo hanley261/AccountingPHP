@@ -53,7 +53,10 @@ function setDate(){
   newDate[i].value = document.getElementById("datepicker").value;
   } 
 }
-
+function selectOptions(){
+  var $options = $(".accounts[0] > option").clone();
+  
+}
 
 
 $(document).ready(function(){
