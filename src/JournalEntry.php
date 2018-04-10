@@ -23,7 +23,7 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
             <!-- CSS -->
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
             <link rel="stylesheet" href="css/header.css"/>
             <link rel="stylesheet" href="css/JournalEntry.css"/>
             <!--Date Picker-->
@@ -98,8 +98,7 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
 
                     <table id="JEtable" class = "table table-stripped">
                         <tr class="table-header-row">                          
-                            <td><strong>NAME</strong></td>
-                            <td><strong>DATE</strong></td>
+                            <td><strong>NAME</strong></td>                            
                             <td><strong>Ref</strong></td>
                             <td><strong>DEBIT</strong></td>
                             <td><strong>CREDIT</strong></td>                           
@@ -107,16 +106,16 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
                         <?php
 
 ?>
-<tr class="layoutRow">
-              <td><select id="accountNameSelect" name="account_name[]" class="form-control"> 
+<tr class="DebitRows">
+              <td><select name="account_name[]" class="form-control"> 
               
-          <?php
+                    <?php
               			while($row = $query2->fetch(PDO::FETCH_ASSOC)){
                       echo '<option class = "accounts" value ="',$row['account_name'],'">',$row['account_name'],'</option>';
                     }
-          ?>
+                     ?>
               </select></td>
-              <td><input class="dateSet" name="" readonly></td>
+
 
               <td>
                <?php 
@@ -126,11 +125,37 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
                 ?>
               </td>
               <td><input class = "debitBox" type="number" step="0.01" value="" min = "0" name="debit[]"></td>
-              <td><input class ="creditBox" type="number" step="0.01" value="" min = "0"name="credit[]"></td>
+              
             
                     
                     </tr>
+                    <tr class="CreditRows">
+              <td><select name="account_name[]" class="form-control"> 
+              
+                 <?php
+              			while($row = $query2->fetch(PDO::FETCH_ASSOC)){
+                      echo '<option class = "accounts" value ="',$row['account_name'],'">',$row['account_name'],'</option>';
+                    }
+                 ?>
+              </select>
+              </td>
 
+
+              <td>
+               <?php 
+                while($max = $query->fetch(PDO::FETCH_ASSOC)){
+                  echo '<input readonly name ="transaction_id" type = "text" value ="',$max['max_number'],'">';
+                }
+                ?>
+              </td>
+              <td></td>
+              <td><input class ="creditBox" type="number" step="0.01" value="" min = "0"name="credit[]"></td>
+              
+            
+                    
+                    </tr>
+                      
+                    </tr>
                   </table>
 
                 </div>

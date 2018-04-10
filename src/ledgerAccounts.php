@@ -29,7 +29,7 @@ $query->fetch(PDO::FETCH_ASSOC);
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
                 <!-- CSS -->
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
             <link rel="stylesheet" href="css/COA.css"/>
             <link rel="stylesheet" href="css/header.css"/>
             <link rel="stylesheet" href="css/ledgerAccounts.css"/>
@@ -86,21 +86,18 @@ $query->fetch(PDO::FETCH_ASSOC);
 
 
 
-
+            <legend class="" align="center" text-size=""><strong>Accounts</strong></legend>
             <!-- Search Component -->
+            <div class="space"> </div>
                    <div class="container-fluid">
                         <div class="row">
                             <div class="col-lg-4">
-                                <form method="get" action="ledgerAccounts.php" class ="search-form">
-                                    <div class="form-group has-feedback">
-                                        <label for="search" class="sr-only">Search Accounts</label>
+                                    <div class="input-group has-feedback">
+                                        <span class="badge badge-default">Search Accounts</span>
                                                 <input type="text" class="form-control" name="search" id="search" placeholder="search"/>
-                                                <input class = "btn btn-success float-right" align = "right" type="submit" value="Filter">
-                
                                           <span class="glyphicon glyphicon-search form-control-feedback"></span>
                                           
-                                    </div>
-                                </form>
+                                    </div>                                
                             </div>
                         </div>
                     </div>
