@@ -106,7 +106,7 @@ $query->fetch(PDO::FETCH_ASSOC);
 <?php
  while($coa = $query->fetch(PDO::FETCH_ASSOC)){
            /*Account Name */
-           echo '<div class = "show">';
+           echo '<div class = "show1">';
            echo '<legend class="" align="center" text-size=""><strong><p class = "table-title">', $coa['account_name'],'</p></strong></legend>';
 echo '<table class= "table">';
         /*Header for table */

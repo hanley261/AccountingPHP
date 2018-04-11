@@ -1,9 +1,8 @@
 
 function hideEmptyAccounts (){
-    var accounts = $(".show");
+    var accounts = $(".show1");
     for(var i = 0; i < accounts.length;i++){
         if(accounts[i].getElementsByTagName("tr").length < 2){            
-            accounts[i].style.display = "none";  
             accounts[i].className = "hide";  
         }
     }
@@ -17,7 +16,7 @@ function searchForAccounts(){
     input = document.getElementById("search");  
     searchBarEmpty(input);
     filter = input.value.toUpperCase();   
-    tables = $(".show");
+    tables = $(".show1");
     
     for (i = 0; i < tables.length; i++) {
         name = tables[i].getElementsByClassName("table-title")[0];
@@ -26,7 +25,7 @@ function searchForAccounts(){
             
         } else {
             tables[i].style.display = "none";
-            tables[i].className = "hide"; 
+            //tables[i].className = "hide"; 
            
         }
     }   
