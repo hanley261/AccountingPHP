@@ -49,8 +49,7 @@ VALUES
  
  }
  
-echo "Success";
-  sleep(1000);
+
   header("Location:home.php");
 exit;
 

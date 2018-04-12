@@ -7,8 +7,22 @@ function hideEmptyAccounts (){
         }
     }
 }
-function searchBarEmpty(){
-
+function removeZeros(){
+    var debitZero = document.getElementsByClassName("table-debit");   
+ var creditZero = document.getElementsByClassName("table-credit");
+ console.log(creditZero[2].innerText);
+ for(var i = 0; i < creditZero.length;i++){
+     if(creditZero[i].innerText == 0){
+         console.log(creditZero[i].value);
+         creditZero[i].innerText = " ";
+     }
+ }
+ for(var i = 0; i < debitZero.length;i++){
+    if(debitZero[i].innerText == 0){
+        console.log(debitZero[i].innerText);
+        debitZero[i].innerText = " ";
+    }
+}
 }
 function searchForAccounts(){
     
@@ -21,19 +35,16 @@ function searchForAccounts(){
     for (i = 0; i < tables.length; i++) {
         name = tables[i].getElementsByClassName("table-title")[0];
         if (name.innerText.toUpperCase().indexOf(filter) > -1) {
-            tables[i].style.display = "";
-            
+            tables[i].style.display = "";          
         } else {
-            tables[i].style.display = "none";
-            //tables[i].className = "hide"; 
-           
+            tables[i].style.display = "none";          
         }
     }   
     
 }
 
 $(document).ready(function(){
-    
+    removeZeros();
 $("#search").keyup(searchForAccounts)
 hideEmptyAccounts();
 
