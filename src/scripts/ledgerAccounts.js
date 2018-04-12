@@ -28,7 +28,7 @@ function searchForAccounts(){
     
     var input, filter, tables, name;
     input = document.getElementById("search");  
-    searchBarEmpty(input);
+    
     filter = input.value.toUpperCase();   
     tables = $(".show1");
     
