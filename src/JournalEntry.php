@@ -105,33 +105,28 @@ $query4 = $db->query("SELECT MAX(transaction_id)+1 AS max_number FROM journal_en
                             <td><strong>DEBIT</strong></td>
                             <td><strong>CREDIT</strong></td>                           
                         </tr>
-                        <?php
-
-?>
-<tr class="DebitRows">
-              <td><select name="account_name[]" class="form-control"> 
+                        <tr class="DebitRows" style="display:none">
+                           <td><select name="account_name[]" class="form-control"> 
               
-                    <?php
-              			while($row = $query2->fetch(PDO::FETCH_ASSOC)){
-                      echo '<option class = "accounts" value ="',$row['account_name'],'">',$row['account_name'],'</option>';
-                    }
-                     ?>
-              </select></td>
+                            <?php
+                            while($row = $query2->fetch(PDO::FETCH_ASSOC)){
+                              echo '<option class = "accounts" value ="',$row['account_name'],'">',$row['account_name'],'</option>';
+                            }
+                            ?>
+                             </select></td>
 
 
-              <td>
-               <?php 
-                while($max = $query->fetch(PDO::FETCH_ASSOC)){
-                  echo '<input readonly name ="transaction_id" type = "text" value ="',$max['max_number'],'">';
-                }
-                ?>
-              </td>
-              <td><input class = "debitBox" type="number" step="0.01" value="" min = "0" name="debit[]"></td>
-              
-            
-                    
+                          <td>
+                          <?php 
+                            while($max = $query->fetch(PDO::FETCH_ASSOC)){
+                              echo '<input readonly name ="transaction_id" type = "text" value ="',$max['max_number'],'">';
+                            }
+                            ?>
+                          </td>
+                          <td><input onKeyUp="subtotalDebits()" class = "debitBox" type="number" step="0.01" value="" min = "0" name="debit[]"></td>            
                     </tr>
-                    <tr class="CreditRows">
+        
+                    <tr class="CreditRows" style="display:none">
               <td><select name="account_name[]" class="form-control"> 
               
                  <?php
@@ -151,22 +146,23 @@ $query4 = $db->query("SELECT MAX(transaction_id)+1 AS max_number FROM journal_en
                 ?>
               </td>
               <td></td>
-              <td><input class ="creditBox" type="number" step="0.01" value="" min = "0"name="credit[]"></td>
+              <td><input  onKeyUp="subtotalCredits()" class ="creditBox" type="number" step="0.01" value="" min = "0"name="credit[]"></td>
               
             
                     
-                    </tr>
+                    
                       
                     </tr>
                   </table>
 
                 </div>
                 <div>
-                  <div>Debit subtotal: </div>
-                  <div>Credit subtotal:</div>
+                  <label>Debit subtotal:</label>  <input id ="debitSub" value="0" readonly/> 
+                  <label>Credit subtotal:</label>  <input id ="creditSub" value="0" readonly/>
                 </div>
                 <div id="btn-add">                
-                      <button type ="button" id="addAccount"class ="btn-success">Add Account</button>
+                      <button type ="button" id="addDebit"class ="btn-success">Add Debit</button>
+                      <button type ="button" id="addCredit"class ="btn-success">Add Credit</button>
                     </div>
 
 
@@ -174,12 +170,13 @@ $query4 = $db->query("SELECT MAX(transaction_id)+1 AS max_number FROM journal_en
                 <!--For the whole Journal Entry-->
                     <div id ="a" class = "journalEntry-description">
                       <h3>Description</h3>
-                      <textarea class = "form-control" maxlength="254" name = "description1"></textarea>
+                      <textarea id = "description" class = "form-control" maxlength="254" name = "description1"></textarea>
                       <input type="file" id="upload-file">
                     </div>
+                    <div id ="errorBox"></div>
                     <div class="journalEntry-buttons">
                         <button class="btn-danger"><a id= "cancel" href="./home.php">Cancel</a></button>
-                        <input id = "submitAll" class="btn btn-success right" type="submit" name="submit" value="submit">
+                        <button id = "submit" class="btn btn-success right" name="submit" value="submit">Submit</button>
                     </div>
                 </form>
 

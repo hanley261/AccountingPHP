@@ -64,7 +64,12 @@ ID
 #datepicker{
     display:inline-block;
 }
-
+#errorBox{
+    color:red;
+    text-align:center;
+    font-style: bold;
+    font-size:1.5em;
+}
 #upload-file{
     text-align:center;
     padding:0px;
