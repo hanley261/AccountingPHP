@@ -1,6 +1,8 @@
 var debitDisplay= 1;
 var creditDisplay= 1;
 var errorBox = document.getElementById("errorBox");
+var form = document.getElementById("form");
+
 /*
 Calendar
 */
@@ -45,6 +47,14 @@ function addCredit(){
   rows[creditDisplay].style.display="";
   creditDisplay++;
 }
+/* Remove Row */
+function removeRow(){
+  $(".remove").on('click',function(events){
+  var row = $(this).closest('tr');
+  console.log(row.html);
+  row.remove();
+});
+}
 /*
 Subtotals 
 */
@@ -65,7 +75,14 @@ function subtotalCredits(){
     sub += parseInt(credits[i].value);
   } 
   document.getElementById("creditSub").value = sub;
+}/*
+Destroy the copy element for credits
+*/
+function destroyFirstCredit(){
+  var credits = $(".CreditRows:first");
+  credits.remove();
 }
+
 /*
  Ready to submit???
  */
@@ -110,13 +127,16 @@ function description(){
 }
 function SubmitReady(){
   errorBox.innerText = "";
-  var ready = true;
-  while(ready == true){
-    ready = DateReady();
-    ready = trialBalance();
-    ready = description();
-    ready = false;
-  }
+    if(DateReady()){
+      if(trialBalance()){
+       if(description()){
+          destroyFirstCredit();
+          form.submit();
+       }
+      }
+    }
+  
+  
 }
 
 

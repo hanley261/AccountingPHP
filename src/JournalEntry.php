@@ -88,7 +88,7 @@ $query4 = $db->query("SELECT MAX(transaction_id)+1 AS max_number FROM journal_en
                    
 
                     <!--Table-->
-                 <form method="post" action="JournalEntryUpload.php" enctype="multipart/form-data">
+                 <form id = "form" method="post" action="JournalEntryUpload.php" enctype="multipart/form-data">
                     <input id="datepicker" width="276" type="text" name = "date1" value = "" readonly/>
                     <!--Date Picker -->
                     <div id = "datepick" class="input-group date" data-provide="datepicker">
@@ -123,7 +123,7 @@ $query4 = $db->query("SELECT MAX(transaction_id)+1 AS max_number FROM journal_en
                             }
                             ?>
                           </td>
-                          <td><input onKeyUp="subtotalDebits()" class = "debitBox" type="number" step="0.01" value="" min = "0" name="debit[]"></td>            
+                          <td><input onKeyUp="subtotalDebits()" class = "debitBox" type="number" step="0.01" value="" min = "0" name="debit[]"><span class="remove" onClick="removeRow()">-</span></td>            
                           <td><input  onKeyUp="subtotalCredits()" class ="hide" type="number" step="0.01" value="" min = "0"name="credit[]"></td>
                     </tr>
         
@@ -147,7 +147,7 @@ $query4 = $db->query("SELECT MAX(transaction_id)+1 AS max_number FROM journal_en
                 ?>
               </td>
               <td><input  onKeyUp="subtotalCredits()" class ="hide" type="number" step="0.01" value="0" min = "0"name="debit[]"></td>
-              <td><input  onKeyUp="subtotalCredits()" class ="creditBox" type="number" step="0.01" value="" min = "0"name="credit[]"></td>
+              <td><input  onKeyUp="subtotalCredits()" class ="creditBox" type="number" step="0.01" value="" min = "0"name="credit[]"><span class="remove" onClick="removeRow()">-</span></td>
               
             
                     
@@ -157,28 +157,35 @@ $query4 = $db->query("SELECT MAX(transaction_id)+1 AS max_number FROM journal_en
                   </table>
 
                 </div>
-                <div>
+                
+                <div id = "transaction-left">
                   <label>Debit subtotal:</label>  <input id ="debitSub" value="0" readonly/> 
                   <label>Credit subtotal:</label>  <input id ="creditSub" value="0" readonly/>
-                </div>
+                
                 <div id="btn-add">                
                       <button type ="button" id="addDebit"class ="btn-success">Add Debit</button>
                       <button type ="button" id="addCredit"class ="btn-success">Add Credit</button>
                     </div>
+                </div>
 
 
 
                 <!--For the whole Journal Entry-->
+                <div id ="transaction-right">
                     <div id ="a" class = "journalEntry-description">
                       <h3>Description</h3>
                       <textarea id = "description" class = "form-control" maxlength="254" name = "description1"></textarea>
+             
                       <input type="file" id="upload-file">
                     </div>
+                </div>
+                <div id="submission">
                     <div id ="errorBox"></div>
                     <div class="journalEntry-buttons">
                         <button class="btn-danger"><a id= "cancel" href="./home.php">Cancel</a></button>
-                        <button id = "submit" class="btn btn-success right" name="submit" value="submit">Submit</button>
+                        <div id = "submit" class="btn btn-success right" name="submit" value="submit">Submit</div>
                     </div>
+              </div>
                 </form>
 
 

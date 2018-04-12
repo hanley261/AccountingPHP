@@ -28,24 +28,30 @@ Class
 .journalEntry-buttons{
     text-align: center;
     margin:3%;
+    
 }
 .journalEntry-buttons button{
     margin-left:1%;
     margin-right:1%;
 }
 .journalEntry-description{
-    text-align: center;
+    text-align: left;
     margin:3%;
 }
 .journalEntry-description textarea{
-    margin:auto;
-    margin-top:2%;
+    
+    text-align:left;
     height: 100px;
     width: 300px;
     padding:20px;
 }
 .layoutRow{
     display: none;
+}
+.remove{
+    color:red;
+    font-size:2em;
+    margin-left:5px;
 }
 
 /*
@@ -76,4 +82,19 @@ ID
     margin-top:5%;
     
     
+}
+#transaction-left{
+    width:45%;
+    margin-left:10px;
+    margin-top:5%;
+    display: inline-block;
+    
+}
+#transaction-right{
+    width:45%;
+    margin-top: 3%;
+    float:right;
+}
+#submission{
+    margin-top:7%;
 }

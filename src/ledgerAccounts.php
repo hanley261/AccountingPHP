@@ -114,7 +114,7 @@ echo '<table class= "table">';
         echo '<tbody>';
         $accountName = $coa['account_name'];
         $query2 = $db->query("SELECT * FROM journal_entry INNER JOIN je_accounts ON journal_entry.transaction_id = je_accounts.transaction_id WHERE account_name =
-         '$accountName' ORDER BY debit Desc");
+         '$accountName' AND approval_status = 'approved' ORDER BY debit Desc");
         
         while($row = $query2->fetch(PDO::FETCH_ASSOC)){
         echo '<tr>';

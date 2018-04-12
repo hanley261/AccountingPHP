@@ -126,14 +126,14 @@ $query3 = $db->query("SELECT * FROM journal_entry INNER JOIN je_accounts ON jour
                       echo '<td>';
                       $query6 = $db->query("SELECT * FROM je_accounts WHERE transaction_id = $transaction_id ORDER BY debit DESC");
                       while($name = $query6->fetch(PDO::FETCH_ASSOC)){
-                        echo '<div>',$name['debit'], '</div>';
+                        echo '<div class="table-debit">',$name['debit'], '</div>';
                       } 
                       echo '</td>';
                       echo '<td>';
                       $query5 = $db->query("SELECT * FROM je_accounts WHERE transaction_id = $transaction_id ORDER BY debit DESC");
                       while($name = $query5->fetch(PDO::FETCH_ASSOC)){
                         
-                        echo '<div>',$name['credit'], '</div>';
+                        echo '<div class="table-credit">',$name['credit'], '</div>';
                       } 
                       echo '</td>';
                       echo '<td>',$row['user_id'],'</td>';
@@ -165,5 +165,6 @@ $query3 = $db->query("SELECT * FROM journal_entry INNER JOIN je_accounts ON jour
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script src="./scripts/managerReview.js" type ="text/javascript"></script>
     </body>
 </html>
