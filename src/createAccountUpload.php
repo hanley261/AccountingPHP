@@ -17,9 +17,11 @@ if (!mysqli_query($con, $sql))
   {
   die('Error: ' . mysqli_error($con));
   }
-echo "Submit was successful";
 
-  header("Location:COA.php");
+  header("Location:SucessPage.php");
+  echo "<a href='./Submit was successful";
+ /* sleep(5);
+  header("Location:COA.php");*/
 exit;
 echo "Submit was successful";
 // my original script ends above

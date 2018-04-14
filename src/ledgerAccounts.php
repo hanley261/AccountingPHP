@@ -12,7 +12,8 @@ $db = new PDO('mysql:host=' . $config['db']['host'] . ';dbname=' . $config['db']
 $db->setATTRIBUTE(PDO::ATTR_EMULATE_PREPARES, false);
 $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$query = $db->prepare("SELECT * FROM journal_entry INNER JOIN je_accounts ON journal_entry.transaction_id = je_accounts.transaction_id WHERE account_name = 'Cash'");
+$query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a'");
+
     
 
 
@@ -28,9 +29,10 @@ $query->fetch(PDO::FETCH_ASSOC);
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
                 <!-- CSS -->
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
             <link rel="stylesheet" href="css/COA.css"/>
             <link rel="stylesheet" href="css/header.css"/>
+            <link rel="stylesheet" href="css/ledgerAccounts.css"/>
                 <!---Title -->
             <title>AnyWhere-Chart Of Accounts</title>
     </head>
@@ -40,7 +42,7 @@ $query->fetch(PDO::FETCH_ASSOC);
               <!-- Header-->
 
 
-        <nav class="navbar navbar-expand navbar-primary">
+               <nav class="navbar navbar-expand navbar-primary">
                 <header class="navbar-brand" href="./home.html"><img src="assets/logo.png" alt="bluePrint" height="60"/></header>
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNavbar">
                 <span class="navbar-toggler-icon"></span>
@@ -60,6 +62,9 @@ $query->fetch(PDO::FETCH_ASSOC);
                 <li class="nav-item">
                          <a class="nav-link" href="./ManagerReview.php">Manager Review</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./ledgerAccounts.php">Account Ledgers</a>
+                  </li>
                   <li class="nav-item">
                     <a class="nav-link" href="./accounts.php">Accounts</a>
                   </li>
@@ -79,19 +84,54 @@ $query->fetch(PDO::FETCH_ASSOC);
               </div>
             </nav>
 
+
+
+            <legend class="" align="center" text-size=""><strong>Accounts</strong></legend>
+            <!-- Search Component -->
+            <div class="space"> </div>
+                   <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                    <div class="form-group has-feedback">
+                                        
+                                                <input type="text" class="form-control" name="search" id="search" placeholder="search"/>
+                                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                                          
+                                    </div>                                
+                            </div>
+                        </div>
+                    </div>
 <!--Body of ledger accoutns -->
-
-<table id="COA-table" class= "table table-stripped">
-    <thead>
-        <tr>
-            <td>Debit</td>
-            <td>Credit</td>
-        </tr>
-    </thead>
-
-<script src="./scripts/activeAccounts.js" type="text/javascript"></script>
+<div id = "table-container">
+<?php
+ while($coa = $query->fetch(PDO::FETCH_ASSOC)){
+           /*Account Name */
+           echo '<div class = "show1">';
+           echo '<legend class="" align="center" text-size=""><strong><p class = "table-title">', $coa['account_name'],'</p></strong></legend>';
+echo '<table class= "table">';
+        /*Header for table */
+        echo '<tr class = "table-header-row"><th>Date</th><th>Debit</th><th>Credit</th></tr>';
+        echo '<tbody>';
+        $accountName = $coa['account_name'];
+        $query2 = $db->query("SELECT * FROM journal_entry INNER JOIN je_accounts ON journal_entry.transaction_id = je_accounts.transaction_id WHERE account_name =
+         '$accountName' AND approval_status = 'approved' ORDER BY debit Desc");
+        
+        while($row = $query2->fetch(PDO::FETCH_ASSOC)){
+        echo '<tr>';
+        echo '<td>',$row['date1'],'</td>';
+        echo '<td class = "table-debit">',$row['debit'],'</td>';
+        echo '<td class = "table-credit">',$row['credit'],'</td>';
+        echo '<td></td>';
+        }
+        echo  '</tbody></table>';
+        echo '</div>';
+ }
+?>
+</div>
+    
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script src="./scripts/ledgerAccounts.js" type="text/javascript"></script>
     </body>
 </html> 

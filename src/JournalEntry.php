@@ -15,6 +15,8 @@ $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $query = $db->query("SELECT MAX(transaction_id)+1 AS max_number FROM journal_entry");
 $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY account_name ASC");
+$query3 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'ACTIVE' ORDER BY account_name ASC");
+$query4 = $db->query("SELECT MAX(transaction_id)+1 AS max_number FROM journal_entry");
 
 ?>
 <html lang = en>
@@ -23,7 +25,7 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
             <!-- CSS -->
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
             <link rel="stylesheet" href="css/header.css"/>
             <link rel="stylesheet" href="css/JournalEntry.css"/>
             <!--Date Picker-->
@@ -55,6 +57,9 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
                 <li class="nav-item">
                          <a class="nav-link" href="./ManagerReview.php">Manager Review</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./ledgerAccounts.php">Account Ledgers</a>
+                  </li>
                   <li class="nav-item">
                     <a class="nav-link" href="./accounts.php">Accounts</a>
                   </li>
@@ -63,6 +68,7 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
                 </li>
       
                 </ul>
+                
               </div>
               <div class="pull-right">
                 <ul class="nav navbar-nav navbar-right">
@@ -82,7 +88,7 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
                    
 
                     <!--Table-->
-                 <form method="post" action="JournalEntryUpload.php" enctype="multipart/form-data">
+                 <form id = "form" method="post" action="JournalEntryUpload.php" enctype="multipart/form-data">
                     <input id="datepicker" width="276" type="text" name = "date1" value = "" readonly/>
                     <!--Date Picker -->
                     <div id = "datepick" class="input-group date" data-provide="datepicker">
@@ -94,58 +100,92 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'AC
 
                     <table id="JEtable" class = "table table-stripped">
                         <tr class="table-header-row">                          
-                            <td><strong>NAME</strong></td>
-                            <td><strong>DATE</strong></td>
+                            <td><strong>NAME</strong></td>                            
                             <td><strong>Ref</strong></td>
                             <td><strong>DEBIT</strong></td>
                             <td><strong>CREDIT</strong></td>                           
                         </tr>
-                        <?php
-
-?>
-<tr class="layoutRow">
-              <td><select id="accountNameSelect" name="account_name[]" class="form-control"> 
+                        <tr class="DebitRows" style="display:none">
+                           <td><select name="account_name[]" class="form-control"> 
               
-          <?php
-              			while($row = $query2->fetch(PDO::FETCH_ASSOC)){
+                            <?php
+                            while($row = $query2->fetch(PDO::FETCH_ASSOC)){
+                              echo '<option class = "accounts" value ="',$row['account_name'],'">',$row['account_name'],'</option>';
+                            }
+                            ?>
+                             </select></td>
+
+
+                          <td>
+                          <?php 
+                            while($max = $query->fetch(PDO::FETCH_ASSOC)){
+                              echo '<input readonly name ="transaction_id" type = "text" value ="',$max['max_number'],'">';
+                            }
+                            ?>
+                          </td>
+                          <td><input onKeyUp="subtotalDebits()" class = "debitBox" type="number" step="0.01" value="" min = "0" name="debit[]"><span class="remove" onClick="removeRow()">-</span></td>            
+                          <td><input  onKeyUp="subtotalCredits()" class ="hide" type="number" step="0.01" value="" min = "0"name="credit[]"></td>
+                    </tr>
+        
+                    <tr class="CreditRows" style="display:none">
+              <td><select name="account_name[]" class="form-control"> 
+              
+                 <?php
+              			while($row = $query3->fetch(PDO::FETCH_ASSOC)){
                       echo '<option class = "accounts" value ="',$row['account_name'],'">',$row['account_name'],'</option>';
                     }
-          ?>
-              </select></td>
-              <td><input class="dateSet" name="" readonly></td>
+                 ?>
+              </select>
+              </td>
+
 
               <td>
                <?php 
-                while($max = $query->fetch(PDO::FETCH_ASSOC)){
+                while($max = $query4->fetch(PDO::FETCH_ASSOC)){
                   echo '<input readonly name ="transaction_id" type = "text" value ="',$max['max_number'],'">';
                 }
                 ?>
               </td>
-              <td><input class = "debitBox" type="number" step="0.01" value="" min = "0" name="debit[]"></td>
-              <td><input class ="creditBox" type="number" step="0.01" value="" min = "0"name="credit[]"></td>
+              <td><input  onKeyUp="subtotalCredits()" class ="hide" type="number" step="0.01" value="0" min = "0"name="debit[]"></td>
+              <td><input  onKeyUp="subtotalCredits()" class ="creditBox" type="number" step="0.01" value="" min = "0"name="credit[]"><span class="remove" onClick="removeRow()">-</span></td>
+              
             
                     
+                    
+                      
                     </tr>
-
                   </table>
 
                 </div>
+                
+                <div id = "transaction-left">
+                  <label>Debit subtotal:</label>  <input id ="debitSub" value="0" readonly/> 
+                  <label>Credit subtotal:</label>  <input id ="creditSub" value="0" readonly/>
+                
                 <div id="btn-add">                
-                      <button type ="button" id="addAccount"class ="btn-success">Add Account</button>
+                      <button type ="button" id="addDebit"class ="btn-success">Add Debit</button>
+                      <button type ="button" id="addCredit"class ="btn-success">Add Credit</button>
                     </div>
+                </div>
 
 
 
                 <!--For the whole Journal Entry-->
+                <div id ="transaction-right">
                     <div id ="a" class = "journalEntry-description">
                       <h3>Description</h3>
-                      <textarea class = "form-control" maxlength="254" name = "description1"></textarea>
+                      <textarea id = "description" class = "form-control" maxlength="254" name = "description1"></textarea>
+             
                       <input type="file" id="upload-file">
                     </div>
+                </div>
+                <div id="submission">
+                    <div id ="errorBox"></div>
                     <div class="journalEntry-buttons">
                         <button class="btn-danger"><a id= "cancel" href="./home.php">Cancel</a></button>
-                        <input id = "submitAll" class="btn btn-success right" type="submit" name="submit" value="submit">
+                        <div id = "submit" class="btn btn-success right" name="submit" value="submit">Submit</div>
                     </div>
+              </div>
                 </form>
 
 

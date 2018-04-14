@@ -1,3 +1,13 @@
+<?php
+// Initialize the session
+/*session_start();
+ 
+// If session variable is not set it will redirect to login page
+if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
+  header("location: login.php");
+  exit;
+}*/
+?>
 <!doctype html>
 <?php
 $config['db'] = array(
@@ -14,41 +24,11 @@ $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 if(isset  ($_GET['Subject'])){
   $order = $_GET['Subject'];
-  
-
-  if($order == "account_type"){
-    $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY account_type ASC");
-    }
-    if($order == "account_subtype"){
-      $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY account_subtype ASC");
-      }
-if($order == "account_name"){
-$query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY account_name ASC");
-}
-if($order == "account_code"){
-  $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY account_code ASC");
-  }
-  if($order == "normal_side"){
-    $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY normal_side ASC");
-    }
-    if($order == "balance"){
-      $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY balance ASC");
-      }
-      if($order == "last_date_accessed"){
-        $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY last_date_accessed ASC");
-        }
-        if($order == "account_status"){
-          $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY account_status ASC");
-          }
-          if($order == "last_user_id_accessed"){
-            $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY last_user_id_accessed ASC");
-            }
+  $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY $order ASC");
 }
 else{
-  $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY account_Type ASC");
+  $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY 'account_name' ASC");
 }
-
-
 
 $query->execute();
 $query->fetch(PDO::FETCH_ASSOC);
@@ -62,7 +42,7 @@ $query->fetch(PDO::FETCH_ASSOC);
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
                 <!-- CSS -->
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
             <link rel="stylesheet" href="css/COA.css"/>
             <link rel="stylesheet" href="css/header.css"/>
                 <!---Title -->
@@ -94,6 +74,9 @@ $query->fetch(PDO::FETCH_ASSOC);
                 <li class="nav-item">
                          <a class="nav-link" href="./ManagerReview.php">Manager Review</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./ledgerAccounts.php">Account Ledgers</a>
+                  </li>
                   <li class="nav-item">
                     <a class="nav-link" href="./accounts.php">Accounts</a>
                   </li>
@@ -120,17 +103,17 @@ $query->fetch(PDO::FETCH_ASSOC);
                 <div class="container">
                     <legend class="" align="center" text-size=""><strong>Charts of Account</strong></legend>
                     <!-- Search Component -->
-                    <!--<div class="container-fluid">
+<!--                    <div class="container-fluid">
                         <div class="row">
                             <div class="col-lg-4">
-                                <form class="search-form">
+                                <form method="get" action="COA.php" class ="search-form">
                                     <div class="form-group has-feedback">
                                         <label for="search" class="sr-only">Search Accounts</label>
                                                 <input type="text" class="form-control" name="search" id="search" placeholder="search"/>
                                           <span class="glyphicon glyphicon-search form-control-feedback"></span>
                                     </div>
-                                </form>
-                            </div>-->
+                                </form>-->
+                            </div>
                             <div class="float-right">
                                 <a class="btn btn-success float-right" id="btn" align="right" href="./createAccount.php">Add Account</a>
                             </div>

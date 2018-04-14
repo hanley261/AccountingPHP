@@ -1,0 +1,37 @@
+/*
+IDs
+
+*/
+#table-container{
+
+}
+
+/*
+Classes
+*/
+
+.table{
+    width:40%;
+    margin-left: 35%;
+    
+}
+.table-debit{
+    border-right: 2px solid black; 
+    text-align: right;
+    width:20%;
+}
+.table-credit{
+    text-align: right;
+    width:20%;
+}
+.table-h2{
+    text-align:center;
+    margin-top: 80px;
+}
+.space{
+    margin:20px;
+}
+legend{
+    margin-top:100px;
+    margin-bottom:20px;
+}

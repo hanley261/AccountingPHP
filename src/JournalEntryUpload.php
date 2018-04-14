@@ -23,7 +23,7 @@ VALUES
     ('Developer',
     'Developer',  
     '$description',
-    'n/a',
+    'Pending',
     '$date'
     )";
    
@@ -48,7 +48,6 @@ VALUES
   }
  
  }
- 
  
 
   header("Location:home.php");

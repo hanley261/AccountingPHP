@@ -4,7 +4,7 @@ $config['db'] = array(
 	'host'			=>'localhost',
 	'username'		=>'rmorga51',
 	'password'		=>'',
-	'dbname'		=>'rmorga51'
+	'dbname'		=>'accounting'
 );
 	
 
@@ -56,7 +56,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             save the username to the session */
                             session_start();
                             $_SESSION['username'] = $username;      
-                            header("location: welcome.php");
+                            header("location: home.php");
                         } else{
                             // Display an error message if password is not valid
                             $password_err = 'The password you entered was not valid.';
@@ -87,7 +87,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
                 <!-- CSS -->
 				<!--https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css-->
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
             <link rel="stylesheet" href="css/home.css"/>
             <link rel="stylesheet" href="css/header.css"/>
             <link rel="stylesheet" href="css/login.css"/>
@@ -101,7 +101,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                <!-- Header-->
 
 
-        <nav class="navbar navbar-expand navbar-primary">
+                <nav class="navbar navbar-expand navbar-primary">
                 <header class="navbar-brand" href="./home.html"><img src="assets/logo.png" alt="bluePrint" height="60"/></header>
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNavbar">
                 <span class="navbar-toggler-icon"></span>
@@ -121,6 +121,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <li class="nav-item">
                          <a class="nav-link" href="./ManagerReview.php">Manager Review</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./ledgerAccounts.php">Account Ledgers</a>
+                  </li>
                   <li class="nav-item">
                     <a class="nav-link" href="./accounts.php">Accounts</a>
                   </li>
