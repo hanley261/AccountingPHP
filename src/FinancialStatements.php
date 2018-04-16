@@ -20,11 +20,11 @@ $queryRight = $db->prepare("SELECT * FROM chart_of_accounts WHERE normal_side = 
 
 
 $queryLeft->execute();
-$queryLeft->fetch(PDO::FETCH_ASSOC);
+
 
 
 $queryRight->execute();
-$queryRight->fetch(PDO::FETCH_ASSOC);
+
 
 //Income Statment
 $queryRevenue = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_type = 'Revenue' AND balance != 0 ORDER BY account_code ASC");
@@ -32,10 +32,10 @@ $queryExpenses = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_typ
 
 
 $queryRevenue->execute();
-$queryRevenue->fetch(PDO::FETCH_ASSOC);
+
 
 $queryExpenses->execute();
-$queryExpenses->fetch(PDO::FETCH_ASSOC);
+
 
 //Balance Sheet
 

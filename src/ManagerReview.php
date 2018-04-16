@@ -153,7 +153,7 @@ $query3 = $db->query("SELECT * FROM journal_entry INNER JOIN je_accounts ON jour
                       }
                       else{
                           echo '<td rowspan="1">    <div class="journalEntry-buttons">
-                          <input onClick="CheckReason()" name = "reject" class="btn btn-danger" type = "button" value ="Reject">
+                          <input onClick="CheckReason()" name = "reject" class="btn btn-danger" type = "submit" value ="Reject">
                           <input name ="approve" class="btn btn-success" type="submit" />
                           </div></td>';
                       }
