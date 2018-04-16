@@ -12,6 +12,47 @@ $db = new PDO('mysql:host=' . $config['db']['host'] . ';dbname=' . $config['db']
 $db->setATTRIBUTE(PDO::ATTR_EMULATE_PREPARES, false);
 $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+//Trial Balance
+$queryLeft = $db->prepare("SELECT * FROM chart_of_accounts WHERE normal_side = 'Left' AND balance != 0 ORDER BY account_code ASC");
+$queryRight = $db->prepare("SELECT * FROM chart_of_accounts WHERE normal_side = 'Right' AND balance != 0 ORDER BY account_code ASC");
+
+    
+
+
+$queryLeft->execute();
+$queryLeft->fetch(PDO::FETCH_ASSOC);
+
+
+$queryRight->execute();
+$queryRight->fetch(PDO::FETCH_ASSOC);
+
+//Income Statment
+$queryRevenue = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_type = 'Revenue' AND balance != 0 ORDER BY account_code ASC");
+$queryExpenses = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_type = 'Operating Expense' AND balance != 0 ORDER BY account_code ASC");
+
+
+$queryRevenue->execute();
+$queryRevenue->fetch(PDO::FETCH_ASSOC);
+
+$queryExpenses->execute();
+$queryExpenses->fetch(PDO::FETCH_ASSOC);
+
+//Balance Sheet
+
+$queryLTA = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_subtype = 'Long Term Asset' AND balance != 0 ORDER BY account_code ASC");
+$queryCA = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_subtype = 'Current Asset' AND balance != 0 ORDER BY account_code ASC");
+$queryOE = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_type = 'Equity' AND balance != 0 ORDER BY account_code ASC");
+$queryLTL = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_subtype = 'Long Term Liability' AND balance != 0 ORDER BY account_code ASC");
+$queryCL = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_subtype = 'Current Liability' AND balance != 0 ORDER BY account_code ASC");
+
+
+$queryLTA->execute();
+$queryCA->execute();
+$queryOE->execute();
+$queryLTL->execute();
+$queryCL->execute();
+
+
 ?>
 <html lang = en>
     <head>
@@ -22,7 +63,7 @@ $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
             <link rel="stylesheet" href="css/COA.css"/>
             <link rel="stylesheet" href="css/header.css"/>
-            <link rel="stylesheet" href="css/ledgerAccounts.css"/>
+            <link rel="stylesheet" href="css/FinancialStatements.css"/>
                 <!---Title -->
             <title>AnyWhere-Chart Of Accounts</title>
     </head>
@@ -32,9 +73,9 @@ $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
               <!-- Header-->
 
 
-               <nav class="navbar navbar-expand navbar-primary">
+                            <nav class="navbar navbar-expand navbar-primary">
                 <header class="navbar-brand" href="./home.html"><img src="assets/logo.png" alt="bluePrint" height="60"/></header>
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNavbar">
+                
                 <span class="navbar-toggler-icon"></span>
               </button>
             
@@ -59,6 +100,9 @@ $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                     <a class="nav-link" href="./accounts.php">Accounts</a>
                   </li>
                   <li class="nav-item">
+                  <a class="nav-link" href="./FinancialStatements.php">Financial Statements</a>
+                </li>
+                  <li class="nav-item">
                   <a class="nav-link" href="./logs.php">Logs</a>
                 </li>
       
@@ -76,34 +120,194 @@ $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
 </div>
-        <div id = "trail-balance" class="show">
-        <h4>Anywhere Accounting Company </h4>
+        <h1 class="title">Financial Statements</h1>
+        <div id="change-sheet">
+          <button id ="trial-balance" type="button" class="btn btn-success">Trial Balance</button>
+          <button id ="income-statement"type="button" class="btn btn-success">Income Statement</button>
+          <button id = "balance-sheet" type="button" class="btn btn-success">Balance Sheet</button>
+          <button id = "retained-earnings" type="button" class="btn btn-success">Statement Of Retained Earnings</button>
+        </div>
+        <div id = "trial-balance-sheet" class="show">
+        <div class="table-title">
+          <h4>Anywhere Accounting Company </h4>
             <h4>Trial Balance</h4>
-            <h4>As of (current date)</h4>
+            <h4>As of <span class = "date"></span></h4>
+        </div>
+            <table class="table">
+              <tr class = 'table-header-row'>
+                <td>Account Name</td>
+                <td>Debit</td>
+                <td>Credit</td>
+              </tr>
             <?php
+               while($tbRow = $queryLeft->fetch(PDO::FETCH_ASSOC)){
+                  echo "<tr class='table-row-debit'><td >",$tbRow['account_name'],"</td>";
+                  echo "<td class = 'table-debit'>",$tbRow['balance'],"</td>";
+                  echo "<td></td></tr>";
+               }
+              ?>
+              <?php
+               while($trRow = $queryRight->fetch(PDO::FETCH_ASSOC)){
+                  echo "<tr class = 'table-row-credit'><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",$trRow['account_name'],"</td>";
+                  echo "<td></td>";
+                  echo "<td class='table-credit'>",$trRow['balance'],"</td></tr>";
+                  
+               }
 
             ?>
-
+            <tr>
+              <td>Subtotal</td>
+              <td id="trial-debit-subtotal"></td>
+              <td id="trial-credit-subtotal"></td>
+            </tr>
+            </table>
         </div>
-        <div id = "income-statement" class ="hide">
+        <div id = "income-statement-sheet" class ="hide">
+          <div class="table-title">
             <h4>Anywhere Accounting Company</h4>
             <h4>Income Statement</h4>
-            <h4>As of (current date)</h4>
+            <h4>As of <div class = "date"></div></h4>
+          </div>
+          <table class = "table">
+              <tr>
+                <td><strong>Revenues</strong></td>
+                <td></td>
+                <td></td>  
+              </tr>
+               <?php
+               
+                  while($RevRow = $queryRevenue->fetch(PDO::FETCH_ASSOC)){
+                    echo "<tr class=''><td></td>";
+                    echo "<td>",$RevRow['account_name'],"</td>";
+                    echo "<td class = 'revenueGroup'>",$RevRow['balance'],"</td>";
+                    echo "</tr>";
+                 }
+                 
+               ?>
+              <tr>
+                <td><strong>Total Revenue</strong></td>
+                <td></td>
+                <td id ="total-revenue"></td>  
+              </tr>
+              <tr>
+                 <td><strong>Expenses</strong></td>
+                 <td></td><td></td>
+              </tr>
+              <?php
+               
+                  while($ExRow = $queryExpenses->fetch(PDO::FETCH_ASSOC)){
+                    echo "<tr class=''><td></td>";
+                    echo "<td>",$ExRow['account_name'],"</td>";
+                    echo "<td class = 'ExpenesGroup'>",$ExRow['balance'],"</td>";
+                    echo "</tr>";
+                 }
+                 
+               ?>
 
+              <tr>
+                 <td><strong>Total Expenses</strong></td>
+                 <td></td><td id = "total-expenses"></td>
+              </tr>
+          </table>
         </div>
-        <div id = "balance-sheet" class="hide">
-        <h4>Anywhere Accounting Company </h4>
+        <div id = "balance-sheet-sheet" class="hide">
+          <div class ="table-title">
+            <h4>Anywhere Accounting Company </h4>
             <h4>Balance Sheet</h4>
-            <h4>As of (current date)</h4>
+            <h4>As of <div class = "date"></div></h4>
+              </div>
+              <table class ="table">
+                <tr>
+                  <td><strong> ASSETS</strong></td><td></td><td></td>
+                </tr>
+                <tr>
+                 <td><strong>Long Term Assets</strong></td><td></td>
+                 <td id = "long-term-assets">
+                 </tr>
+                 <?php
+                  while($LTARow = $queryLTA->fetch(PDO::FETCH_ASSOC)){
+                  echo "<tr>";
+                  echo "<td>",$LTARow['account_name'],"</td>";
+                  echo "<td class='LTA'>",$LTARow['balance'],"</td><td></td></tr>";
+                  }
+                 ?>
+                <tr>
+                  <td><strong>Current Assets</strong></td>
+                  <td></td>
+                  <td id = "current-assets"></td>
+                </tr>
+                <?php
+                  while($CARow = $queryCA->fetch(PDO::FETCH_ASSOC)){
+                  echo "<tr>";
+                  echo "<td>",$CARow['account_name'],"</td>";
+                  echo "<td class='CA'>",$CARow['balance'],"</td><td></td></tr>";
+                  }
+                 ?>
+                <tr>
+                  <td><strong>TOTAL ASSETS</strong</td>
+                  <td></td>
+                  <td id = "total-assets"></td>
+                </tr>
+                <tr>
+                  <td><strong>EQUITY AND LIABILITIES</strong></td>
+                  <td></td>
+                  <td id = "total-EQ-LIA"></td>
+                </tr>
+                <tr>
+                  <td><strong>Owner's Equity</strong></td>
+                  <td></td>
+                  <td id = "total-OE"></td>
+                </tr>
+                <?php
+                  
+                  while($OERow = $queryOE->fetch(PDO::FETCH_ASSOC)){
+                  echo "<tr>";
+                  echo "<td>",$OERow['account_name'],"</td>";
+                  echo "<td class='OE'>",$OERow['balance'],"</td><td></td></tr>";
+                  }
+                 ?>
+                <tr>
+                  <td><strong>Long Term Liabilities</strong></td>
+                  <td></td>
+                  <td id = "total-LTL"></td>
+                </tr>
+                <?php
+                  while($LTLRow = $queryLTL->fetch(PDO::FETCH_ASSOC)){
+                  echo "<tr>";
+                  echo "<td>",$LTLRow['account_name'],"</td>";
+                  echo "<td class='LTL'>",$LTLRow['balance'],"</td><td></td></tr>";
+                  }
+                 ?>
+                <tr>
+                  <td><strong>Current Liabilities</strong></td>
+                  <td></td>
+                  <td id = "total-CL"></td>
+                </tr>
+                <?php
+                  while($CLRow = $queryCL->fetch(PDO::FETCH_ASSOC)){
+                  echo "<tr>";
+                  echo "<td>",$CLRow['account_name'],"</td>";
+                  echo "<td class='CL'>",$CLRow['balance'],"</td><td></td></tr>";
+                  }
+                 ?>
+                <tr>
+                  <td><strong>TOTAL EQUITY AND LIABILITIES</strong</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </table>
+                 
         </div>
-        <div id = "retained-earnings" class="hide">
-        <h4>Anywhere Accounting Company </h4>
+        <div id = "retained-earnings-sheet" class="hide">
+          <div class = "table-title">
+            <h4>Anywhere Accounting Company </h4>
             <h4>Statement of Retained Earnings</h4>
-            <h4>As of (current date)</h4>
+            <h4>As of <div class = "date"></div></h4>
+          </div>
         </div>
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-    <script src="./scripts/ledgerAccounts.js" type="text/javascript"></script>
+    <script src="./scripts/financialStatements.js" type="text/javascript"></script>
     </body>
 </html> 

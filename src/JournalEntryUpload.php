@@ -50,7 +50,7 @@ VALUES
  }
  
 
-  header("Location:home.php");
+  header("Location:COA.php");
 exit;
 
 

@@ -39,7 +39,7 @@ if(isset($_POST['approve']))
 
     }
  
-    $updateBalance=("UPDATE chart_of_accounts SET balance = $total WHERE account_name = '$name'");
+    $updateBalance=("UPDATE chart_of_accounts SET balance = balance + $total WHERE account_name = '$name'");
     if (!mysqli_query($con, $updateBalance))
     {
     die('Error: ' . mysqli_error($con));

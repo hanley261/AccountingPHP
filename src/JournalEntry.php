@@ -37,9 +37,9 @@ $query4 = $db->query("SELECT MAX(transaction_id)+1 AS max_number FROM journal_en
               <!-- Header-->
 
 
-        <nav class="navbar navbar-expand navbar-primary">
+              <nav class="navbar navbar-expand navbar-primary">
                 <header class="navbar-brand" href="./home.html"><img src="assets/logo.png" alt="bluePrint" height="60"/></header>
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNavbar">
+                
                 <span class="navbar-toggler-icon"></span>
               </button>
             
@@ -63,6 +63,9 @@ $query4 = $db->query("SELECT MAX(transaction_id)+1 AS max_number FROM journal_en
                   <li class="nav-item">
                     <a class="nav-link" href="./accounts.php">Accounts</a>
                   </li>
+                  <li class="nav-item">
+                  <a class="nav-link" href="./FinancialStatements.php">Financial Statements</a>
+                </li>
                   <li class="nav-item">
                   <a class="nav-link" href="./logs.php">Logs</a>
                 </li>
@@ -123,7 +126,7 @@ $query4 = $db->query("SELECT MAX(transaction_id)+1 AS max_number FROM journal_en
                             }
                             ?>
                           </td>
-                          <td><input onKeyUp="subtotalDebits()" class = "debitBox" type="number" step="0.01" value="" min = "0" name="debit[]"><span class="remove" onClick="removeRow()">-</span></td>            
+                          <td><input onKeyUp="subtotalDebits()" class = "debitBox" type="number" step="0.01" value="0.00" min = "0" name="debit[]"><span class="remove" onClick="removeRow()">-</span></td>            
                           <td><input  onKeyUp="subtotalCredits()" class ="hide" type="number" step="0.01" value="" min = "0"name="credit[]"></td>
                     </tr>
         

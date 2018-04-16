@@ -43,9 +43,9 @@ $query3 = $db->query("SELECT * FROM journal_entry INNER JOIN je_accounts ON jour
              <!-- Header-->
 
 
-               <nav class="navbar navbar-expand navbar-primary">
+              <nav class="navbar navbar-expand navbar-primary">
                 <header class="navbar-brand" href="./home.html"><img src="assets/logo.png" alt="bluePrint" height="60"/></header>
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNavbar">
+                
                 <span class="navbar-toggler-icon"></span>
               </button>
             
@@ -69,6 +69,9 @@ $query3 = $db->query("SELECT * FROM journal_entry INNER JOIN je_accounts ON jour
                   <li class="nav-item">
                     <a class="nav-link" href="./accounts.php">Accounts</a>
                   </li>
+                  <li class="nav-item">
+                  <a class="nav-link" href="./FinancialStatements.php">Financial Statements</a>
+                </li>
                   <li class="nav-item">
                   <a class="nav-link" href="./logs.php">Logs</a>
                 </li>
@@ -140,7 +143,7 @@ $query3 = $db->query("SELECT * FROM journal_entry INNER JOIN je_accounts ON jour
                       echo '</tr><tr>';
 
                       echo '<td rowspan="2"><label>Description:&nbsp &nbsp </label>',$row['description1'],'</td>';             
-                      echo '<td rowspan="2"><label>Reason:&nbsp &nbsp </label><input/></td></tr>';
+                      echo '<td rowspan="2"><label>Reason:&nbsp &nbsp </label><input class ="reason"/></td>';
                       
                       if($filter == 'approved'){
                         echo '<td rowspan="1"><div class= "btn btn-success"> Approved</div> </td> ';
@@ -150,7 +153,7 @@ $query3 = $db->query("SELECT * FROM journal_entry INNER JOIN je_accounts ON jour
                       }
                       else{
                           echo '<td rowspan="1">    <div class="journalEntry-buttons">
-                          <input name = "reject" class="btn btn-danger" type = "submit" value ="Reject">
+                          <input onClick="CheckReason()" name = "reject" class="btn btn-danger" type = "button" value ="Reject">
                           <input name ="approve" class="btn btn-success" type="submit" />
                           </div></td>';
                       }

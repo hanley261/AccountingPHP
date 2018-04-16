@@ -14,7 +14,11 @@ function removeZeros(){
 }
 }
 
-
+function CheckReason(){
+    console.log("6");
+    console.log($(this).closest("reason").val());
+    
+}
 
 $(document).ready(function(){
 removeZeros();
