@@ -6,7 +6,7 @@ $config['db'] = array(
 	'password'		=>'',
 	'dbname'		=>'accounting'
 );
-	
+// set dbname to accounting before commit	
 
 $db = new PDO('mysql:host=' . $config['db']['host'] . ';dbname=' . $config['db']['dbname'], $config['db']['username'], $config['db']['password']); 
 $db->setATTRIBUTE(PDO::ATTR_EMULATE_PREPARES, false);
