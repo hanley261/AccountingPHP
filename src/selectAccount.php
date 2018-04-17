@@ -33,9 +33,9 @@ $query = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'ACT
             <!-- Header-->
 
 
-               <nav class="navbar navbar-expand navbar-primary">
+                            <nav class="navbar navbar-expand navbar-primary">
                 <header class="navbar-brand" href="./home.html"><img src="assets/logo.png" alt="bluePrint" height="60"/></header>
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNavbar">
+                
                 <span class="navbar-toggler-icon"></span>
               </button>
             
@@ -60,6 +60,9 @@ $query = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'ACT
                     <a class="nav-link" href="./accounts.php">Accounts</a>
                   </li>
                   <li class="nav-item">
+                  <a class="nav-link" href="./FinancialStatements.php">Financial Statements</a>
+                </li>
+                  <li class="nav-item">
                   <a class="nav-link" href="./logs.php">Logs</a>
                 </li>
       
@@ -74,7 +77,6 @@ $query = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'ACT
                 </ul>
               </div>
             </nav>
-
 
 
 <!--Create Account -->

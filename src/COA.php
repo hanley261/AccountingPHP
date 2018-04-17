@@ -31,7 +31,7 @@ else{
 }
 
 $query->execute();
-$query->fetch(PDO::FETCH_ASSOC);
+
 
 
 
@@ -54,9 +54,9 @@ $query->fetch(PDO::FETCH_ASSOC);
               <!-- Header-->
 
 
-        <nav class="navbar navbar-expand navbar-primary">
+                      <nav class="navbar navbar-expand navbar-primary">
                 <header class="navbar-brand" href="./home.html"><img src="assets/logo.png" alt="bluePrint" height="60"/></header>
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNavbar">
+                
                 <span class="navbar-toggler-icon"></span>
               </button>
             
@@ -80,6 +80,9 @@ $query->fetch(PDO::FETCH_ASSOC);
                   <li class="nav-item">
                     <a class="nav-link" href="./accounts.php">Accounts</a>
                   </li>
+                  <li class="nav-item">
+                  <a class="nav-link" href="./FinancialStatements.php">Financial Statements</a>
+                </li>
                   <li class="nav-item">
                   <a class="nav-link" href="./logs.php">Logs</a>
                 </li>

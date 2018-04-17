@@ -1,0 +1,25 @@
+/*
+Classes
+*/
+.table{
+    width:60%;
+    margin:auto;
+}
+.table-title{
+    text-align:center;
+    
+}
+
+.title{
+    text-align:center;
+    margin:60px;
+}
+/*
+IDS
+*/
+#change-sheet{
+text-align: center;
+}
+#change-sheet button{
+    margin:30px;
+}

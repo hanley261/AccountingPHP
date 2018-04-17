@@ -53,7 +53,12 @@ Class
     font-size:2em;
     margin-left:5px;
 }
-
+.whitespace{
+    background-color: grey;
+    width:20px;
+    height:10px;
+    display:inline-block;
+}
 /*
 
 ID

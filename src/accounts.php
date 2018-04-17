@@ -82,6 +82,9 @@ $query->fetch(PDO::FETCH_ASSOC);
                     <a class="nav-link" href="./accounts.php">Accounts</a>
                   </li>
                   <li class="nav-item">
+                  <a class="nav-link" href="./FinancialStatements.php">Financial Statements</a>
+                </li>
+                  <li class="nav-item">
                   <a class="nav-link" href="./logs.php">Logs</a>
                 </li>
       
