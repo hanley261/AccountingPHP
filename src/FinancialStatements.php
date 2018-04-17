@@ -135,9 +135,9 @@ $queryCL->execute();
         </div>
             <table class="table">
               <tr class = 'table-header-row'>
-                <td>Account Name</td>
-                <td>Debit</td>
-                <td>Credit</td>
+                <td>ACCOUNT NAME</td>
+                <td>DEBIT</td>
+                <td>CREDIT</td>
               </tr>
             <?php
                while($tbRow = $queryLeft->fetch(PDO::FETCH_ASSOC)){
@@ -156,7 +156,7 @@ $queryCL->execute();
 
             ?>
             <tr>
-              <td>Subtotal</td>
+              <td><strong>Subtotal</strong></td>
               <td id="trial-debit-subtotal"></td>
               <td id="trial-credit-subtotal"></td>
             </tr>
@@ -169,6 +169,12 @@ $queryCL->execute();
             <h4>As of <div class = "date"></div></h4>
           </div>
           <table class = "table">
+              <tr class = 'table-header-row'>
+               <td>TYPE</td>
+               <td>ACCOUNT NAME</td>
+               <td>VALUE</td>
+              </tr>
+
               <tr>
                 <td><strong>Revenues</strong></td>
                 <td></td>
@@ -208,6 +214,10 @@ $queryCL->execute();
                  <td><strong>Total Expenses</strong></td>
                  <td></td><td id = "total-expenses"></td>
               </tr>
+              <tr>
+              <td><strong>Net Profit</strong></td>
+              <td></td><td id = "net-profit"></td>
+              </tr>
           </table>
         </div>
         <div id = "balance-sheet-sheet" class="hide">
@@ -217,6 +227,11 @@ $queryCL->execute();
             <h4>As of <div class = "date"></div></h4>
               </div>
               <table class ="table">
+                <tr class = 'table-header-row'>
+                 <td>NAME</td>
+                 <td>DEBITS</td>
+                 <td>CREDITS</td>
+                </tr>
                 <tr>
                   <td><strong> ASSETS</strong></td><td></td><td></td>
                 </tr>
@@ -293,7 +308,7 @@ $queryCL->execute();
                 <tr>
                   <td><strong>TOTAL EQUITY AND LIABILITIES</strong</td>
                   <td></td>
-                  <td></td>
+                  <td id = "total-EL"></td>
                 </tr>
               </table>
                  
@@ -304,6 +319,29 @@ $queryCL->execute();
             <h4>Statement of Retained Earnings</h4>
             <h4>As of <div class = "date"></div></h4>
           </div>
+          <table class = "table" >
+                  <tr class = 'table-header-row'>
+                    <td>STATEMENTS</td>
+                    <td>VALUES</td>
+                  </tr>
+                  <tr>
+                    <td>Retained earnings at January 1, ####</td>
+                    <td>$###</td>
+
+                  </tr>
+                  <tr>
+                    <td>Add: net income earned in ####</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Subtotal</strong></td>
+                    <td>$###</td>
+                  </tr>
+                  <tr>
+                    <td> Retained earnings at ######</td>
+                    <td>$####</td>
+                  </tr>
+          </table>
         </div>
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>

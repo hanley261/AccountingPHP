@@ -49,6 +49,18 @@ function totalExpenses(){
 
     totalexpense.innerText = addCollection(expenses);
 }
+function netProfit(){
+    var revenue = document.getElementsByClassName("revenueGroup");
+    var totalRevenue = document.getElementById("total-revenue");
+
+    var expenses = document.getElementsByClassName("ExpenesGroup");
+    var totalexpense = document.getElementById("total-expenses");
+
+    totalexpense = addCollection(expenses);
+    totalRevenue = addCollection(revenue); 
+    
+    document.getElementById("net-profit").innerText = (totalRevenue - totalexpense);
+}
 function totalAssets(){
     var long = document.getElementById("long-term-assets").innerText;
     var current = document.getElementById("current-assets").innerText;
@@ -74,6 +86,27 @@ function totalLTL(){
     var LTL = document.getElementById("total-LTL");
     LTL.innerText = addCollection(LTLs);
 }
+function totalCL(){
+    var CLs = document.getElementsByClassName("CL");
+    var CL = document.getElementById("total-CL");
+    CL.innerText = addCollection(CLs);
+}
+function totalELTLCL(){
+    var LTLs = document.getElementsByClassName("LTL");
+    var LTL = document.getElementById("total-LTL");
+
+    var OEs = document.getElementsByClassName("OE");
+    var OE = document.getElementById("total-OE");
+
+    var CLs = document.getElementsByClassName("CL");
+    var CL = document.getElementById("total-CL");
+
+    CL = addCollection(CLs);
+    OE = addCollection(OEs);
+    LTL= addCollection(LTLs);
+
+    document.getElementById("total-EL").innerText = (CL +OE+LTL);
+}
 function addCollection(total){
     var sum=0;
     for(var i = 0; i < total.length; i++){
@@ -96,4 +129,7 @@ totalCA();
 totalAssets();
 totalOE();
 totalLTL();
+totalCL();
+totalELTLCL();
+netProfit();
 });
