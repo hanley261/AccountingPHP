@@ -1,12 +1,27 @@
 <?php
 // Initialize the session
 session_start();
- 
+$username = $_SESSION['username'];// grab the session username
 // If session variable is not set it will redirect to login page
 if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
   header("location: login.php");
   exit;
+  
+
 }
+
+$config['db'] = array(
+	'host'			=>'localhost',
+	'username'		=>'rmorga51',
+	'password'		=>'',
+	'dbname'		=>'rmorga51'
+);
+	
+
+$db = new PDO('mysql:host=' . $config['db']['host'] . ';dbname=' . $config['db']['dbname'], $config['db']['username'], $config['db']['password']); 
+$db->setATTRIBUTE(PDO::ATTR_EMULATE_PREPARES, false);
+$db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
 ?>
 <!doctype html>
 <html lang = en>
@@ -45,9 +60,19 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
                   <li class="nav-item">
                         <a class="nav-link" href="./JournalEntry.php">Journal Entry</a>
                 </li>
-                <li class="nav-item">
+				
+				<?php // to hide 'manager review' based on user type
+				$query = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
+				while($row = $query->fetch(PDO::FETCH_ASSOC)){
+					$userType = $row['user_type'];
+				}
+				/* if the username is equal to Regular, do not show the manager review link*/
+				if($userType != 'Regular'){ 
+				echo ' <li class="nav-item">
                          <a class="nav-link" href="./ManagerReview.php">Manager Review</a>
-                </li>
+                </li>';	
+				}
+				?>
                 <li class="nav-item">
                     <a class="nav-link" href="./ledgerAccounts.php">Account Ledgers</a>
                   </li>
@@ -64,7 +89,7 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
               <div class="pull-right">
                 <ul class="nav navbar-nav navbar-right">
                   <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="navbarDropdown" href="./login.php"><span class="glyphicon glyphicon-user"></span><?php echo htmlspecialchars($_SESSION['username']); ?></a>
+                    <a class="dropdown-toggle" data-toggle="navbarDropdown" href="./logout.php"><span class="glyphicon glyphicon-user"></span><?php echo htmlspecialchars($_SESSION['username']); ?></a>
                   </li>
                 </ul>
               </div>

@@ -4,9 +4,9 @@ $config['db'] = array(
 	'host'			=>'localhost',
 	'username'		=>'rmorga51',
 	'password'		=>'',
-	'dbname'		=>'accounting'
+	'dbname'		=>'rmorga51'
 );
-	
+	//change dbname back to 'accounting' before committing
 
 $db = new PDO('mysql:host=' . $config['db']['host'] . ';dbname=' . $config['db']['dbname'], $config['db']['username'], $config['db']['password']); 
 $db->setATTRIBUTE(PDO::ATTR_EMULATE_PREPARES, false);
@@ -79,6 +79,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     unset($db);
 }
 ?>
+
 <!doctype html>
 <html lang = en>
     <head>

@@ -4,9 +4,9 @@ $config['db'] = array(
 	'host'			=>'localhost',
 	'username'		=>'rmorga51',
 	'password'		=>'',
-	'dbname'		=>'accounting'
+	'dbname'		=>'rmorga51'
 );
-	
+// set dbname to accounting before commit	
 
 $db = new PDO('mysql:host=' . $config['db']['host'] . ';dbname=' . $config['db']['dbname'], $config['db']['username'], $config['db']['password']); 
 $db->setATTRIBUTE(PDO::ATTR_EMULATE_PREPARES, false);
