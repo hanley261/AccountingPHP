@@ -4,7 +4,7 @@ $config['db'] = array(
 	'host'			=>'localhost',
 	'username'		=>'rmorga51',
 	'password'		=>'',
-	'dbname'		=>'rmorga51'
+	'dbname'		=>'accounting'
 );
 	//change dbname back to 'accounting' before committing
 
