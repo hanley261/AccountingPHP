@@ -1,7 +1,7 @@
 <?php
 // Initialize the session
 session_start();
- 
+$username = $_SESSION['username'];// grab the session username
 // If session variable is not set it will redirect to login page
 if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
   header("location: login.php");
@@ -68,24 +68,80 @@ $query->execute();
                   <li class="nav-item">
                     <a class="nav-link"href="./COA.php">Charts of Account</a>
                   </li>
-                  <li class="nav-item">
-                        <a class="nav-link" href="./JournalEntry.php">Journal Entry</a>
-                </li>
-                <li class="nav-item">
+                  <?php // to hide 'manager review' based on user type
+				$query1 = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
+				while($row = $query1->fetch(PDO::FETCH_ASSOC)){
+					$userType = $row['user_type'];
+				}
+				/* if the username is equal to Regular, do not show the manager review link*/
+				if($userType != 'Administrator'){ 
+				echo ' <li class="nav-item">
+                         <a class="nav-link" href="./JournalEntry.php">Journal Entry</a>
+                </li>';	
+				}
+				?>
+				
+				<?php // to hide 'manager review' based on user type
+				$query1 = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
+				while($row = $query1->fetch(PDO::FETCH_ASSOC)){
+					$userType = $row['user_type'];
+				}
+				/* if the username is equal to Regular, do not show the manager review link*/
+				if($userType == 'Manger'){ 
+				echo ' <li class="nav-item">
                          <a class="nav-link" href="./ManagerReview.php">Manager Review</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./ledgerAccounts.php">Account Ledgers</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="./accounts.php">Accounts</a>
-                  </li>
-                  <li class="nav-item">
-                  <a class="nav-link" href="./FinancialStatements.php">Financial Statements</a>
-                </li>
-                  <li class="nav-item">
-                  <a class="nav-link" href="./logs.php">Logs</a>
-                </li>
+                </li>';	
+				}
+				?>
+                  <?php // to hide 'manager review' based on user type
+				$query1 = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
+				while($row = $query1->fetch(PDO::FETCH_ASSOC)){
+					$userType = $row['user_type'];
+				}
+				/* if the username is equal to Regular, do not show the manager review link*/
+				if($userType != 'Administrator'){ 
+				echo ' <li class="nav-item">
+                         <a class="nav-link" href="./ledgerAccounts.php">Accounts Ledgers</a>
+                </li>';	
+				}
+				?>
+                  <?php // to hide 'manager review' based on user type
+				$query1 = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
+				while($row = $query1->fetch(PDO::FETCH_ASSOC)){
+					$userType = $row['user_type'];
+				}
+				/* if the username is equal to Regular, do not show the manager review link*/
+				if($userType != 'Administrator'){ 
+				echo ' <li class="nav-item">
+                         <a class="nav-link" href="./accounts.php">Accounts</a>
+                </li>';	
+				}
+				?>
+                  <?php // to hide 'manager review' based on user type
+				$query1 = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
+				while($row = $query1->fetch(PDO::FETCH_ASSOC)){
+					$userType = $row['user_type'];
+				}
+				/* if the username is equal to Regular, do not show the manager review link*/
+				if($userType != 'Administrator'){ 
+				echo ' <li class="nav-item">
+                         <a class="nav-link" href="./FinancialStatements.php">Financial Statements</a>
+                </li>';	
+				}
+				?>
+                  <?php // to hide 'manager review' based on user type
+				$query1 = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
+				while($row = $query1->fetch(PDO::FETCH_ASSOC)){
+					$userType = $row['user_type'];
+				}
+				/* if the username is equal to Regular, do not show the manager review link*/
+				if($userType != 'Administrator'){ 
+				echo ' <li class="nav-item">
+                         <a class="nav-link" href="./logs.php">logs</a>
+                </li>';	
+				}
+				?>
+      
       
                 </ul>
                 
@@ -93,7 +149,7 @@ $query->execute();
               <div class="pull-right">
                 <ul class="nav navbar-nav navbar-right">
                   <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="navbarDropdown" href="./login.php"><span class="glyphicon glyphicon-user"></span>Login</a>
+                  <a class="dropdown-toggle" data-toggle="navbarDropdown" href="./logout.php"><span class="glyphicon glyphicon-user"></span><?php echo htmlspecialchars($_SESSION['username']); ?></a>
                   </li>
                 </ul>
               </div>
@@ -161,7 +217,7 @@ $query->execute();
 				echo "<td>",$row['account_name'],"</td>";
 				echo "<td>",$row['normal_side'],"</td>";
 				echo "<td>",$row['account_status'],"</td>";
-				echo "<td>",$row['balance'],"</td>";
+				echo "<td class='balance'>",$row['balance'],"</td>";
 				echo "<td>",$row['last_date_accessed'],"</td>";
 				echo "<td>",$row['last_user_id_accessed'],"</td>";
 				echo "</tr>";
@@ -170,9 +226,10 @@ $query->execute();
                     </table>
                     </div>
 
-    <script src="./scripts/activeAccounts.js" type="text/javascript"></script>
+  
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script src="./scripts/activeAccounts.js" type="text/javascript"></script>
     </body>
 </html>

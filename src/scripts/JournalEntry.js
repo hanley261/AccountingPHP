@@ -125,25 +125,11 @@ function description(){
     return false;
   }
 }
-function addDecimals(){
-  var debits = document.getElementsByClassName("debitBox");
-  var credits = document.getElementsByClassName("creditBox");
-  console.log(debits.length);
-  for(var i = 1; i < debits.length;i++){
-   var debDecimal = parseInt(debits[i].value);
-    debits[i].value = String(debDecimal.toFixed(2));
-  }
-  for(var i = 0; i < credits.length;i++){
-    var credDecimal = parseInt(credits[i].value);
-    credits[i].value = String(credDecimal.toFixed(2));
-  }
-}
 function SubmitReady(){
   errorBox.innerText = "";
     if(DateReady()){
       if(trialBalance()){
        if(description()){
-         addDecimals();
           destroyFirstCredit();
           form.submit();
        }

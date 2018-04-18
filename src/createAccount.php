@@ -1,3 +1,14 @@
+<?php
+// Initialize the session
+session_start();
+
+// If session variable is not set it will redirect to login page
+if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
+  header("location: login.php");
+  exit;
+}
+
+?>
 <!doctype html>
 <?php
 $config['db'] = array(
@@ -16,7 +27,16 @@ $query = $db->query("SELECT * FROM chart_of_accounts");
 
 $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'n/a' ORDER BY account_name ASC");
 
-
+$username = $_SESSION['username'];
+// to hide 'manager review' based on user type
+$query = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
+while($row = $query->fetch(PDO::FETCH_ASSOC)){
+$userType = $row['user_type'];
+}
+if($userType == 'Administrator'){
+  header("location: home.php");
+  exit;
+}
 
 ?>
 <html lang = en>
@@ -77,7 +97,7 @@ $query2 = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'n/
               <div class="pull-right">
                 <ul class="nav navbar-nav navbar-right">
                   <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="navbarDropdown" href="./login.php"><span class="glyphicon glyphicon-user"></span>Login</a>
+                  <a class="dropdown-toggle" data-toggle="navbarDropdown" href="./logout.php"><span class="glyphicon glyphicon-user"></span><?php echo htmlspecialchars($_SESSION['username']); ?></a>
                   </li>
                 </ul>
               </div>

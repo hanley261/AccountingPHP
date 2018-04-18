@@ -42,13 +42,10 @@ $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
               <!-- Header-->
 
-
-              <nav class="navbar navbar-expand navbar-primary">
-                <header class="navbar-brand" href="./home.html"><img src="assets/logo.png" alt="bluePrint" height="60"/></header>
-                
-                <span class="navbar-toggler-icon"></span>
-              </button>
-            
+              <nav class="navbar navbar-expand-md navbar-primary">
+                <header class="navbar-brand" href="./home.html">
+                <img src="assets/logo.png" alt="bluePrint" height="60"/></header>
+              
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                   <li class="nav-item active">
@@ -57,9 +54,18 @@ $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                   <li class="nav-item">
                     <a class="nav-link"href="./COA.php">Charts of Account</a>
                   </li>
-                  <li class="nav-item">
-                        <a class="nav-link" href="./JournalEntry.php">Journal Entry</a>
-                </li>
+                  <?php // to hide 'manager review' based on user type
+				$query = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
+				while($row = $query->fetch(PDO::FETCH_ASSOC)){
+					$userType = $row['user_type'];
+				}
+				/* if the username is equal to Regular, do not show the manager review link*/
+				if($userType != 'Administrator'){ 
+				echo ' <li class="nav-item">
+                         <a class="nav-link" href="./JournalEntry.php">Journal Entry</a>
+                </li>';	
+				}
+				?>
 				
 				<?php // to hide 'manager review' based on user type
 				$query = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
@@ -67,24 +73,60 @@ $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 					$userType = $row['user_type'];
 				}
 				/* if the username is equal to Regular, do not show the manager review link*/
-				if($userType != 'Regular'){ 
+				if($userType == 'Manger'){ 
 				echo ' <li class="nav-item">
                          <a class="nav-link" href="./ManagerReview.php">Manager Review</a>
                 </li>';	
 				}
 				?>
-                <li class="nav-item">
-                    <a class="nav-link" href="./ledgerAccounts.php">Account Ledgers</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="./accounts.php">Accounts</a>
-                  </li>
-                  <li class="nav-item">
-                  <a class="nav-link" href="./FinancialStatements.php">Financial Statements</a>
-                </li>
-                  <li class="nav-item">
-                  <a class="nav-link" href="./logs.php">Logs</a>
-                </li>
+                  <?php // to hide 'manager review' based on user type
+				$query = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
+				while($row = $query->fetch(PDO::FETCH_ASSOC)){
+					$userType = $row['user_type'];
+				}
+				/* if the username is equal to Regular, do not show the manager review link*/
+				if($userType != 'Administrator'){ 
+				echo ' <li class="nav-item">
+                         <a class="nav-link" href="./ledgerAccounts.php">Accounts Ledgers</a>
+                </li>';	
+				}
+				?>
+                  <?php // to hide 'manager review' based on user type
+				$query = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
+				while($row = $query->fetch(PDO::FETCH_ASSOC)){
+					$userType = $row['user_type'];
+				}
+				/* if the username is equal to Regular, do not show the manager review link*/
+				if($userType != 'Administrator'){ 
+				echo ' <li class="nav-item">
+                         <a class="nav-link" href="./accounts.php">Accounts</a>
+                </li>';	
+				}
+				?>
+                  <?php // to hide 'manager review' based on user type
+				$query = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
+				while($row = $query->fetch(PDO::FETCH_ASSOC)){
+					$userType = $row['user_type'];
+				}
+				/* if the username is equal to Regular, do not show the manager review link*/
+				if($userType != 'Administrator'){ 
+				echo ' <li class="nav-item">
+                         <a class="nav-link" href="./FinancialStatements.php">Financial Statements</a>
+                </li>';	
+				}
+				?>
+                  <?php // to hide 'manager review' based on user type
+				$query = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
+				while($row = $query->fetch(PDO::FETCH_ASSOC)){
+					$userType = $row['user_type'];
+				}
+				/* if the username is equal to Regular, do not show the manager review link*/
+				if($userType != 'Administrator'){ 
+				echo ' <li class="nav-item">
+                         <a class="nav-link" href="./logs.php">logs</a>
+                </li>';	
+				}
+				?>
       
                 </ul>
                 
@@ -104,12 +146,13 @@ $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
             <div class="container">
-                    <div class="row">
+                  <h1>Dashboard</h1>
+                    <!--<div class="row">
                      <a href ="./createAccount.html" class="btn btn-success margin-10">Create Account</a>
                      <a href="./journalEntry.html" class="btn btn-success margin-10">Journalize</a>
                      <a class="btn btn-success margin-10">Post Account</a>
                      <a href = "./ledgerAccounts.php" class="btn btn-success margin-10">Ledger Accounts</a>
-                    </div>
+                    </div>-->
                   </div>
 
 
