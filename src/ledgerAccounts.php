@@ -184,6 +184,15 @@ echo '<table class= "table">';
         echo '<td class = "table-credit">',$row['credit'],'</td>';
         echo '<td></td>';
         }
+              
+        if($coa['balance'] > 0){
+          echo '<tr><td>End Bal</td>';
+          echo "<td>",$coa['balance'],"</td><td></td></tr>";
+        }
+        elseif($coa['balance'] < 0){
+          echo '<tr><td>End Bal</td>';
+          echo "<td></td><td>",$coa['balance'],"</td></tr>";
+        }
         echo  '</tbody></table>';
         echo '</div>';
  }

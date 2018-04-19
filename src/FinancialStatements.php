@@ -195,7 +195,7 @@ $queryCL->execute();
         </div>
         <div id = "trial-balance-sheet" class="show">
         <div class="table-title">
-          <h4>Anywhere Accounting Company </h4>
+          <h4>Addams and Family Inc.</h4>
             <h4>Trial Balance</h4>
             <h4>As of <span class = "date"></span></h4>
         </div>
@@ -230,7 +230,7 @@ $queryCL->execute();
         </div>
         <div id = "income-statement-sheet" class ="hide">
           <div class="table-title">
-            <h4>Anywhere Accounting Company</h4>
+            <h4>Addams and Family Inc.</h4>
             <h4>Income Statement</h4>
             <h4>As of <div class = "date"></div></h4>
           </div>
@@ -288,15 +288,15 @@ $queryCL->execute();
         </div>
         <div id = "balance-sheet-sheet" class="hide">
           <div class ="table-title">
-            <h4>Anywhere Accounting Company </h4>
+            <h4>Addams and Family Inc.</h4>
             <h4>Balance Sheet</h4>
             <h4>As of <div class = "date"></div></h4>
               </div>
               <table class ="table">
                 <tr class = 'table-header-row'>
                  <td>NAME</td>
-                 <td align="right">DEBITS</td>
-                 <td align="right">CREDITS</td>
+                 <td align="right">ACCOUNT TOTALS</td>
+                 <td align="right">SUBTOTALS</td>
                 </tr>
                 <tr>
                   <td><strong> ASSETS</strong></td><td></td><td></td>
@@ -347,6 +347,11 @@ $queryCL->execute();
                   echo "<td align='right' class='OE'>",$OERow['balance'],"</td><td></td></tr>";
                   }
                  ?>
+                 <tr>
+                  <td>Retained Earnings</td>
+                  <td align ="right" id ="retained-earnings-value"></td>
+                  <td></td>
+                 </tr>
                 <tr>
                   <td><strong>Long Term Liabilities</strong></td>
                   <td></td>
@@ -381,7 +386,7 @@ $queryCL->execute();
         </div>
         <div id = "retained-earnings-sheet" class="hide">
           <div class = "table-title">
-            <h4>Anywhere Accounting Company </h4>
+            <h4>Addams and Family Inc.</h4>
             <h4>Statement of Retained Earnings</h4>
             <h4>As of <div class = "date"></div></h4>
           </div>

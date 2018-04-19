@@ -34,6 +34,7 @@ function subtotalTrialBalance(){
     var debitNum = document.getElementsByClassName("table-debit");
     var creditNum = document.getElementsByClassName("table-credit");
 
+    creditNum = changeCollectionNeg(creditNum);
     subDebit.innerText = addCollection(debitNum);
     subCredit.innerText = addCollection(creditNum);
    
@@ -41,6 +42,8 @@ function subtotalTrialBalance(){
 function totalRevenue(){
     var revenue = document.getElementsByClassName("revenueGroup");
     var totalRevenue = document.getElementById("total-revenue");
+
+    revenue = changeCollectionNeg(revenue);
     totalRevenue.innerText = addCollection(revenue); 
 }
 function totalExpenses(){
@@ -60,6 +63,11 @@ function netProfit(){
     totalRevenue = addCollection(revenue); 
     
     document.getElementById("net-profit").innerText = (totalRevenue - totalexpense);
+    console.log(document.getElementById("net-profit").innerText);
+    document.getElementById("retained-earnings-value").innerText = document.getElementById("net-profit").innerText;
+    
+  
+    
 }
 function totalAssets(){
     var long = document.getElementById("long-term-assets").innerText;
@@ -79,16 +87,21 @@ function totalCA(){
 function totalOE(){
     var OEs = document.getElementsByClassName("OE");
     var OE = document.getElementById("total-OE");
+    OEs = changeCollectionNeg(OEs);
     OE.innerText = addCollection(OEs);
 }
 function totalLTL(){
     var LTLs = document.getElementsByClassName("LTL");
     var LTL = document.getElementById("total-LTL");
+
+    LTLs = changeCollectionNeg(LTLs);
     LTL.innerText = addCollection(LTLs);
 }
 function totalCL(){
     var CLs = document.getElementsByClassName("CL");
     var CL = document.getElementById("total-CL");
+
+    CLs = changeCollectionNeg(CLs);
     CL.innerText = addCollection(CLs);
 }
 function totalELTLCL(){
@@ -106,15 +119,29 @@ function totalELTLCL(){
     LTL= addCollection(LTLs);
 
     document.getElementById("total-EL").innerText = (CL +OE+LTL);
+
 }
 function addCollection(total){
     var sum=0;
     for(var i = 0; i < total.length; i++){
         sum += parseInt(total[i].innerText);
     }
+    sum = makeNumPositive(sum);
     return sum;
 }
-
+function changeCollectionNeg(collection){
+    for(var i = 0; i < collection.length;i++){
+        collection[i].innerText = makeNumPositive(parseInt(collection[i].innerText));
+    }
+    return collection;
+}
+function makeNumPositive(number){
+    return Math.abs(number);
+}
+function addRetained(){
+    totalEL = document.getElementById("total-EL");
+    totalEL.innerText = parseInt(totalEL.innerText) +parseInt(document.getElementById("retained-earnings-value").innerText);
+}
 $(document).ready(function(){
 $("#trial-balance").click(changeSheet);
 $("#income-statement").click(changeSheet);
@@ -132,4 +159,5 @@ totalLTL();
 totalCL();
 totalELTLCL();
 netProfit();
+addRetained();
 });
