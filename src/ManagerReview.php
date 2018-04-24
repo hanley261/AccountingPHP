@@ -30,9 +30,9 @@ if(isset  ($_GET['Subject'])){
 else{
   $filter = 'pending';
 }
-$query = $db->query("SELECT * FROM journal_entry WHERE approval_status = '$filter'");
+$query = $db->query("SELECT * FROM journal_entry WHERE approval_status = '$filter' ORDER BY date1 ASC");
 $query2 = $db->query("SELECT * FROM je_accounts WHERE transaction_id = 1");
-$query3 = $db->query("SELECT * FROM journal_entry INNER JOIN je_accounts ON journal_entry.transaction_id = je_accounts.transaction_id");
+$query3 = $db->query("SELECT * FROM journal_entry INNER JOIN je_accounts ON journal_entry.transaction_id = je_accounts.transaction_id ORDER BY date1 ASC");
 ?>
 <html lang = en>
     <head>

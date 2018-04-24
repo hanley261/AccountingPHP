@@ -242,7 +242,7 @@ $query4 = $db->query("SELECT MAX(transaction_id)+1 AS max_number FROM journal_en
                 <div id ="transaction-right">
                     <div id ="a" class = "journalEntry-description">
                       <h3>Description</h3>
-                      <textarea id = "description" class = "form-control" maxlength="254" name = "description1"></textarea>
+                      <input id = "description" class = "form-control" maxlength="254" name = "description1"></input>
              
                       <input type="file" id="upload-file">
                     </div>
@@ -250,7 +250,7 @@ $query4 = $db->query("SELECT MAX(transaction_id)+1 AS max_number FROM journal_en
                 <div id="submission">
                     <div id ="errorBox"></div>
                     <div class="journalEntry-buttons">
-                        <button class="btn-danger"><a id= "cancel" href="./home.php">Cancel</a></button>
+                        <button class="btn-danger"><a id= "cancel" href="./JournalEntry.php">Cancel</a></button>
                         <div id = "submit" class="btn btn-success right" name="submit" value="submit">Submit</div>
                     </div>
               </div>

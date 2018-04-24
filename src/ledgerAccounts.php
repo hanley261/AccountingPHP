@@ -22,6 +22,18 @@ $db = new PDO('mysql:host=' . $config['db']['host'] . ';dbname=' . $config['db']
 $db->setATTRIBUTE(PDO::ATTR_EMULATE_PREPARES, false);
 $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+if(isset  ($_GET['Subject'])){
+  $order = $_GET['Subject'];
+  $queryFilter = $db->prepare("SELECT * FROM chart_of_accounts
+   WHERE account_status != 'n/a' AND balance != 0 
+   ORDER BY '$order' ASC");
+}
+else{
+  $queryFilter = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY 'account_name' ASC");
+}
+
+$queryFilter->execute();
+
 $query = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a'");
 
 $query->execute();
@@ -162,6 +174,16 @@ $query->execute();
                             </div>
                         </div>
                     </div>
+                    <form method="get" action="ledgerAccounts.php" class ="form-inline"> 
+                    <select  name="Subject" class ="form-control">
+                    <?php 
+                      while($filter = $queryFilter->fetch(PDO::FETCH_ASSOC)){
+                          echo "<option value =",$filter['account_name'],">",$filter['account_name'],"</option>";
+                      }
+                    ?>
+                    </select>
+                    <input class = "btn btn-success float-right" align = "right" type="submit" value="Filter">
+                    </form>
 <!--Body of ledger accoutns -->
 <div id = "table-container">
 <?php
@@ -187,18 +209,24 @@ echo '<table class= "table">';
               
         if($coa['balance'] > 0){
           echo '<tr><td>End Bal</td>';
-          echo "<td>",$coa['balance'],"</td><td></td></tr>";
+          echo "<td class = 'totalDebits'>",$coa['balance'],"</td><td></td></tr>";
         }
         elseif($coa['balance'] < 0){
           echo '<tr><td>End Bal</td>';
-          echo "<td></td><td>",$coa['balance'],"</td></tr>";
+          echo "<td></td><td class='totalCredits'>",$coa['balance'],"</td></tr>";
         }
         echo  '</tbody></table>';
         echo '</div>';
  }
 ?>
 </div>
-    
+<div id="filterWord"class="hide"><?php
+  if(isset  ($_GET['Subject'])){
+  echo $_GET['Subject'];
+   }
+  ?>
+</div>
+
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>

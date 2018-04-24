@@ -51,7 +51,6 @@ function addCredit(){
 function removeRow(){
   $(".remove").on('click',function(events){
   var row = $(this).closest('tr');
-  console.log(row.html);
   row.remove();
 });
 }
@@ -61,9 +60,8 @@ Subtotals
 function subtotalDebits(){
   var debits = $(".debitBox");
   var sub = 0;
-  console.log(debits.length);
   for(var i = 1; i < debits.length;i++){
-    sub += parseInt(debits[i].value);
+    sub += Number(debits[i].value);
   } 
   document.getElementById("debitSub").value = sub;
 }
@@ -72,7 +70,7 @@ function subtotalCredits(){
   var sub = 0;
   console.log(credits.length);
   for(var i = 1; i < credits.length;i++){
-    sub += parseInt(credits[i].value);
+    sub += Number(credits[i].value);
   } 
   document.getElementById("creditSub").value = sub;
 }/*

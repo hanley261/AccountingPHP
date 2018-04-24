@@ -20,38 +20,60 @@ function createElement(){
     x.add(option);
     }
 }
+
 function haveDecimals(){
     var balance = document.getElementsByClassName("balance");
     var count;
+    var count2;
     var index;
+    console.log("length"+balance.length);
     for(var j = 0; j < balance.length; j++){
-        if (balance[j].innerText.indexOf(".") != -1) {
-            count= 0; 
-            index = balance[j].innerText.indexOf(".");
-            console.log(index);
-            for(var i =index; i >=0; i--){
-                count++;
-                
-                if(count >=3){
-                    count =0;
-                    balance[j].innerText = insertCommas(balance[j].innerText,i );
+        console.log("value"+balance[j]);
+        if(balance[j].innerText != "0" ){
+            if (balance[j].innerText.indexOf(".") != -1) {
+                count= 0; 
+                index = balance[j].innerText.indexOf(".");
+                console.log(index);
+                for(var i =index-1; i >0; i--){
+                    count++;
+                    
+                    if(count >=3){
+                        count =0;
+                        balance[j].innerText = insertCommas(balance[j].innerText,i );
+                    }
+                }
+
+            } 
+            else{
+                balance[j].innerText = balance[j].innerText + ".00";
+                index = balance[j].innerText.indexOf(".");
+                count2 = 0;
+                for(var i =index-1; i >0; i--){
+                    count2++;
+                    
+                    if(count2 >=3){
+                        count2 =0;
+                        console.log(balance[j].innerText);
+                        balance[j].innerText = insertCommas(balance[j].innerText,i );
+                    }
                 }
             }
-
-        } 
-}
-
-    for(var i=0; j < balance.length;i++){
-        var target = balance[j].innerText;
-
+        }
     }
+}
+function negAndCom(number1){
+    if(number1.charAt(0) == "-" && number1.charAt(1) == ","){
+        number1 = number1.replace("-,","-");
+    }
+    return number1;
 }
 
 function insertCommas(number, index){
-    var left = number.slice(index, number.length);
-    var right = number.slice(0, index);
+    var right = number.slice(index, number.length);
+    var left = number.slice(0, index);
     number = left +","+right;
     console.log(number);
+    number = negAndCom(number);
     return number;
 
 }

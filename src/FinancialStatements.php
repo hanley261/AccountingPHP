@@ -23,29 +23,24 @@ $db->setATTRIBUTE(PDO::ATTR_EMULATE_PREPARES, false);
 $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 //Trial Balance
-$queryLeft = $db->prepare("SELECT * FROM chart_of_accounts WHERE normal_side = 'Left' AND balance != 0 ORDER BY account_code ASC");
-$queryRight = $db->prepare("SELECT * FROM chart_of_accounts WHERE normal_side = 'Right' AND balance != 0 ORDER BY account_code ASC");
-
-    
-
+$queryLeft = $db->prepare("SELECT * FROM chart_of_accounts WHERE normal_side = 'Left' AND balance > 0 ORDER BY account_code ASC");
+$queryLeftNeg = $db->prepare("SELECT * FROM chart_of_accounts WHERE normal_side = 'Left' AND balance < 0 ORDER BY account_code ASC");
+$queryRight = $db->prepare("SELECT * FROM chart_of_accounts WHERE normal_side = 'Right' AND balance < 0 ORDER BY account_code ASC");
+$queryRightPos = $db->prepare("SELECT * FROM chart_of_accounts WHERE normal_side = 'Right' AND balance > 0 ORDER BY account_code ASC");
 
 $queryLeft->execute();
-
-
+$queryLeftNeg->execute();
 
 $queryRight->execute();
-
+$queryRightPos->execute();
 
 //Income Statment
 $queryRevenue = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_type = 'Revenue' AND balance != 0 ORDER BY account_code ASC");
 $queryExpenses = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_type = 'Operating Expense' AND balance != 0 ORDER BY account_code ASC");
 
-
 $queryRevenue->execute();
 
-
 $queryExpenses->execute();
-
 
 //Balance Sheet
 
@@ -62,6 +57,16 @@ $queryOE->execute();
 $queryLTL->execute();
 $queryCL->execute();
 
+//retained earnings not this year
+$queryREPrevious = $db->prepare("SELECT SUM(debit) AS sumd, SUM(credit) AS sumc 
+                        from je_accounts
+                        INNER JOIN journal_entry ON je_accounts.transaction_id = journal_entry.transaction_id
+                        WHERE journal_entry.approval_status = 'approved' 
+                        AND journal_entry.date1 NOT LIKE '%2018'");
+$queryREPrevious->execute();
+
+$queryDiv = $db->prepare("SELECT * from chart_of_accounts WHERE account_name = 'dividend'" );
+$queryDiv->execute();
 
 ?>
 <html lang = en>
@@ -212,19 +217,35 @@ $queryCL->execute();
                   echo "<td></td></tr>";
                }
               ?>
+                            <?php
+               while($LNrRow = $queryLeftNeg->fetch(PDO::FETCH_ASSOC)){
+                  echo "<tr class = 'table-row-credit'><td>",$LNrRow['account_name'],"</td>";
+                  echo "<td></td>";
+                  echo "<td align='right' class='table-credit'>",$LNrRow['balance'],"</td></tr>";
+                  
+               }
+
+            ?>
               <?php
                while($trRow = $queryRight->fetch(PDO::FETCH_ASSOC)){
-                  echo "<tr class = 'table-row-credit'><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",$trRow['account_name'],"</td>";
+                  echo "<tr class = 'table-row-credit'><td>",$trRow['account_name'],"</td>";
                   echo "<td></td>";
-                  echo "<td align='right' class='table-credit'>",$trRow['balance'],"</td></tr>";
+                  echo "<td align='right' class='table-credit'>",$trRow['balance'],"</td></tr>";    
+               }
+            ?>
+            <?php
+               while($RPRow = $queryRightPos->fetch(PDO::FETCH_ASSOC)){
+                  echo "<tr class = 'table-row-credit'><td>",$RPRow['account_name'],"</td>";
+                  echo "<td></td>";
+                  echo "<td align='right' class='table-credit'>",$RPRow['balance'],"</td></tr>";
                   
                }
 
             ?>
             <tr>
-              <td><strong>Subtotal</strong></td>
-              <td id="trial-debit-subtotal" align="right"></td>
-              <td id="trial-credit-subtotal" align="right"></td>
+              <td><strong>Total</strong></td>
+              <td id="trial-debit-subtotal" class = "total" align="right"></td>
+              <td id="trial-credit-subtotal" class ="total" align="right"></td>
             </tr>
             </table>
         </div>
@@ -232,7 +253,7 @@ $queryCL->execute();
           <div class="table-title">
             <h4>Addams and Family Inc.</h4>
             <h4>Income Statement</h4>
-            <h4>As of <div class = "date"></div></h4>
+            <h4>As of <span class = "date"></span></h4>
           </div>
           <table class = "table">
               <tr class = 'table-header-row'>
@@ -259,7 +280,7 @@ $queryCL->execute();
               <tr>
                 <td><strong>Total Revenue</strong></td>
                 <td></td>
-                <td id ="total-revenue"></td>  
+                <td id ="total-revenue" align = "right" class = "total"></td>  
               </tr>
               <tr>
                  <td><strong>Expenses</strong></td>
@@ -278,11 +299,11 @@ $queryCL->execute();
 
               <tr>
                  <td><strong>Total Expenses</strong></td>
-                 <td></td><td id = "total-expenses"></td>
+                 <td></td><td id = "total-expenses" class = "total" align="right"></td>
               </tr>
               <tr>
               <td><strong>Net Profit</strong></td>
-              <td></td><td  align='right' id = "net-profit"></td>
+              <td></td><td  align='right' id = "net-profit" class ="total"></td>
               </tr>
           </table>
         </div>
@@ -290,7 +311,7 @@ $queryCL->execute();
           <div class ="table-title">
             <h4>Addams and Family Inc.</h4>
             <h4>Balance Sheet</h4>
-            <h4>As of <div class = "date"></div></h4>
+            <h4>As of <span class = "date"></span></h4>
               </div>
               <table class ="table">
                 <tr class = 'table-header-row'>
@@ -302,20 +323,9 @@ $queryCL->execute();
                   <td><strong> ASSETS</strong></td><td></td><td></td>
                 </tr>
                 <tr>
-                 <td><strong>Long Term Assets</strong></td><td></td>
-                 <td id = "long-term-assets" align='right'>
-                 </tr>
-                 <?php
-                  while($LTARow = $queryLTA->fetch(PDO::FETCH_ASSOC)){
-                  echo "<tr>";
-                  echo "<td>",$LTARow['account_name'],"</td>";
-                  echo "<td align='right' class='LTA'>",$LTARow['balance'],"</td><td></td></tr>";
-                  }
-                 ?>
-                <tr>
                   <td><strong>Current Assets</strong></td>
                   <td></td>
-                  <td id = "current-assets" align='right'></td>
+                  <td id = "current-assets" class = "subtotal" align='right'></td>
                 </tr>
                 <?php
                   while($CARow = $queryCA->fetch(PDO::FETCH_ASSOC)){
@@ -325,9 +335,21 @@ $queryCL->execute();
                   }
                  ?>
                 <tr>
-                  <td><strong>TOTAL ASSETS</strong</td>
+                 <td><strong>Long Term Assets</strong></td><td></td>
+                 <td id = "long-term-assets" class = "subtotal"align='right'>
+                 </tr>
+                 <?php
+                  while($LTARow = $queryLTA->fetch(PDO::FETCH_ASSOC)){
+                  echo "<tr>";
+                  echo "<td>",$LTARow['account_name'],"</td>";
+                  echo "<td align='right' class='LTA'>",$LTARow['balance'],"</td><td></td></tr>";
+                  }
+                 ?>
+                
+                <tr>
+                  <td><strong>TOTAL ASSETS</strong></td>
                   <td></td>
-                  <td id = "total-assets" align='right'></td>
+                  <td id = "total-assets" class="total"align='right'></td>
                 </tr>
                 <tr>
                   <td><strong>EQUITY AND LIABILITIES</strong></td>
@@ -335,9 +357,33 @@ $queryCL->execute();
                   <td id = "total-EQ-LIA"align='right'></td>
                 </tr>
                 <tr>
+                  <td><strong>Long Term Liabilities</strong></td>
+                  <td></td>
+                  <td id = "total-LTL"align='right'class="subtotal"></td>
+                </tr>
+                <?php
+                  while($LTLRow = $queryLTL->fetch(PDO::FETCH_ASSOC)){
+                  echo "<tr>";
+                  echo "<td>",$LTLRow['account_name'],"</td>";
+                  echo "<td align='right' class='LTL'>",$LTLRow['balance'],"</td><td></td></tr>";
+                  }
+                 ?>
+                <tr>
+                  <td><strong>Current Liabilities</strong></td>
+                  <td></td>
+                  <td id = "total-CL"align='right' class="subtotal"></td>
+                </tr>
+                <?php
+                  while($CLRow = $queryCL->fetch(PDO::FETCH_ASSOC)){
+                  echo "<tr>";
+                  echo "<td>",$CLRow['account_name'],"</td>";
+                  echo "<td align='right' class='CL'>",$CLRow['balance'],"</td><td></td></tr>";
+                  }
+                 ?>
+                <tr>
                   <td><strong>Owner's Equity</strong></td>
                   <td></td>
-                  <td id = "total-OE"align='right'></td>
+                  <td id = "total-OE"align='right'class = "subtotal"></td>
                 </tr>
                 <?php
                   
@@ -353,33 +399,9 @@ $queryCL->execute();
                   <td></td>
                  </tr>
                 <tr>
-                  <td><strong>Long Term Liabilities</strong></td>
-                  <td></td>
-                  <td id = "total-LTL"align='right'></td>
-                </tr>
-                <?php
-                  while($LTLRow = $queryLTL->fetch(PDO::FETCH_ASSOC)){
-                  echo "<tr>";
-                  echo "<td>",$LTLRow['account_name'],"</td>";
-                  echo "<td align='right' class='LTL'>",$LTLRow['balance'],"</td><td></td></tr>";
-                  }
-                 ?>
-                <tr>
-                  <td><strong>Current Liabilities</strong></td>
-                  <td></td>
-                  <td id = "total-CL"align='right'></td>
-                </tr>
-                <?php
-                  while($CLRow = $queryCL->fetch(PDO::FETCH_ASSOC)){
-                  echo "<tr>";
-                  echo "<td>",$CLRow['account_name'],"</td>";
-                  echo "<td align='right' class='CL'>",$CLRow['balance'],"</td><td></td></tr>";
-                  }
-                 ?>
-                <tr>
                   <td><strong>TOTAL EQUITY AND LIABILITIES</strong</td>
                   <td></td>
-                  <td align='right' id = "total-EL"></td>
+                  <td align='right' id = "total-EL" class = "total"></td>
                 </tr>
               </table>
                  
@@ -388,7 +410,7 @@ $queryCL->execute();
           <div class = "table-title">
             <h4>Addams and Family Inc.</h4>
             <h4>Statement of Retained Earnings</h4>
-            <h4>As of <div class = "date"></div></h4>
+            <h4>As of <span class = "date"></span></h4>
           </div>
           <table class = "table" >
                   <tr class = 'table-header-row'>
@@ -396,21 +418,38 @@ $queryCL->execute();
                     <td>VALUES</td>
                   </tr>
                   <tr>
-                    <td>Retained earnings at January 1, ####</td>
-                    <td>$###</td>
+                    <td>Retained earnings at January 1, <span class = "this-year"></span></td>
+                    <td><span id = "prev-retained"> 
+                    <?php
+                        while($REPrev = $queryREPrevious->fetch(PDO::FETCH_ASSOC)){
+                          $total = ($REPrev['sumd'] -$REPrev['sumc']);
+                          
+                          }
+                          echo trim($total);
+                    ?>
+                    </span></td>
 
                   </tr>
                   <tr>
-                    <td>Add: net income earned in ####</td>
-                    <td></td>
+                    <td>Add: net income earned in <span class = "this-year"></span></td>
+                    <td id="add-net"></td>
                   </tr>
                   <tr>
-                    <td><strong>Subtotal</strong></td>
-                    <td>$###</td>
+                    <td>Less: Dividends</td>
+                    <td id = "Dividends">
+                    <?php
+                        $c= 0;
+                        while($div = $queryDiv->fetch(PDO::FETCH_ASSOC)){
+                          echo ($div['sumd'] + 0);
+                          $c =$c+1;
+                          }
+                          if($c == 0){echo 0;}
+                    ?>
+                    </td>
                   </tr>
                   <tr>
-                    <td> Retained earnings at ######</td>
-                    <td>$####</td>
+                    <td> Retained earnings at <span class = "this-year"></span></td>
+                    <td id = "retained-total" class = "total"></td>
                   </tr>
           </table>
         </div>
