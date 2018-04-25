@@ -207,10 +207,10 @@ echo '<table class= "table">';
         
         while($row = $query2->fetch(PDO::FETCH_ASSOC)){
         echo '<tr>';
-        echo '<td>',$row['date1'],'</td>';
-        echo '<td class = "table-debit">',$row['debit'],'</td>';
-        echo '<td class = "table-credit">',$row['credit'],'</td>';
-        echo '<td></td>';
+        echo '<td><a href="./transactions.php?Subject=',$row['transaction_id'],'">',$row['date1'],'</a></td>';
+        echo '<td><a href="./transactions.php?Subject=',$row['transaction_id'],'"><span class = "table-debit">',$row['debit'],'</span></a></td>';
+        echo '<td><a href="./transactions.php?Subject=',$row['transaction_id'],'"><span class = "table-credit">',$row['credit'],'</span></a></td>';
+        echo '<td></tr>';
         }
               
         if($coa['balance'] > 0){

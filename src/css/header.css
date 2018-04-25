@@ -7,7 +7,9 @@ Header
     color:white !important;
     font-size: 1.2em !important;
     }
-
+.dropdown-toggle{
+    color:white;
+}
  nav li{
     padding-right:30px;
    } 
