@@ -123,7 +123,34 @@ function description(){
     return false;
   }
 }
+function emptyvalue(collection){
+  for(var i = 0; i < collection.length;i++){
+      if(Number(collection[i].innerText) == ""){
+        console.log("collection[i].innerText");
+        collection[i].value = 0;
+      }
+     
+  }
+
+}
+function checkAccounts(){
+  var accounts =document.getElementsByTagName("select");
+  for(var i =0; i < accounts.length;i++){
+      for(var j =0; j<accounts.length;j++){
+        if(j != i){
+            if(accounts[i].value == accounts[j].value){
+              return false;
+            }
+        }
+      }
+  }
+  return true;
+}
 function SubmitReady(){
+  var debits = document.getElementsByClassName("debitBox");
+  var credits = document.getElementsByClassName("creditBox");
+  emptyvalue(debits);
+  emptyvalue(credits);
   errorBox.innerText = "";
     if(DateReady()){
       if(trialBalance()){

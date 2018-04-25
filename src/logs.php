@@ -1,7 +1,7 @@
 <?php
 // Initialize the session
 session_start();
- 
+$username = $_SESSION['username'];// grab the session username
 // If session variable is not set it will redirect to login page
 if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
   header("location: login.php");
@@ -9,6 +9,21 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
 }
 ?>
 <!doctype html>
+<?php
+$config['db'] = array(
+	'host'			=>'localhost',
+	'username'		=>'rmorga51',
+	'password'		=>'',
+	'dbname'		=>'accounting'
+);
+	
+
+$db = new PDO('mysql:host=' . $config['db']['host'] . ';dbname=' . $config['db']['dbname'], $config['db']['username'], $config['db']['password']); 
+$db->setATTRIBUTE(PDO::ATTR_EMULATE_PREPARES, false);
+$db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+
+?>
 <html lang = en>
     <head>
                 <!-- Required meta tags -->
@@ -27,12 +42,12 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
 ?>
       
         
-             <!-- Header-->
+              <!-- Header-->
 
 
-               <nav class="navbar navbar-expand navbar-primary">
+                      <nav class="navbar navbar-expand navbar-primary">
                 <header class="navbar-brand" href="./home.html"><img src="assets/logo.png" alt="bluePrint" height="60"/></header>
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNavbar">
+                
                 <span class="navbar-toggler-icon"></span>
               </button>
             
@@ -44,21 +59,80 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
                   <li class="nav-item">
                     <a class="nav-link"href="./COA.php">Charts of Account</a>
                   </li>
-                  <li class="nav-item">
-                        <a class="nav-link" href="./JournalEntry.php">Journal Entry</a>
-                </li>
-                <li class="nav-item">
+                  <?php // to hide 'manager review' based on user type
+				$query1 = $db->query("SELECT * FROM users WHERE username ='$username'");  // grab user_type of matching username
+				while($row = $query1->fetch(PDO::FETCH_ASSOC)){
+					$userType = $row['user_type'];
+				}
+				/* if the username is equal to Regular, do not show the manager review link*/
+				if($userType != 'Administrator'){ 
+				echo ' <li class="nav-item">
+                         <a class="nav-link" href="./JournalEntry.php">Journal Entry</a>
+                </li>';	
+				}
+				?>
+				
+				<?php // to hide 'manager review' based on user type
+				$query1 = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
+				while($row = $query1->fetch(PDO::FETCH_ASSOC)){
+					$userType = $row['user_type'];
+				}
+				/* if the username is equal to Regular, do not show the manager review link*/
+				if($userType == 'Manger'){ 
+				echo ' <li class="nav-item">
                          <a class="nav-link" href="./ManagerReview.php">Manager Review</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./ledgerAccounts.php">Account Ledgers</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="./accounts.php">Accounts</a>
-                  </li>
-                  <li class="nav-item">
-                  <a class="nav-link" href="./logs.php">Logs</a>
-                </li>
+                </li>';	
+				}
+				?>
+                  <?php // to hide 'manager review' based on user type
+				$query1 = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
+				while($row = $query1->fetch(PDO::FETCH_ASSOC)){
+					$userType = $row['user_type'];
+				}
+				/* if the username is equal to Regular, do not show the manager review link*/
+				if($userType != 'Administrator'){ 
+				echo ' <li class="nav-item">
+                         <a class="nav-link" href="./ledgerAccounts.php">Accounts Ledgers</a>
+                </li>';	
+				}
+				?>
+                  <?php // to hide 'manager review' based on user type
+				$query1 = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
+				while($row = $query1->fetch(PDO::FETCH_ASSOC)){
+					$userType = $row['user_type'];
+				}
+				/* if the username is equal to Regular, do not show the manager review link*/
+				if($userType != 'Administrator'){ 
+				echo ' <li class="nav-item">
+                         <a class="nav-link" href="./accounts.php">Accounts</a>
+                </li>';	
+				}
+				?>
+                  <?php // to hide 'manager review' based on user type
+				$query1 = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
+				while($row = $query1->fetch(PDO::FETCH_ASSOC)){
+					$userType = $row['user_type'];
+				}
+				/* if the username is equal to Regular, do not show the manager review link*/
+				if($userType != 'Administrator'){ 
+				echo ' <li class="nav-item">
+                         <a class="nav-link" href="./FinancialStatements.php">Financial Statements</a>
+                </li>';	
+				}
+				?>
+                  <?php // to hide 'manager review' based on user type
+				$query1 = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
+				while($row = $query1->fetch(PDO::FETCH_ASSOC)){
+					$userType = $row['user_type'];
+				}
+				/* if the username is equal to Regular, do not show the manager review link*/
+				if($userType != 'Administrator'){ 
+				echo ' <li class="nav-item">
+                         <a class="nav-link" href="./logs.php">logs</a>
+                </li>';	
+				}
+				?>
+      
       
                 </ul>
                 
@@ -66,11 +140,16 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
               <div class="pull-right">
                 <ul class="nav navbar-nav navbar-right">
                   <li class="dropdown">
-                  <a class="dropdown-toggle" data-toggle="navbarDropdown" href="./logout.php"><span class="glyphicon glyphicon-user"></span><?php echo htmlspecialchars($_SESSION['username']); ?></a>
+                  <a class="dropdown-toggle" data-toggle="navbarDropdown" href="./logout.php"><span class="glyphicon glyphicon-user"></span> <?php echo htmlspecialchars($_SESSION['username']); ?></a>
+                  </li>
+                  <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="navbarDropdown" href="./help.php"><span class="glyphicon glyphicon-question-sign"></span> Help</a>
                   </li>
                 </ul>
               </div>
             </nav>
+
+
 
             <!--Logs-->
             <h1>Log Page</h1>

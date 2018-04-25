@@ -67,7 +67,6 @@ function negAndCom(number1){
     }
     return number1;
 }
-
 function insertCommas(number, index){
     var right = number.slice(index, number.length);
     var left = number.slice(0, index);

@@ -1,0 +1,7 @@
+p{
+    font-weight:bold;
+}
+p:hover{
+    text-decoration-line: underline;
+
+}

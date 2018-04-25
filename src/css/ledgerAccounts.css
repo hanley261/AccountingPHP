@@ -31,6 +31,20 @@ Classes
 .space{
     margin:20px;
 }
+.totalCredits{
+        border-top:2px solid black;
+        text-decoration-line:underline;
+        text-decoration-style:double;
+}
+.totalDebits{
+    border-top:2px solid black;
+    text-decoration-line:underline;
+    text-decoration-style:double;
+    
+}
+.overline{
+    text-decoration-line: overline;
+}
 legend{
     margin-top:100px;
     margin-bottom:20px;

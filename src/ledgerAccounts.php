@@ -57,7 +57,7 @@ $query->execute();
               <!-- Header-->
 
 
-              <nav class="navbar navbar-expand navbar-primary">
+                      <nav class="navbar navbar-expand navbar-primary">
                 <header class="navbar-brand" href="./home.html"><img src="assets/logo.png" alt="bluePrint" height="60"/></header>
                 
                 <span class="navbar-toggler-icon"></span>
@@ -145,17 +145,23 @@ $query->execute();
 				}
 				?>
       
+      
                 </ul>
                 
               </div>
               <div class="pull-right">
                 <ul class="nav navbar-nav navbar-right">
                   <li class="dropdown">
-                  <a class="dropdown-toggle" data-toggle="navbarDropdown" href="./logout.php"><span class="glyphicon glyphicon-user"></span><?php echo htmlspecialchars($_SESSION['username']); ?></a>
+                  <a class="dropdown-toggle" data-toggle="navbarDropdown" href="./logout.php"><span class="glyphicon glyphicon-user"></span> <?php echo htmlspecialchars($_SESSION['username']); ?></a>
+                  </li>
+                  <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="navbarDropdown" href="./help.php"><span class="glyphicon glyphicon-question-sign"></span> Help</a>
                   </li>
                 </ul>
               </div>
             </nav>
+
+
 
 
 
@@ -213,7 +219,7 @@ echo '<table class= "table">';
         }
         elseif($coa['balance'] < 0){
           echo '<tr><td>End Bal</td>';
-          echo "<td></td><td class='totalCredits'>",$coa['balance'],"</td></tr>";
+          echo "<td></td><td class='totalCredits'><div class='overline'>",$coa['balance'],"</div></td></tr>";
         }
         echo  '</tbody></table>';
         echo '</div>';

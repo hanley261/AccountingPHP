@@ -3,10 +3,11 @@
 Header
 
 */
-a{
+.nav-link{
     color:white !important;
     font-size: 1.2em !important;
     }
+
  nav li{
     padding-right:30px;
    } 

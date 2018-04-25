@@ -146,7 +146,10 @@ $query->execute();
               <div class="pull-right">
                 <ul class="nav navbar-nav navbar-right">
                   <li class="dropdown">
-                  <a class="dropdown-toggle" data-toggle="navbarDropdown" href="./logout.php"><span class="glyphicon glyphicon-user"></span><?php echo htmlspecialchars($_SESSION['username']); ?></a>
+                  <a class="dropdown-toggle" data-toggle="navbarDropdown" href="./logout.php"><span class="glyphicon glyphicon-user"></span> <?php echo htmlspecialchars($_SESSION['username']); ?></a>
+                  </li>
+                  <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="navbarDropdown" href="./help.php"><span class="glyphicon glyphicon-question-sign"></span> Help</a>
                   </li>
                 </ul>
               </div>
@@ -211,7 +214,7 @@ $query->execute();
 				echo "<td>",$row['account_code'],"</td>";
 				echo "<td>",$row['account_type'],"</td>";
 				echo "<td>",$row['account_subtype'],"</td>";
-				echo "<td><a style = 'text-decoration:none' href='./ledgerAccounts.php?Subject=",$row['account_name'],"'>",$row['account_name'],"</a></td>";
+				echo "<td onClick='accountledger()'><a href='./ledgerAccounts.php?Subject=",$row['account_name'],"'>",$row['account_name'],"</a></td>";
 				echo "<td>",$row['normal_side'],"</td>";
 				echo "<td>",$row['account_status'],"</td>";
 				echo "<td class='balance'>",$row['balance'],"</td>";

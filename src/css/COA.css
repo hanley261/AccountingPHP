@@ -13,7 +13,14 @@ margin: auto;
     background-color:#393a3d;
     color:white;
 }
-
+.totalcredits{
+    
+}
 /*
 tags
 */
+a{
+    color:black;
+    display:block;
+    text-decoration: none;
+}

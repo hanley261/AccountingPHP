@@ -52,10 +52,10 @@ $query->fetch(PDO::FETCH_ASSOC);
     <body>
 
         
-              <!-- Header-->
+               <!-- Header-->
 
 
-              <nav class="navbar navbar-expand navbar-primary">
+                      <nav class="navbar navbar-expand navbar-primary">
                 <header class="navbar-brand" href="./home.html"><img src="assets/logo.png" alt="bluePrint" height="60"/></header>
                 
                 <span class="navbar-toggler-icon"></span>
@@ -143,13 +143,17 @@ $query->fetch(PDO::FETCH_ASSOC);
 				}
 				?>
       
+      
                 </ul>
                 
               </div>
               <div class="pull-right">
                 <ul class="nav navbar-nav navbar-right">
                   <li class="dropdown">
-                  <a class="dropdown-toggle" data-toggle="navbarDropdown" href="./logout.php"><span class="glyphicon glyphicon-user"></span><?php echo htmlspecialchars($_SESSION['username']); ?></a>
+                  <a class="dropdown-toggle" data-toggle="navbarDropdown" href="./logout.php"><span class="glyphicon glyphicon-user"></span> <?php echo htmlspecialchars($_SESSION['username']); ?></a>
+                  </li>
+                  <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="navbarDropdown" href="./help.php"><span class="glyphicon glyphicon-question-sign"></span> Help</a>
                   </li>
                 </ul>
               </div>
