@@ -52,7 +52,8 @@ function loopCFD(collection){
 }
 
 function checkForDecimal(element){
-    if(element.innerText.indexOf("-") == 0 && element.innerText.length != 1){
+    console.log(element.innerText.length );
+    if(element.innerText.length > 1 && element.innerText != "-"){
     if(element.innerText.indexOf(".") == -1){
         element.innerText = element.innerText + ".00";
     }

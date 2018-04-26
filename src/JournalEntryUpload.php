@@ -9,7 +9,7 @@ if (!$con)
   mysqli_select_db($con, "accounting");
 
 
- 
+
   $transaction_id = ($_POST["transaction_id"]);
   $description = ($_POST["description1"]);
   $date = ($_POST["date1"]);

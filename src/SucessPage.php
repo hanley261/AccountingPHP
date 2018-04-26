@@ -29,7 +29,22 @@ $query = $db->query("SELECT * FROM chart_of_accounts WHERE account_status = 'ACT
     <body>
 
         <div>
-        Sucesss
+        <?php
+        if(isset($name)){
+             echo $file = $_FILES['file']['name'],"<br>";
+             echo $size = $_FILES['file']['size'],"<br>";
+             echo $type = $_FILES['file']['type'],"<br>";
+             echo $tmp_name = $_FILES['file']['tmp_name'],"<br>";
+        }
+        else{
+echo "choose a file";
+        }
+        ?>
+
+        <form action ="sucessPage.php" method="POST" enctype ="multipart/form-data">
+            <input type ="file" name = "file"><br>
+            <input type ="submit">
+</form>
         </div>
 
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>

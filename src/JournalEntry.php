@@ -249,7 +249,7 @@ $query4 = $db->query("SELECT MAX(transaction_id)+1 AS max_number FROM journal_en
                       <h3>Description</h3>
                       <input id = "description" class = "form-control" maxlength="254" name = "description1"></input>
              
-                      <input type="file" id="upload-file">
+                      <input type="file" id="upload-file" name="file">
                     </div>
                 </div>
                 <div id="submission">
