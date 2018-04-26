@@ -11,18 +11,17 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
 <!doctype html>
 <?php
 $config['db'] = array(
-	'host'			=>'localhost',
+	'host'			=>'localhost',//'rmorga5180688.ipagemysql.com',
 	'username'		=>'rmorga51',
 	'password'		=>'',
 	'dbname'		=>'accounting'
 );
-	
 
 $db = new PDO('mysql:host=' . $config['db']['host'] . ';dbname=' . $config['db']['dbname'], $config['db']['username'], $config['db']['password']); 
 $db->setATTRIBUTE(PDO::ATTR_EMULATE_PREPARES, false);
 $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-/* Filter for Manger Review  */
+/* Filter for manager Review  */
 if(isset  ($_GET['Subject'])){
   $filter = ($_GET['Subject']);
  
@@ -86,7 +85,7 @@ $query3 = $db->query("SELECT * FROM journal_entry INNER JOIN je_accounts ON jour
 					$userType = $row['user_type'];
 				}
 				/* if the username is equal to Regular, do not show the manager review link*/
-				if($userType == 'Manger'){ 
+				if($userType == 'manager'){ 
 				echo ' <li class="nav-item">
                          <a class="nav-link" href="./ManagerReview.php">Manager Review</a>
                 </li>';	
@@ -195,6 +194,7 @@ $query3 = $db->query("SELECT * FROM journal_entry INNER JOIN je_accounts ON jour
                       echo '<td>',$row['date1'],'</td>';
                       echo '<td>';
                       $transaction_id = $row['transaction_id'];
+                      $_SESSION['transaction_id'] = $transaction_id;    
                       $query4 = $db->query("SELECT * FROM je_accounts WHERE transaction_id = $transaction_id ORDER BY debit DESC");
                       while($name = $query4->fetch(PDO::FETCH_ASSOC)){
                         echo '<div>',$name['account_name'], '</div>';

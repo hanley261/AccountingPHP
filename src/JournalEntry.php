@@ -1,8 +1,10 @@
 <?php
 // Initialize the session
+ini_set("display_errors", "1");
+error_reporting(E_ALL);
 session_start();
  $username = $_SESSION['username'];
-// If session variable is not set it will redirect to login page
+
 if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
   header("location: login.php");
   exit;
@@ -61,12 +63,12 @@ $query4 = $db->query("SELECT MAX(transaction_id)+1 AS max_number FROM journal_en
                   <li class="nav-item">
                     <a class="nav-link"href="./COA.php">Charts of Account</a>
                   </li>
-                  <?php // to hide 'manager review' based on user type
+                  <?php // to hide 'Manager review' based on user type
 				$query1 = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
 				while($row = $query1->fetch(PDO::FETCH_ASSOC)){
 					$userType = $row['user_type'];
 				}
-				/* if the username is equal to Regular, do not show the manager review link*/
+				/* if the username is equal to Regular, do not show the Manager review link*/
 				if($userType != 'Administrator'){ 
 				echo ' <li class="nav-item">
                          <a class="nav-link" href="./JournalEntry.php">Journal Entry</a>
@@ -74,60 +76,60 @@ $query4 = $db->query("SELECT MAX(transaction_id)+1 AS max_number FROM journal_en
 				}
 				?>
 				
-				<?php // to hide 'manager review' based on user type
+				<?php // to hide 'Manager review' based on user type
 				$query1 = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
 				while($row = $query1->fetch(PDO::FETCH_ASSOC)){
 					$userType = $row['user_type'];
 				}
-				/* if the username is equal to Regular, do not show the manager review link*/
-				if($userType == 'Manger'){ 
+				/* if the username is equal to Regular, do not show the Manager review link*/
+				if($userType == 'Manager'){ 
 				echo ' <li class="nav-item">
                          <a class="nav-link" href="./ManagerReview.php">Manager Review</a>
                 </li>';	
 				}
 				?>
-                  <?php // to hide 'manager review' based on user type
+                  <?php // to hide 'Manager review' based on user type
 				$query1 = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
 				while($row = $query1->fetch(PDO::FETCH_ASSOC)){
 					$userType = $row['user_type'];
 				}
-				/* if the username is equal to Regular, do not show the manager review link*/
+				/* if the username is equal to Regular, do not show the Manager review link*/
 				if($userType != 'Administrator'){ 
 				echo ' <li class="nav-item">
                          <a class="nav-link" href="./ledgerAccounts.php">Accounts Ledgers</a>
                 </li>';	
 				}
 				?>
-                  <?php // to hide 'manager review' based on user type
+                  <?php // to hide 'Manager review' based on user type
 				$query1 = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
 				while($row = $query1->fetch(PDO::FETCH_ASSOC)){
 					$userType = $row['user_type'];
 				}
-				/* if the username is equal to Regular, do not show the manager review link*/
+				/* if the username is equal to Regular, do not show the Manager review link*/
 				if($userType != 'Administrator'){ 
 				echo ' <li class="nav-item">
                          <a class="nav-link" href="./accounts.php">Accounts</a>
                 </li>';	
 				}
 				?>
-                  <?php // to hide 'manager review' based on user type
+                  <?php // to hide 'Manager review' based on user type
 				$query1 = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
 				while($row = $query1->fetch(PDO::FETCH_ASSOC)){
 					$userType = $row['user_type'];
 				}
-				/* if the username is equal to Regular, do not show the manager review link*/
+				/* if the username is equal to Regular, do not show the Manager review link*/
 				if($userType != 'Administrator'){ 
 				echo ' <li class="nav-item">
                          <a class="nav-link" href="./FinancialStatements.php">Financial Statements</a>
                 </li>';	
 				}
 				?>
-                  <?php // to hide 'manager review' based on user type
+                  <?php // to hide 'Manager review' based on user type
 				$query1 = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
 				while($row = $query1->fetch(PDO::FETCH_ASSOC)){
 					$userType = $row['user_type'];
 				}
-				/* if the username is equal to Regular, do not show the manager review link*/
+				/* if the username is equal to Regular, do not show the Manager review link*/
 				if($userType != 'Administrator'){ 
 				echo ' <li class="nav-item">
                          <a class="nav-link" href="./logs.php">logs</a>
@@ -196,7 +198,7 @@ $query4 = $db->query("SELECT MAX(transaction_id)+1 AS max_number FROM journal_en
                             }
                             ?>
                           </td>
-                          <td><input onKeyUp="subtotalDebits()" class = "debitBox" type="number" step="0.01" default="0" min = "0" name="debit[]"><span class="remove" onClick="removeRow()">-</span></td>            
+                          <td><input onKeyUp="subtotalDebits()" class = "debitBox" type="number" step="0.01" value="" min = "0" name="debit[]"><span class="remove" onClick="removeRow()">-</span></td>            
                           <td><input  onKeyUp="subtotalCredits()" class ="hide" type="number" step="0.01" value="" min = "0"name="credit[]"></td>
                     </tr>
         
@@ -249,7 +251,7 @@ $query4 = $db->query("SELECT MAX(transaction_id)+1 AS max_number FROM journal_en
                       <h3>Description</h3>
                       <input id = "description" class = "form-control" maxlength="254" name = "description1"></input>
              
-                      <input type="file" id="upload-file" name="file">
+                      <input type="file" id="upload-file">
                     </div>
                 </div>
                 <div id="submission">

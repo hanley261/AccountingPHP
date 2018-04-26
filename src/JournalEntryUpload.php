@@ -1,15 +1,34 @@
 <?php
-
+////////////Code for Log Page////////////////////////////
+session_start();
+$username = $_SESSION['username']; // store session username
+$logActivity = 'Journal entry with REF# '.$_SESSION['transaction_id'] .' was submitted for manager approval.';
 // connect to database
 $con = mysqli_connect("localhost","rmorga51","");
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . mysql_error($con));
   }
   mysqli_select_db($con, "accounting");
+////////insert data into log_page//////////
+$userTypeQuery = $con->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
+$currentDate = date("Y/m/d h:i:s"); 
+while($row = $userTypeQuery->fetch_assoc()){
+    $userType = $row['user_type'];
+}
+$logUpdate = "INSERT INTO log_page (username, usertype, activity, date)
+VALUES ('$username', '$userType', '$logActivity', '$currentDate')";
+if (!mysqli_query($con, $logUpdate))
+  {
+  die('Error: ' . mysqli_error($con));
+  }
+else{  
+    echo "Submit was successful";
+}
+/////////////////////////////////////////// 
 
 
-
+ 
   $transaction_id = ($_POST["transaction_id"]);
   $description = ($_POST["description1"]);
   $date = ($_POST["date1"]);
@@ -50,7 +69,7 @@ VALUES
  }
  
 
-  header("Location:JournalEntry.php");
+  header("Location:COA.php");
 exit;
 
 

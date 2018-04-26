@@ -31,7 +31,7 @@ $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
                 <!-- CSS -->
                 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-            <link rel="stylesheet" href="css/home.css"/>
+            <!--<link rel="stylesheet" href="css/home.css"/>-->
             <link rel="stylesheet" href="css/header.css"/>
            
 
@@ -156,7 +156,7 @@ $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             <legend class="" align="center" text-size=""><strong>Dashboard</strong></legend>
 <div class="container">
   <div class="col-lg-4 col-md-6">
-    <div class=" panel panel-primary" >
+    <div class=" panel panel-warning" >
       <div class="panel-heading">
         <div class="row">
           <div class="col-xs-3">
@@ -165,19 +165,19 @@ $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
           <div class="col-xs-9 text-right">
             <div class="huge">
             <?php
-  	$queryCA = $db->prepare("SELECT SUM(balance) AS sumCA FROM chart_of_accounts WHERE account_subtype = 'Current Asset'");  // grab user_type of matching username
-    $queryCA->execute();
-    $rowCA = $queryCA->fetchAll(PDO::FETCH_OBJ);
-     $sumCA = $rowCA[0]->sumCA;
-     
+                $queryCA = $db->prepare("SELECT SUM(balance) AS sumCA FROM chart_of_accounts WHERE account_subtype = 'Current Asset'");  // grab user_type of matching username
+                $queryCA->execute();
+                $rowCA = $queryCA->fetchAll(PDO::FETCH_OBJ);
+                $sumCA = $rowCA[0]->sumCA;
+                
 
-     $queryCL = $db->prepare("SELECT SUM(balance) AS sumCL FROM chart_of_accounts WHERE account_subtype = 'Current Liability'");  // grab user_type of matching username
-     $queryCL->execute();
-     $rowCL = $queryCL->fetchAll(PDO::FETCH_OBJ);
-      $sumCL = $rowCL[0]->sumCL;
-    $currentRatio =$sumCA/abs($sumCL);
-    echo "<h1>",round($currentRatio,2),"%</h1>";
-?>
+                $queryCL = $db->prepare("SELECT SUM(balance) AS sumCL FROM chart_of_accounts WHERE account_subtype = 'Current Liability'");  // grab user_type of matching username
+                $queryCL->execute();
+                $rowCL = $queryCL->fetchAll(PDO::FETCH_OBJ);
+                $sumCL = $rowCL[0]->sumCL;
+                $currentRatio =$sumCA/abs($sumCL);
+                echo "<h1>",round($currentRatio,2),"%</h1>";
+            ?>
 
             </div>
           </div>
@@ -185,24 +185,6 @@ $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       </div>
       <div class="panel-body"><strong>Current Ratio</strong></div>
-    </div>
-  </div>
-  <div class="col-lg-4 col-md-6">
-    <div class=" panel panel-green" >
-      <div class="panel-heading">
-        <div class="row">
-          <div class="col-xs-3">
-          </div>
-          <div class="col-xs-9 text-right">
-            <div class="huge">
-            
-              <h1>?</h1>
-            </div>
-          </div>
-        </div>
-
-      </div>
-      <div class="panel-body"><strong>Quick Ratio</strong></div>
     </div>
   </div>
   <div class="col-lg-4 col-md-6">
@@ -214,27 +196,66 @@ $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
           <div class="col-xs-9 text-right">
             <div class="huge">
             <?php
-$queryTD = $db->prepare("SELECT SUM(balance) AS sumTD FROM chart_of_accounts WHERE account_type = 'Liability'");  // grab user_type of matching username
-$queryTD->execute();
-$rowTD = $queryTD->fetchAll(PDO::FETCH_OBJ);
- $sumTD = $rowTD[0]->sumTD;
- 
+                
 
- $queryTA = $db->prepare("SELECT SUM(balance) AS sumTA FROM chart_of_accounts WHERE account_type = 'Asset'");  // grab user_type of matching username
-$queryTA->execute();
-$rowTA = $queryTA->fetchAll(PDO::FETCH_OBJ);
- $sumTA = $rowTA[0]->sumTA;
+                $queryCL = $db->prepare("SELECT SUM(balance) AS sumCL FROM chart_of_accounts WHERE account_subtype = 'Current Liability'");  // grab user_type of matching username
+                $queryCL->execute();
+                $rowCL = $queryCL->fetchAll(PDO::FETCH_OBJ);
+                $sumCL = $rowCL[0]->sumCL;
 
-$DAratio = abs($sumTD)/$sumTA;
- echo "<h1>",round($DAratio,2),"%</h1>";
-?>
+                $queryCA = $db->prepare("SELECT SUM(balance) AS sumCA FROM chart_of_accounts WHERE account_subtype = 'Current Asset'");  // grab user_type of matching username
+                $queryCA->execute();
+                $rowCA = $queryCA->fetchAll(PDO::FETCH_OBJ);
+                $sumCA = $rowCA[0]->sumCA;
+
+
+                $queryI = $db->prepare("SELECT SUM(balance) AS sumI FROM chart_of_accounts WHERE account_name = 'Merchandise Inventory'");  // grab user_type of matching username
+                $queryI->execute();
+                $rowI = $queryI->fetchAll(PDO::FETCH_OBJ);
+                $sumI = $rowI[0]->sumI;
+                $QRatio =(abs($sumCA - $sumI))/abs($sumCL);
+                echo "<h1>",round($QRatio,2),"%</h1>";
+            ?>
             </div>
           </div>
         </div>
 
       </div>
-      <div class="panel-body"><strong>Debit to Assets Ratio</strong></div>
+      <div class="panel-body"><strong>Quick Ratio</strong></div>
     </div>
+
+  </div>
+  <div class="col-lg-4 col-md-6">
+    <div class=" panel panel-red" >
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-3">
+          </div>
+          <div class="col-xs-9 text-right">
+            <div class="huge">
+            <?php
+              $queryTD = $db->prepare("SELECT SUM(balance) AS sumTD FROM chart_of_accounts WHERE account_type = 'Liability'");  // grab user_type of matching username
+              $queryTD->execute();
+              $rowTD = $queryTD->fetchAll(PDO::FETCH_OBJ);
+              $sumTD = $rowTD[0]->sumTD;
+
+
+              $queryTE = $db->prepare("SELECT SUM(balance) AS sumTE FROM chart_of_accounts WHERE account_type = 'Equity'");  // grab user_type of matching username
+              $queryTE->execute();
+              $rowTE = $queryTE->fetchAll(PDO::FETCH_OBJ);
+              $sumTE = $rowTE[0]->sumTE;
+              
+              $DEratio = abs($sumTD)/abs($sumTE);
+              echo "<h1>",round($DEratio,2),"%</h1>";
+              ?>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="panel-body"><strong>Debit to Equity Ratio</strong></div>
+    </div>
+    <!--Netxt -->
   </div>
   <div class="col-lg-4 col-md-6">
     <div class=" panel panel-red">
@@ -245,28 +266,29 @@ $DAratio = abs($sumTD)/$sumTA;
           <div class="col-xs-9 text-right">
             <div class="huge">
             <?php
-$queryTD = $db->prepare("SELECT SUM(balance) AS sumTD FROM chart_of_accounts WHERE account_type = 'Liability'");  // grab user_type of matching username
-$queryTD->execute();
-$rowTD = $queryTD->fetchAll(PDO::FETCH_OBJ);
- $sumTD = $rowTD[0]->sumTD;
+              $queryTD = $db->prepare("SELECT SUM(balance) AS sumTD FROM chart_of_accounts WHERE account_name = 'Sales'");  // grab user_type of matching username
+              $queryTD->execute();
+              $rowTD = $queryTD->fetchAll(PDO::FETCH_OBJ);
+              $sumTD = $rowTD[0]->sumTD;
 
 
- $queryTE = $db->prepare("SELECT SUM(balance) AS sumTE FROM chart_of_accounts WHERE account_type = 'Equity'");  // grab user_type of matching username
-$queryTE->execute();
-$rowTE = $queryTE->fetchAll(PDO::FETCH_OBJ);
- $sumTE = $rowTE[0]->sumTE;
- 
-$DEratio = abs($sumTD)/abs($sumTE);
- echo "<h1>",round($DEratio,2),"%</h1>";
-?>
+              $queryA = $db->prepare("SELECT SUM(balance) AS sumA FROM chart_of_accounts WHERE account_type = 'Asset'");  // grab user_type of matching username
+              $queryA->execute();
+              $rowA= $queryA->fetchAll(PDO::FETCH_OBJ);
+              $sumA = $rowA[0]->sumA;
+              
+              $DEratio = abs($sumTD)/abs($sumA);
+              echo "<h1>",round($DEratio,2),"%</h1>";
+              ?>
             </div>
           </div>
         </div>
 
       </div>
-      <div class="panel-body"><strong>Debit to Equity Ratio</strong></div>
+      <div class="panel-body"><strong>Total Asset Turnover</strong></div>
     </div>
-  </div>
+  </div> <!-- End Netxt -->
+
   <div class="col-lg-4 col-md-6">
     <div class=" panel panel-red" >
       <div class="panel-heading">
@@ -275,34 +297,32 @@ $DEratio = abs($sumTD)/abs($sumTE);
           </div>
           <div class="col-xs-9 text-right">
             <div class="huge">
-              <h1>?</h1>
+            <?php
+              $queryTD = $db->prepare("SELECT SUM(balance) AS sumTD FROM chart_of_accounts WHERE account_type = 'Liability'");  // grab user_type of matching username
+              $queryTD->execute();
+              $rowTD = $queryTD->fetchAll(PDO::FETCH_OBJ);
+              $sumTD = $rowTD[0]->sumTD;
 
+
+              $queryTE = $db->prepare("SELECT SUM(balance) AS sumTE FROM chart_of_accounts WHERE account_type = 'Asset'");  // grab user_type of matching username
+              $queryTE->execute();
+              $rowTE = $queryTE->fetchAll(PDO::FETCH_OBJ);
+              $sumTE = $rowTE[0]->sumTE;
+              
+              $DEratio = abs($sumTD)/abs($sumTE);
+              echo "<h1>",round($DEratio,2),"%</h1>";
+              ?>
             </div>
           </div>
         </div>
 
       </div>
-      <div class="panel-body"><strong>Net Profit Margin</strong></div>
+      <div class="panel-body"><strong>Debt to Asset Ratio</strong></div>
     </div>
-  </div>
-  <div class="col-lg-4 col-md-6">
-    <div class=" panel panel-red" >
-      <div class="panel-heading">
-        <div class="row">
-          <div class="col-xs-3">
-          </div>
-          <div class="col-xs-9 text-right">
-            <div class="huge">
-              <h1>?</h1>
+  </div><!--End Netxt -->
 
-            </div>
-          </div>
-        </div>
+  
 
-      </div>
-      <div class="panel-body">Panel Content</div>
-    </div>
-  </div>
   </div>
 </div>
 

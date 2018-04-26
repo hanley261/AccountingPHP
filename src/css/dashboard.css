@@ -32,12 +32,12 @@
 }
 .panel-warning {
   background-color: inherit;
-  border-color: #E3D121;
+  border-color:orange;
 }
 .panel-warning > .panel-heading {
-    border-color: #E3D121;
+    border-color: orange;
     color: white;
-    background-color: #E3D121;
+    background-color: orange;
 }
 .panel-red {
   background-color: inherit;
@@ -130,4 +130,9 @@ body {
 }
 .col-xs-9 {
   width: 75%;
+}
+
+legend{
+  margin-top:5%;
+  margin-bottom:5%;
 }

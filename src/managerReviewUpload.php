@@ -1,8 +1,8 @@
 <?php
-
+session_start();
 // connect to database
 $config['db'] = array(
-	'host'			=>'localhost',
+	'host'			=>'localhost',//'rmorga5180688.ipagemysql.com',
 	'username'		=>'rmorga51',
 	'password'		=>'',
 	'dbname'		=>'accounting'
@@ -22,12 +22,29 @@ if (!$con)
 
   //post properties Table: journal_entry
 $transaction_id = $_POST['transaction_id'];
-
+$_SESSION['transaction_id'] = $transaction_id;
 if(isset($_POST['approve']))
 {
   $total = 0;
   $query = $db->query("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a'");
   $sql=("UPDATE journal_entry SET approval_status = 'approved' WHERE transaction_id = $transaction_id"); 
+///////////////////////////////////////////
+////////insert data into log_page//////////
+///////////////////////////////////////////
+$username = $_SESSION['username'];
+$logActivity = 'Journal entry with REF# ' . $transaction_id . ' was approved';
+$userTypeQuery = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
+$currentDate = date("Y/m/d h:i:s"); 
+while($row = $userTypeQuery->fetch(PDO::FETCH_ASSOC)){
+    $userType = $row['user_type'];
+}
+$logUpdate = "INSERT INTO log_page (username, usertype, activity, date)
+VALUES ('$username', '$userType', '$logActivity', '$currentDate')";
+$stmt = $db->prepare($logUpdate);
+$stmt->execute();
+///////////////////////////////////////////    
+///////////////////////////////////////////
+///////////////////////////////////////////
   while($coa = $query->fetch(PDO::FETCH_ASSOC)){
     $name = $coa['account_name'];
     $total = 0;
@@ -52,11 +69,28 @@ if(isset($_POST['approve']))
    }
   }
   else{
-    $sql=("UPDATE journal_entry SET approval_status = 'rejected' WHERE transaction_id = $transaction_id"); 
+    $sql=("UPDATE journal_entry SET approval_status = 'rejected' WHERE transaction_id = $transaction_id");
+///////////////////////////////////////////
+////////insert data into log_page//////////
+//////////////////////////////////////////
+$username = $_SESSION['username'];
+$logActivity = 'Journal entry with REF# ' . $transaction_id . ' was rejected';
+$userTypeQuery = $db->query("SELECT * FROM users WHERE username = '$username'");  // grab user_type of matching username
+$currentDate = date("Y/m/d h:i:s"); 
+while($row = $userTypeQuery->fetch(PDO::FETCH_ASSOC)){
+    $userType = $row['user_type'];
+}
+$logUpdate = "INSERT INTO log_page (username, usertype, activity, date)
+VALUES ('$username', '$userType', '$logActivity', '$currentDate')";
+$stmt = $db->prepare($logUpdate);
+$stmt->execute();
+//////////////////////////////////////////
+///////////////////////////////////////////
+//////////////////////////////////////////
   
     if (!mysqli_query($con, $sql))
     {
-    die('Error: ' . mysqli_error($db));
+    die('Error: ' . mysqli_error($con));
     }
   }
   header("Location:ManagerReview.php");

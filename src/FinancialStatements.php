@@ -423,7 +423,7 @@ $queryDiv->execute();
                   </tr>
                   <tr>
                     <td>Retained earnings at January 1, <span class = "this-year"></span></td>
-                    <td><span id = "prev-retained"> 
+                    <td align="right"><span id = "prev-retained"> 
                     <?php
                         while($REPrev = $queryREPrevious->fetch(PDO::FETCH_ASSOC)){
                           $total = ($REPrev['sumd'] -$REPrev['sumc']);
@@ -436,11 +436,11 @@ $queryDiv->execute();
                   </tr>
                   <tr>
                     <td>Add: net income earned in <span class = "this-year"></span></td>
-                    <td id="add-net"></td>
+                    <td id="add-net" align="right"></td>
                   </tr>
                   <tr>
                     <td>Less: Dividends</td>
-                    <td id = "Dividends">
+                    <td id = "Dividends" align="right">
                     <?php
                         $c= 0;
                         while($div = $queryDiv->fetch(PDO::FETCH_ASSOC)){
@@ -453,7 +453,7 @@ $queryDiv->execute();
                   </tr>
                   <tr>
                     <td> Retained earnings at <span class = "this-year"></span></td>
-                    <td id = "retained-total" class = "total"></td>
+                    <td id = "retained-total" class = "total" align="right"></td>
                   </tr>
           </table>
         </div>

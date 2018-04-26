@@ -79,77 +79,48 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     unset($db);
 }
 ?>
-
 <!doctype html>
-<html lang = en>
-    <head>
-                <!-- Required meta tags -->
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-                <!-- CSS -->
-				<!--https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css-->
-                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-            <link rel="stylesheet" href="css/home.css"/>
-            <link rel="stylesheet" href="css/header.css"/>
-            <link rel="stylesheet" href="css/login.css"/>
-                <!---Title -->
-            <title>AnyWhere-Login</title>
-    </head>
-    <body>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-      
-        
-               <!-- Header-->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="log.css"/>
+    <title>Login </title>
+  </head>
+  <body>
+    <div class="fill-page dark-blue-background">
+      <div class="login-container">
+          <div class="login-header"><img src="assets/logo.png" alt="anywhere" height="50"/></div>
 
-
-                <nav class="navbar navbar-expand navbar-primary">
-                <header class="navbar-brand" href="./home.html"><img src="assets/logo.png" alt="bluePrint" height="60"/></header>
- 
-            
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <
-                
+          <form id="form" class="login-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+              <hr/>
+              <div class="form-group" <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>
+                  <label class="login-label" htmlFor="username"><strong>Username:</strong> </span></label>
+                  <input name="username" id="username" type="text" class="login-text form-control" required="true" value="<?php echo $username; ?>">
+				  <span class="help-block"><?php echo $username_err; ?></span>
               </div>
-              <div class="pull-right">
-                <ul class="nav navbar-nav navbar-right">
-                  <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="navbarDropdown" href="./login.php"><span class="glyphicon glyphicon-user"></span>Login</a>
-                  </li>
-                </ul>
+              <div class="form-group" <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>
+                  <label class="login-label" htmlFor="password"><strong>Password:</strong></label>
+                  <input name="password" id="password" type="password" class="login-text form-control">
+				<span class="help-block"><?php echo $password_err; ?></span>
+				  
               </div>
-            </nav>
+              <hr/>
+              <button type="submit" class="login-btn btn" value="Login">
+                  LOGIN
+              </button>
+          </form>
+      </div>
+  </div>
 
-            <!--Login-->
-
-
-            <div class="container">
-                    <legend>Login</legend>
-                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                        <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
-                            <label htmlFor="username"> Username</label>
-							<input  class="form-control" name= "username" id="username" type="text" placeholder="Username" value="<?php echo $username; ?>" onChange=""/>
-							<span class="help-block"><?php echo $username_err; ?></span>
-                        </div>
-						<div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
-							<label>Password</label>
-							<input type="password" name="password" class="form-control" placeholder="password">
-							<span class="help-block"><?php echo $password_err; ?></span>
-						</div>
-                        <!--<div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
-                            <label htmlFor="password"> Password</label>
-                            <input  class="form-control" name="password" id="password" type="password" placeholder="password" value="" onChange=""/>
-							<span class="help-block"><?php echo $password_err; ?></span>
-                        </div>-->
-						<div class="form-group">
-						<input type="submit" class="btn btn-success" value="Login">
-						</div>
-                        </form>
-                        <!--<button class="btn btn-success" onClick="">Login</button>-->
-                  </div>
-
-
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-    </body>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
 </html>
