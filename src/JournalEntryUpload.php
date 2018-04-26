@@ -50,7 +50,7 @@ VALUES
  }
  
 
-  header("Location:COA.php");
+  header("Location:JournalEntry.php");
 exit;
 
 

@@ -68,7 +68,6 @@ function subtotalDebits(){
 function subtotalCredits(){
   var credits = $(".creditBox");
   var sub = 0;
-  console.log(credits.length);
   for(var i = 1; i < credits.length;i++){
     sub += Number(credits[i].value);
   } 
@@ -85,7 +84,6 @@ function destroyFirstCredit(){
  Ready to submit???
  */
 function DateReady(){
-  console.log("dateready");
   var date1 = document.getElementById("datepicker");   
   if(date1.value.length ==  10){
     return true;
@@ -96,7 +94,6 @@ function DateReady(){
   }
 }
 function trialBalance(){
-  console.log("trial Balance");
   if(document.getElementById("debitSub").value <= 0){
     errorBox.innerText = "The balance needs to be greater than zero";
     return false;
@@ -114,7 +111,6 @@ function trialBalance(){
   }
 }
 function description(){
-  console.log("description");
   if(document.getElementById("description").value.length > 0){
     return true;
   }
@@ -125,13 +121,10 @@ function description(){
 }
 function emptyvalue(collection){
   for(var i = 0; i < collection.length;i++){
-      if(Number(collection[i].innerText) == ""){
-        console.log("collection[i].innerText");
+      if(collection[i].value <= 0){
         collection[i].value = 0;
       }
-     
   }
-
 }
 function checkAccounts(){
   var accounts =document.getElementsByTagName("select");

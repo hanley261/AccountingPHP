@@ -214,7 +214,7 @@ $query->execute();
 				echo "<td>",$row['account_code'],"</td>";
 				echo "<td>",$row['account_type'],"</td>";
 				echo "<td>",$row['account_subtype'],"</td>";
-				echo "<td onClick='accountledger()'><a href='./ledgerAccounts.php?Subject=",$row['account_name'],"'>",$row['account_name'],"</a></td>";
+				echo "<td><a href='./ledgerAccounts.php?Subject=",$row['account_name'],"'>",$row['account_name'],"</a></td>";
 				echo "<td>",$row['normal_side'],"</td>";
 				echo "<td>",$row['account_status'],"</td>";
 				echo "<td class='balance'>",$row['balance'],"</td>";

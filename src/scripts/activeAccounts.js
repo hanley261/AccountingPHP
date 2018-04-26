@@ -26,14 +26,11 @@ function haveDecimals(){
     var count;
     var count2;
     var index;
-    console.log("length"+balance.length);
     for(var j = 0; j < balance.length; j++){
-        console.log("value"+balance[j]);
         if(balance[j].innerText != "0" ){
             if (balance[j].innerText.indexOf(".") != -1) {
                 count= 0; 
                 index = balance[j].innerText.indexOf(".");
-                console.log(index);
                 for(var i =index-1; i >0; i--){
                     count++;
                     
@@ -53,7 +50,6 @@ function haveDecimals(){
                     
                     if(count2 >=3){
                         count2 =0;
-                        console.log(balance[j].innerText);
                         balance[j].innerText = insertCommas(balance[j].innerText,i );
                     }
                 }
@@ -71,7 +67,6 @@ function insertCommas(number, index){
     var right = number.slice(index, number.length);
     var left = number.slice(0, index);
     number = left +","+right;
-    console.log(number);
     number = negAndCom(number);
     return number;
 

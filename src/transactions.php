@@ -152,6 +152,7 @@ $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             </nav>
 
             <!--Body -->
+            <legend class="" align="center" text-size=""><strong>Transactions</strong></legend>
 <?php
 $description = "asdf";
 if(isset  ($_GET['Subject'])){
@@ -164,21 +165,22 @@ if(isset  ($_GET['Subject'])){
                 
                 
                 echo "<tr><td>",$row['account_name'],"</td>";
-                echo "<td>",$row['debit'],"</td>";
-                echo "<td>",$row['credit'],"</td>";
+                echo "<td class = 'table-debit'>",$row['debit'],"</td>";
+                echo "<td class ='table-credit'>",$row['credit'],"</td>";
                 echo "</tr>";
                 $description = $row['description1'];
                 $user = $row['user_id'];
                 $manager = $row['manager_id'];
                 $trans = $row['transaction_id'];
                 }
-                echo"</table><div class='whitespace'></div><table class = 'table'><tr><td><strong>Journal Entry: </strong>",$trans,"</td><td> <strong>Description:</strong> ",$description,"</td></tr>";
-                echo"<td><strong>User: </strong>",$user,"</td><td><strong>Manager:</strong> ",$manager,"</td></tr></table>";
+                echo"</table><div class='whitespace'></div><table class = 'table2'><tr class = 'table-header-row'><th>JOURNAL ENTRY</th><th>USER</th><th>MANAGER</th><th>DESCRIPTION</th></th></tr><tr>";
+                echo "<td>",$trans,"</td><td>",$user,"</td><td>",$manager,"</td>";
+                echo"<td>",$description,"</td></tr></table>";
                 
 ?>
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-    <script src="./scripts/ledgerAccounts.js" type="text/javascript"></script>
+    <script src="./scripts/transactions.js" type="text/javascript"></script>
     </body>
 </html>

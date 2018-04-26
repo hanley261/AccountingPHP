@@ -62,11 +62,8 @@ function loopCredit(collection){
     var group;
     
     for(var i = 0; i < collection.length; i++){
-        console.log(collection[i].innerText);
         if(collection[i].innerText != ""){
-            console.log(collection[i].innerText);
             collection[i].innerText = Math.abs(collection[i].innerText);
-            console.log(collection[i].innerText);
         }
         
     }

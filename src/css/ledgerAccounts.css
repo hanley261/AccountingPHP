@@ -31,6 +31,15 @@ Classes
     text-align:center;
     margin-top: 80px;
 }
+.table2{
+    width:75%;
+    margin-left: auto;
+    margin-right:auto;
+    
+}
+.table2 th, .table2 td{
+    text-align: center;
+}
 .space{
     margin:20px;
 }
@@ -47,6 +56,10 @@ Classes
 }
 .overline{
     text-decoration-line: overline;
+}
+.whitespace{
+    height:50px;
+    width:100px;
 }
 legend{
     margin-top:100px;

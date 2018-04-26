@@ -14,7 +14,6 @@ function setDate(){
     month = checkDigits(month);
     var day = d.getDate();
     day = checkDigits(day);
-    console.log(month +" "+ day);
     var date = document.getElementsByClassName("date");
     for(var i =0; i < date.length; i++){
         date[i].innerText = month + "/" + day + "/" + year;
@@ -205,7 +204,6 @@ function totalSRE(){
     var current = document.getElementById("add-net");
     var total = document.getElementById("retained-total");
     var div = document.getElementById("Dividends");
-    console.log(Number(prev.innerText) + Number(current.innerText) + Number(Dividends.innerText));
     total.innerText = Number(prev.innerText) + Number(current.innerText) + Number(Dividends.innerText);
     
     prev.innerText = Number(prev.innerText);
@@ -219,7 +217,6 @@ function totalSRE(){
 function addYear(){
     var d = new Date();
     var year = d.getFullYear();
-    console.log(year);
     var placeholder = document.getElementsByClassName("this-year");
     for(var i = 0; i < placeholder.length; i++){
         placeholder[i].innerText = year;
@@ -250,7 +247,6 @@ function checkForDecimal(element){
         count2++;        
         if(count2 >=3){
             count2 =0;
-            console.log(element.innerText);
             element.innerText = insertCommas(element.innerText,i );
         }
     }

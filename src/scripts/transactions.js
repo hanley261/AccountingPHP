@@ -1,32 +1,3 @@
-function removeZeros(){
-    var debitZero = document.getElementsByClassName("table-debit");   
- var creditZero = document.getElementsByClassName("table-credit");
-
- for(var i = 0; i < creditZero.length;i++){
-     if(creditZero[i].innerText == 0){
-         creditZero[i].innerText = "-";
-     }
- }
- for(var i = 0; i < debitZero.length;i++){
-    if(debitZero[i].innerText == 0){
-        debitZero[i].innerText = "-";
-    }
-}
-}
-function format(){
-    var debits = document.getElementsByClassName("table-debit");
-    var credits = document.getElementsByClassName("table-credit");
-    var totalDebits = document.getElementsByClassName("totalDebits");
-    var totalCredits = document.getElementsByClassName("totalCredits");
-
-    loopCFD(debits);
-    loopCFD(credits);
-    loopCFD(totalDebits);
-    loopCredit(totalCredits);
-    
-    addDollar(totalDebits);
-    addDollar(totalCredits);
-}
 function addDollar(collection){
     for(var j = 0; j <collection.length;j++){
         collection[j].innerText = "$ " +collection[j].innerText;
@@ -52,7 +23,6 @@ function loopCFD(collection){
 }
 
 function checkForDecimal(element){
-    if(element.innerText.indexOf("-") == 0 && element.innerText.length != 1){
     if(element.innerText.indexOf(".") == -1){
         element.innerText = element.innerText + ".00";
     }
@@ -65,7 +35,6 @@ function checkForDecimal(element){
             element.innerText = insertCommas(element.innerText,i );
         }
     }
-}
 }
 function insertCommas(number, index){
     var right = number.slice(index, number.length);
@@ -80,7 +49,29 @@ function negAndCom(number1){
     }
     return number1;
 }
+function removeZeros(){
+    var debitZero = document.getElementsByClassName("table-debit");   
+ var creditZero = document.getElementsByClassName("table-credit");
+ for(var i = 0; i < creditZero.length;i++){
+     if(creditZero[i].innerText == 0){         
+         creditZero[i].innerText = " ";
+     }
+ }
+ for(var i = 0; i < debitZero.length;i++){
+    if(debitZero[i].innerText == 0){       
+        debitZero[i].innerText = " ";
+    }
+}
+}
+function format(){
+    var debits = document.getElementsByClassName("table-debit");
+    var credits = document.getElementsByClassName("table-credit");
+
+
+    loopCFD(debits);
+    loopCFD(credits);
+}
 $(document).ready(function(){
-removeZeros();
-format();
+    removeZeros();
+    format();
 });

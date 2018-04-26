@@ -196,7 +196,7 @@ $query4 = $db->query("SELECT MAX(transaction_id)+1 AS max_number FROM journal_en
                             }
                             ?>
                           </td>
-                          <td><input onKeyUp="subtotalDebits()" class = "debitBox" type="number" step="0.01" value="" min = "0" name="debit[]"><span class="remove" onClick="removeRow()">-</span></td>            
+                          <td><input onKeyUp="subtotalDebits()" class = "debitBox" type="number" step="0.01" default="0" min = "0" name="debit[]"><span class="remove" onClick="removeRow()">-</span></td>            
                           <td><input  onKeyUp="subtotalCredits()" class ="hide" type="number" step="0.01" value="" min = "0"name="credit[]"></td>
                     </tr>
         
