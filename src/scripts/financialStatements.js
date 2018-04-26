@@ -171,6 +171,8 @@ function finalize(){
     var retainedEarnings = document.getElementById("retained-earnings-value");
     var totalAss =document.getElementById("total-assets");
     var netProfit = document.getElementById("net-profit");
+    var OE = document.getElementById("total-OE");
+    OE.innerText = Number(OE.innerText) + Number(retainedEarnings.innerText);
 
     loopCFD(debitNum);
     loopCFD(creditNum);

@@ -29,7 +29,7 @@ if(isset  ($_GET['Subject'])){
    ORDER BY '$order' ASC");
 }
 else{
-  $queryFilter = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' ORDER BY 'account_name' ASC");
+  $queryFilter = $db->prepare("SELECT * FROM chart_of_accounts WHERE account_status != 'n/a' AND balance != 0 ORDER BY 'account_name' ASC");
 }
 
 $queryFilter->execute();

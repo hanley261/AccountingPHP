@@ -33,6 +33,9 @@ $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
             <link rel="stylesheet" href="css/home.css"/>
             <link rel="stylesheet" href="css/header.css"/>
+           
+
+            <link rel="stylesheet" href="./css/dashboard.css" />
                 <!---Title -->
             <title>AnyWhere-Home</title>
     </head>
@@ -150,21 +153,166 @@ $db->setATTRIBUTE(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
             <!--Home-->
+            <legend class="" align="center" text-size=""><strong>Dashboard</strong></legend>
+<div class="container">
+  <div class="col-lg-4 col-md-6">
+    <div class=" panel panel-primary" >
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-3">
+
+          </div>
+          <div class="col-xs-9 text-right">
+            <div class="huge">
+            <?php
+  	$queryCA = $db->prepare("SELECT SUM(balance) AS sumCA FROM chart_of_accounts WHERE account_subtype = 'Current Asset'");  // grab user_type of matching username
+    $queryCA->execute();
+    $rowCA = $queryCA->fetchAll(PDO::FETCH_OBJ);
+     $sumCA = $rowCA[0]->sumCA;
+     
+
+     $queryCL = $db->prepare("SELECT SUM(balance) AS sumCL FROM chart_of_accounts WHERE account_subtype = 'Current Liability'");  // grab user_type of matching username
+     $queryCL->execute();
+     $rowCL = $queryCL->fetchAll(PDO::FETCH_OBJ);
+      $sumCL = $rowCL[0]->sumCL;
+    $currentRatio =$sumCA/abs($sumCL);
+    echo "<h1>",round($currentRatio,2),"%</h1>";
+?>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="panel-body"><strong>Current Ratio</strong></div>
+    </div>
+  </div>
+  <div class="col-lg-4 col-md-6">
+    <div class=" panel panel-green" >
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-3">
+          </div>
+          <div class="col-xs-9 text-right">
+            <div class="huge">
+            
+              <h1>?</h1>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="panel-body"><strong>Quick Ratio</strong></div>
+    </div>
+  </div>
+  <div class="col-lg-4 col-md-6">
+    <div class=" panel panel-warning" >
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-3">
+          </div>
+          <div class="col-xs-9 text-right">
+            <div class="huge">
+            <?php
+$queryTD = $db->prepare("SELECT SUM(balance) AS sumTD FROM chart_of_accounts WHERE account_type = 'Liability'");  // grab user_type of matching username
+$queryTD->execute();
+$rowTD = $queryTD->fetchAll(PDO::FETCH_OBJ);
+ $sumTD = $rowTD[0]->sumTD;
+ 
+
+ $queryTA = $db->prepare("SELECT SUM(balance) AS sumTA FROM chart_of_accounts WHERE account_type = 'Asset'");  // grab user_type of matching username
+$queryTA->execute();
+$rowTA = $queryTA->fetchAll(PDO::FETCH_OBJ);
+ $sumTA = $rowTA[0]->sumTA;
+
+$DAratio = abs($sumTD)/$sumTA;
+ echo "<h1>",round($DAratio,2),"%</h1>";
+?>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="panel-body"><strong>Debit to Assets Ratio</strong></div>
+    </div>
+  </div>
+  <div class="col-lg-4 col-md-6">
+    <div class=" panel panel-red">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-3">
+          </div>
+          <div class="col-xs-9 text-right">
+            <div class="huge">
+            <?php
+$queryTD = $db->prepare("SELECT SUM(balance) AS sumTD FROM chart_of_accounts WHERE account_type = 'Liability'");  // grab user_type of matching username
+$queryTD->execute();
+$rowTD = $queryTD->fetchAll(PDO::FETCH_OBJ);
+ $sumTD = $rowTD[0]->sumTD;
 
 
-            <div class="container">
-                  <h1>Dashboard</h1>
-                    <!--<div class="row">
-                     <a href ="./createAccount.html" class="btn btn-success margin-10">Create Account</a>
-                     <a href="./journalEntry.html" class="btn btn-success margin-10">Journalize</a>
-                     <a class="btn btn-success margin-10">Post Account</a>
-                     <a href = "./ledgerAccounts.php" class="btn btn-success margin-10">Ledger Accounts</a>
-                    </div>-->
-                  </div>
+ $queryTE = $db->prepare("SELECT SUM(balance) AS sumTE FROM chart_of_accounts WHERE account_type = 'Equity'");  // grab user_type of matching username
+$queryTE->execute();
+$rowTE = $queryTE->fetchAll(PDO::FETCH_OBJ);
+ $sumTE = $rowTE[0]->sumTE;
+ 
+$DEratio = abs($sumTD)/abs($sumTE);
+ echo "<h1>",round($DEratio,2),"%</h1>";
+?>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="panel-body"><strong>Debit to Equity Ratio</strong></div>
+    </div>
+  </div>
+  <div class="col-lg-4 col-md-6">
+    <div class=" panel panel-red" >
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-3">
+          </div>
+          <div class="col-xs-9 text-right">
+            <div class="huge">
+              <h1>?</h1>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="panel-body"><strong>Net Profit Margin</strong></div>
+    </div>
+  </div>
+  <div class="col-lg-4 col-md-6">
+    <div class=" panel panel-red" >
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-3">
+          </div>
+          <div class="col-xs-9 text-right">
+            <div class="huge">
+              <h1>?</h1>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="panel-body">Panel Content</div>
+    </div>
+  </div>
+  </div>
+</div>
 
 
 
 
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            <!--<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>-->
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
