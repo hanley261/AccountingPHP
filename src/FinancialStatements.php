@@ -324,13 +324,9 @@ $queryDiv->execute();
                  <td align="right">SUBTOTALS</td>
                 </tr>
                 <tr>
-                  <td><strong> ASSETS</strong></td><td></td><td></td>
+                  <td><strong>ASSETS</strong></td><td></td><td></td>
                 </tr>
-                <tr>
-                  <td><strong>Current Assets</strong></td>
-                  <td></td>
-                  <td id = "current-assets" class = "subtotal" align='right'></td>
-                </tr>
+
                 <?php
                   while($CARow = $queryCA->fetch(PDO::FETCH_ASSOC)){
                   echo "<tr>";
@@ -339,9 +335,11 @@ $queryDiv->execute();
                   }
                  ?>
                 <tr>
-                 <td><strong>Long Term Assets</strong></td><td></td>
-                 <td id = "long-term-assets" class = "subtotal"align='right'>
-                 </tr>
+                  <td><strong>Current Assets</strong></td>
+                  <td></td>
+                  <td id = "current-assets" class = "subtotal" align='right'></td>
+                </tr>
+                
                  <?php
                   while($LTARow = $queryLTA->fetch(PDO::FETCH_ASSOC)){
                   echo "<tr>";
@@ -349,7 +347,10 @@ $queryDiv->execute();
                   echo "<td align='right' class='LTA'>",$LTARow['balance'],"</td><td></td></tr>";
                   }
                  ?>
-                
+                <tr>
+                 <td><strong>Long Term Assets</strong></td><td></td>
+                 <td id = "long-term-assets" class = "subtotal"align='right'>
+                 </tr>
                 <tr>
                   <td><strong>TOTAL ASSETS</strong></td>
                   <td></td>
@@ -360,23 +361,7 @@ $queryDiv->execute();
                   <td></td>
                   <td id = "total-EQ-LIA"align='right'></td>
                 </tr>
-                <tr>
-                  <td><strong>Long Term Liabilities</strong></td>
-                  <td></td>
-                  <td id = "total-LTL"align='right'class="subtotal"></td>
-                </tr>
-                <?php
-                  while($LTLRow = $queryLTL->fetch(PDO::FETCH_ASSOC)){
-                  echo "<tr>";
-                  echo "<td>",$LTLRow['account_name'],"</td>";
-                  echo "<td align='right' class='LTL'>",$LTLRow['balance'],"</td><td></td></tr>";
-                  }
-                 ?>
-                <tr>
-                  <td><strong>Current Liabilities</strong></td>
-                  <td></td>
-                  <td id = "total-CL"align='right' class="subtotal"></td>
-                </tr>
+
                 <?php
                   while($CLRow = $queryCL->fetch(PDO::FETCH_ASSOC)){
                   echo "<tr>";
@@ -385,10 +370,24 @@ $queryDiv->execute();
                   }
                  ?>
                 <tr>
-                  <td><strong>Owner's Equity</strong></td>
+                  <td><strong>Current Liabilities</strong></td>
                   <td></td>
-                  <td id = "total-OE"align='right'class = "subtotal"></td>
+                  <td id = "total-CL"align='right' class="subtotal"></td>
                 </tr>
+
+                <?php
+                  while($LTLRow = $queryLTL->fetch(PDO::FETCH_ASSOC)){
+                  echo "<tr>";
+                  echo "<td>",$LTLRow['account_name'],"</td>";
+                  echo "<td align='right' class='LTL'>",$LTLRow['balance'],"</td><td></td></tr>";
+                  }
+                 ?>
+                <tr>
+                  <td><strong>Long Term Liabilities</strong></td>
+                  <td></td>
+                  <td id = "total-LTL"align='right'class="subtotal"></td>
+                </tr>
+                
                 <?php
                   
                   while($OERow = $queryOE->fetch(PDO::FETCH_ASSOC)){
@@ -397,6 +396,11 @@ $queryDiv->execute();
                   echo "<td align='right' class='OE'>",$OERow['balance'],"</td><td></td></tr>";
                   }
                  ?>
+                 <tr>
+                  <td><strong>Owner's Equity</strong></td>
+                  <td></td>
+                  <td id = "total-OE"align='right'class = "subtotal"></td>
+                </tr>
                  <tr>
                   <td>Retained Earnings</td>
                   <td align ="right" id ="retained-earnings-value"></td>
